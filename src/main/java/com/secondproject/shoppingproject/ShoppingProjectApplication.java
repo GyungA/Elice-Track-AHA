@@ -1,7 +1,10 @@
 package com.secondproject.shoppingproject;
 
+import com.secondproject.shoppingproject.user.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
@@ -12,4 +15,9 @@ public class ShoppingProjectApplication {
         SpringApplication.run(ShoppingProjectApplication.class, args);
     }
 
+    @Bean
+    @Profile("local")
+    public DataInit stubDataInit(UserRepository userRepository) {
+        return new DataInit(userRepository);
+    }
 }
