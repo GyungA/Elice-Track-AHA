@@ -2,6 +2,7 @@ package com.secondproject.shoppingproject.order.entity;
 
 import com.secondproject.shoppingproject.product.entity.Product;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,4 +31,12 @@ public class OrderDetail {
 
     @Column(nullable = false)
     private int payment;
+
+    @Builder
+    public OrderDetail(Order order, Product product, int quantity, int payment) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.payment = payment;
+    }
 }

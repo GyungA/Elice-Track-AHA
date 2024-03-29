@@ -4,6 +4,7 @@ import com.secondproject.shoppingproject.global.entity.BaseEntity;
 import com.secondproject.shoppingproject.order.status.OrderStatus;
 import com.secondproject.shoppingproject.user.entity.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,13 +25,29 @@ public class Order extends BaseEntity {
     private User user;
 
     @Column(nullable = false)
-    private int totalAmount;
+    private int totalPayment;
 
     @Column(nullable = false)
     private String deliveryAddress;
 
-    private String request;
-
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderStatus orderStatus;
+
+    @Column(nullable = false)
+    private String receiverName;
+
+    @Column(nullable = false)
+    private String receiverPhoneNumber;
+
+    @Builder
+    public Order(User user, String deliveryAddress, OrderStatus orderStatus,
+                 String receiverName, String receiverPhoneNumber){
+        this.user = user;
+        this.deliveryAddress = deliveryAddress;
+        this.orderStatus = orderStatus;
+        this.receiverName = receiverName;
+        this.receiverPhoneNumber = receiverPhoneNumber;
+    }
+
 }
