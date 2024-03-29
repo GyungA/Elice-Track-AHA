@@ -5,21 +5,18 @@ import com.secondproject.shoppingproject.cart.entity.Cart;
 import com.secondproject.shoppingproject.global.entity.BaseEntity;
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.product.entity.Product;
-import com.secondproject.shoppingproject.user.Enum.Grade;
-import com.secondproject.shoppingproject.user.Enum.Role;
+import com.secondproject.shoppingproject.user.constant.Grade;
+import com.secondproject.shoppingproject.user.constant.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 @Setter
@@ -33,7 +30,7 @@ public class User extends BaseEntity{
     String email;
 
     @Column(name="password", nullable = false)
-//    @Size(min=8, max=20)//비밀번호는 8자 이상 20자 이하로 입력
+    @Size(min=8, max=20)
     String password;
 
     @Column(name="name", nullable = false)
@@ -43,7 +40,7 @@ public class User extends BaseEntity{
     String birthdate;//생년월일 6자리와 주민 번호 앞자리 1개를 받음 => ex) 9806101
 
     @Column(name="status", nullable = false)
-    String status;
+    boolean status;
 
     @Column(name="address")
     String address;
@@ -71,18 +68,8 @@ public class User extends BaseEntity{
 //    @JsonIgnore
 //    List<Product> products = new ArrayList<>();
 
-//    public User(String email,String password, String name, String birthdate, String status, String address, String phone, Grade grade, Role role){
-//        this.email=email;
-//        this.password=password;
-//        this.name=name;
-//        this.birthdate=birthdate;
-//        this.status=status;
-//        this.address=address;
-//        this.phone=phone;
-//        this.grade=grade;
-//        this.role=role;
-//    }
-    public User(String email,String password, String name, String birthdate, String status, String address, String phone, Grade grade, Role role){
+    @Builder
+    public User(String email,String password, String name, String birthdate, boolean status, String address, String phone, Grade grade, Role role){
         this.email=email;
         this.password=password;
         this.name=name;
@@ -94,7 +81,8 @@ public class User extends BaseEntity{
         this.role=role;
     }
 
-    public User(String email,String password, String name, String birthdate, String status, String address, String phone){
+    @Builder
+    public User(String email,String password, String name, String birthdate, boolean status, String address, String phone){
         this.email=email;
         this.password=password;
         this.name=name;
