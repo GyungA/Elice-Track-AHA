@@ -35,7 +35,7 @@ public class UserService {
             user.setName(signUpRequest.getName());
             user.setBirthdate(signUpRequest.getBirthdate());
           //  user.setGrade(signUpDto.getGrade());
-            user.setStatus(signUpRequest.isStatus());
+//            user.setStatus(signUpRequest.isStatus());
             user.setAddress(signUpRequest.getAddress());
             user.setPhone(signUpRequest.getPhone());
            // user.setRole(signUpDto.getRole());

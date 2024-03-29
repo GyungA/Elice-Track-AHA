@@ -28,17 +28,13 @@ public class SignUpRequest {
     @Size(min=7, max=7)
     String birthdate;//생년월일 6자리와 주민 번호 앞자리 1개를 받음 => ex) 9806101
 
-    @NotBlank
-    boolean status;
+//    @NotBlank
+//    boolean status;
 
     @NotBlank
     String address;
 
     @NotBlank
     String phone;
-
-    public User toEntity(){
-        return new User(email,password, name, birthdate, status, address, phone);
-    }
 
 }

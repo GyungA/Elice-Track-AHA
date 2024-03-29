@@ -1,12 +1,9 @@
 package com.secondproject.shoppingproject.user.controller;
 
-import com.secondproject.shoppingproject.user.dto.request.SignInRequest;
 import com.secondproject.shoppingproject.user.dto.request.SignUpRequest;
-import com.secondproject.shoppingproject.user.entity.User;
+import com.secondproject.shoppingproject.user.dto.response.SignUpResponse;
 import com.secondproject.shoppingproject.user.service.SignUpService;
-import com.secondproject.shoppingproject.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +20,9 @@ public class SignUpController {
         this.signUpService=signUpService;
     }
 
-
     @PostMapping
-    public ResponseEntity<User> postUser(@RequestBody SignUpRequest signUpRequest){
-        User newUser = signUpService.saveUser(signUpRequest);
-        return new ResponseEntity<>(newUser,HttpStatus.CREATED);
+    public ResponseEntity<? super SignUpResponse> signUp(@RequestBody SignUpRequest signUpRequest){
+        return signUpService.signUp(signUpRequest);
     }
 
 }
