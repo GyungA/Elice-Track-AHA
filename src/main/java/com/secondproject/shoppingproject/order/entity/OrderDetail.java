@@ -27,7 +27,7 @@ public class OrderDetail {
     private Product product;
 
     @Column(nullable = false)
-    private int amount;
+    private int quantity;
 
     @Column(nullable = false)
     private int payment;
@@ -36,7 +36,7 @@ public class OrderDetail {
     public OrderDetail(Order order, Product product, int quantity, int payment) {
         this.order = order;
         this.product = product;
-        this.amount = quantity;
+        this.quantity = quantity;
         this.payment = payment;
     }
 }

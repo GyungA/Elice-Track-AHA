@@ -1,9 +1,9 @@
 package com.secondproject.shoppingproject.order.service;
 
-import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailCountAndProductNamesDto;
-import com.secondproject.shoppingproject.order.dto.order.user.OrderDetailHistoryResponseDto;
-import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryResponseDto;
-import com.secondproject.shoppingproject.order.dto.order.user.OrderInstantRequestDto;
+import com.secondproject.shoppingproject.order.dto.OrderDetail.OrderDetailCountAndProductNamesDto;
+import com.secondproject.shoppingproject.order.dto.user.OrderDetailHistoryResponseDto;
+import com.secondproject.shoppingproject.order.dto.user.OrderHistoryResponseDto;
+import com.secondproject.shoppingproject.order.dto.user.OrderInstantRequestDto;
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.repository.OrderRepository;

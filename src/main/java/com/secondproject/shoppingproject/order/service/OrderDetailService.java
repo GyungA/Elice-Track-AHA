@@ -1,7 +1,6 @@
 package com.secondproject.shoppingproject.order.service;
 
-import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailCountAndProductNamesDto;
-import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailInfoDto;
+import com.secondproject.shoppingproject.order.dto.OrderDetail.OrderDetailCountAndProductNamesDto;
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.repository.OrderDetailRepository;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,11 +47,8 @@ public class OrderDetailService {
     }
 
     //해당 order에 연관된 모든 product 리스트
-    public List<OrderDetailInfoDto> getOrderDetailList(Order order){
-        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
-        return orderDetails.stream()
-                .map((orderDetail -> new OrderDetailInfoDto(orderDetail)))
-                .collect(Collectors.toList());
+    public List<OrderDetail> getOrderDetailList(Order order){
+        return orderDetailRepository.findByOrder(order);
     }
 
 }
