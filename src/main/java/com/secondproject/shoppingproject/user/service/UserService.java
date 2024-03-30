@@ -1,7 +1,7 @@
 package com.secondproject.shoppingproject.user.service;
 
-import com.secondproject.shoppingproject.user.dto.LoginDto;
-import com.secondproject.shoppingproject.user.dto.SignUpDto;
+import com.secondproject.shoppingproject.user.dto.request.SignInRequest;
+import com.secondproject.shoppingproject.user.dto.request.SignUpRequest;
 import com.secondproject.shoppingproject.user.entity.User;
 import com.secondproject.shoppingproject.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,22 +23,22 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public User saveUser(SignUpDto userDto){
-        return userRepository.save(userDto.toEntity());
-    }
+//    public User saveUser(SignUpRequest userDto){
+//        return userRepository.save(userDto.toEntity());
+//    }
 
-    public User updateUser(Long userId, SignUpDto signUpDto){
+    public User updateUser(Long userId, SignUpRequest signUpRequest){
         User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
-            user.setEmail(signUpDto.getEmail());
-            user.setPassword(signUpDto.getPassword());
-            user.setName(signUpDto.getName());
-            user.setBirthdate(signUpDto.getBirthdate());
-            //  user.setGrade(signUpDto.getGrade());
-            user.setStatus(signUpDto.getStatus());
-            user.setAddress(signUpDto.getAddress());
-            user.setPhone(signUpDto.getPhone());
-            // user.setRole(signUpDto.getRole());
+            user.setEmail(signUpRequest.getEmail());
+            user.setPassword(signUpRequest.getPassword());
+            user.setName(signUpRequest.getName());
+            user.setBirthdate(signUpRequest.getBirthdate());
+          //  user.setGrade(signUpDto.getGrade());
+//            user.setStatus(signUpRequest.isStatus());
+            user.setAddress(signUpRequest.getAddress());
+            user.setPhone(signUpRequest.getPhone());
+           // user.setRole(signUpDto.getRole());
             return userRepository.save(user);
         }
         return null;
@@ -48,13 +48,10 @@ public class UserService {
         User user = userRepository.findById(userId).orElse(null);
         userRepository.delete(user);
     }
-    public User registerUser(SignUpDto signUpDto) {
-        User user = userRepository.save(signUpDto.toEntity());
-        return user;
-    }
-    public User loginUser(LoginDto loginDtoDto) {
-        return userRepository.findByEmailAndPassword(loginDtoDto.getEmail(), loginDtoDto.getPassword());
-    }
+
+//    public User loginUser(SignInRequest signInRequest) {
+//        return userRepository.findByEmailAndPassword(signInRequest.getEmail(), signInRequest.getPassword());
+//    }
 //    public User loginUser(String email, String password) {
 //        return userRepository.findByEmailAndPassword(email, password);
 //    }
