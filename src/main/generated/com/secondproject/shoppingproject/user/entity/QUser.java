@@ -40,7 +40,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<com.secondproject.shoppingproject.user.constant.Role> role = createEnum("role", com.secondproject.shoppingproject.user.constant.Role.class);
 
-    public final BooleanPath status = createBoolean("status");
+    public final StringPath status = createString("status");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;

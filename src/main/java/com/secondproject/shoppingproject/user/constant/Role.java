@@ -12,4 +12,3 @@ public enum Role {
         this.role=role;
     }
 }
-
