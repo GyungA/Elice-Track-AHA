@@ -1,6 +1,5 @@
 package com.secondproject.shoppingproject.category.service;
 
-import com.secondproject.shoppingproject.category.dto.CategoryDTO;
 import com.secondproject.shoppingproject.category.entity.Category;
 import com.secondproject.shoppingproject.category.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
