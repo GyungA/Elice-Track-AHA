@@ -1,6 +1,6 @@
-package com.secondproject.shoppingproject.order.dto.user;
+package com.secondproject.shoppingproject.order.dto.order.user;
 
-import com.secondproject.shoppingproject.order.dto.OrderDetail.OrderDetailCountAndProductNamesDto;
+import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailCountAndProductNamesDto;
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.status.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;

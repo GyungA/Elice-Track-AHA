@@ -1,4 +1,4 @@
-package com.secondproject.shoppingproject.order.dto.OrderDetail;
+package com.secondproject.shoppingproject.order.dto.orderDetail;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

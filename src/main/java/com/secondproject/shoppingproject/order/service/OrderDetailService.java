@@ -1,6 +1,6 @@
 package com.secondproject.shoppingproject.order.service;
 
-import com.secondproject.shoppingproject.order.dto.OrderDetail.OrderDetailCountAndProductNamesDto;
+import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailCountAndProductNamesDto;
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.repository.OrderDetailRepository;

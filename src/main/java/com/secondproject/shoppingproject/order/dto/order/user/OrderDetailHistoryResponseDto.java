@@ -1,4 +1,4 @@
-package com.secondproject.shoppingproject.order.dto.user;
+package com.secondproject.shoppingproject.order.dto.order.user;
 
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
