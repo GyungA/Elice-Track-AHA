@@ -30,7 +30,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath email = createString("email");
 
-    public final EnumPath<com.secondproject.shoppingproject.user.Enum.Grade> grade = createEnum("grade", com.secondproject.shoppingproject.user.Enum.Grade.class);
+    public final EnumPath<com.secondproject.shoppingproject.user.constant.Grade> grade = createEnum("grade", com.secondproject.shoppingproject.user.constant.Grade.class);
 
     public final StringPath name = createString("name");
 
@@ -38,7 +38,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath phone = createString("phone");
 
-    public final EnumPath<com.secondproject.shoppingproject.user.Enum.Role> role = createEnum("role", com.secondproject.shoppingproject.user.Enum.Role.class);
+    public final EnumPath<com.secondproject.shoppingproject.user.constant.Role> role = createEnum("role", com.secondproject.shoppingproject.user.constant.Role.class);
 
     public final StringPath status = createString("status");
 

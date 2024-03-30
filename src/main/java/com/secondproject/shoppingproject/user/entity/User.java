@@ -1,21 +1,13 @@
 package com.secondproject.shoppingproject.user.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.secondproject.shoppingproject.cart.entity.Cart;
 import com.secondproject.shoppingproject.global.entity.BaseEntity;
-import com.secondproject.shoppingproject.order.entity.Order;
-import com.secondproject.shoppingproject.product.entity.Product;
-import com.secondproject.shoppingproject.user.Enum.Grade;
-import com.secondproject.shoppingproject.user.Enum.Role;
+import com.secondproject.shoppingproject.user.constant.Grade;
+import com.secondproject.shoppingproject.user.constant.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "user")

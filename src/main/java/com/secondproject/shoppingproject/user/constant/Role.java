@@ -1,4 +1,4 @@
-package com.secondproject.shoppingproject.user.Enum;
+package com.secondproject.shoppingproject.user.constant;
 
 import lombok.Getter;
 

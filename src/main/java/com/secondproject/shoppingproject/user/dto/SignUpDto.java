@@ -1,7 +1,5 @@
 package com.secondproject.shoppingproject.user.dto;
 
-import com.secondproject.shoppingproject.user.Enum.Grade;
-import com.secondproject.shoppingproject.user.Enum.Role;
 import com.secondproject.shoppingproject.user.entity.User;
 import lombok.*;
 
