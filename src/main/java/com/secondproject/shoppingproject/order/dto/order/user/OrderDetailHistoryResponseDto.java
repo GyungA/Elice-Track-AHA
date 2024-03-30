@@ -1,12 +1,11 @@
 package com.secondproject.shoppingproject.order.dto.order.user;
 
+import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailInfoDto;
 import com.secondproject.shoppingproject.order.entity.Order;
-import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.status.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -16,16 +15,15 @@ public class OrderDetailHistoryResponseDto {
     @Schema(description = "주문자 id")
     private Long id;
 
-    //TODO: 굳이 OrderDetail을 리턴하지말고 dto만들자
-    private List<OrderDetail> orderDetails;
+    private List<OrderDetailInfoDto> orderDetailInfoDtos;
     private OrderStatus orderStatus;
     private String deliveryAddress;
     private int totalPayment;
     private String orderDate;
 
-    public OrderDetailHistoryResponseDto(Order order, List<OrderDetail> orderDetails){
+    public OrderDetailHistoryResponseDto(Order order, List<OrderDetailInfoDto> orderDetailInfoDtos){
         this.id = order.getUser().getUser_id();
-        this.orderDetails = orderDetails;
+        this.orderDetailInfoDtos = orderDetailInfoDtos;
         this.orderStatus = order.getOrderStatus();
         this.deliveryAddress = order.getDeliveryAddress();
         this.totalPayment = order.getTotalPayment();
