@@ -6,7 +6,6 @@ import com.secondproject.shoppingproject.order.status.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Getter

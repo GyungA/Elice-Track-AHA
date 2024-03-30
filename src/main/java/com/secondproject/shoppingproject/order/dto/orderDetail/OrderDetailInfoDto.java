@@ -1,6 +1,5 @@
 package com.secondproject.shoppingproject.order.dto.orderDetail;
 
-import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import lombok.Getter;
 
