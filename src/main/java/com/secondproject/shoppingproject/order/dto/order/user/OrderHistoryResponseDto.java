@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Schema(description = "유저의 전체 주문 내역 조회할 때 response")
@@ -18,7 +19,7 @@ public class OrderHistoryResponseDto {
     private int totalProductCount;
     private int totalPayment;
     private OrderStatus orderStatus;
-    private LocalDate orderDate;
+    private String orderDate;
 
     public OrderHistoryResponseDto(Order order, OrderDetailCountAndProductNamesDto orderDetailCountAndProductNamesDto){
         this.userId = order.getUser().getUser_id();
@@ -28,6 +29,6 @@ public class OrderHistoryResponseDto {
         this.totalProductCount = orderDetailCountAndProductNamesDto.getCount();
         this.totalPayment = order.getTotalPayment();
         this.orderStatus = order.getOrderStatus();
-        this.orderDate = order.getCreatedAt().toLocalDate();
+        this.orderDate = order.getCreatedAt().toLocalDate().format(DateTimeFormatter.ofPattern("yy-MM-dd"));
     }
 }

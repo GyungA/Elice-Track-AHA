@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -20,7 +21,7 @@ public class OrderDetailHistoryResponseDto {
     private OrderStatus orderStatus;
     private String deliveryAddress;
     private int totalPayment;
-    private LocalDate orderDate;
+    private String orderDate;
 
     public OrderDetailHistoryResponseDto(Order order, List<OrderDetail> orderDetails){
         this.id = order.getUser().getUser_id();
@@ -28,6 +29,6 @@ public class OrderDetailHistoryResponseDto {
         this.orderStatus = order.getOrderStatus();
         this.deliveryAddress = order.getDeliveryAddress();
         this.totalPayment = order.getTotalPayment();
-        this.orderDate = order.getCreatedAt().toLocalDate();
+        this.orderDate = order.getCreatedAt().toLocalDate().format(DateTimeFormatter.ofPattern("yy-MM-dd"));
     }
 }
