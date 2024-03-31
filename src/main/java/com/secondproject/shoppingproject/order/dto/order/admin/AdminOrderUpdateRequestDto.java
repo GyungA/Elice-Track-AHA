@@ -1,4 +1,4 @@
-package com.secondproject.shoppingproject.order.dto.admin;
+package com.secondproject.shoppingproject.order.dto.order.admin;
 
 import com.secondproject.shoppingproject.order.status.OrderStatus;
 import lombok.Getter;

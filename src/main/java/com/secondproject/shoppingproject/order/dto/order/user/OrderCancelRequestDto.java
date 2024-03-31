@@ -1,4 +1,4 @@
-package com.secondproject.shoppingproject.order.dto.user;
+package com.secondproject.shoppingproject.order.dto.order.user;
 
 import lombok.Getter;
 
