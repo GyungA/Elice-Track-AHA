@@ -2,7 +2,6 @@ package com.secondproject.shoppingproject.order.repository;
 
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
-import com.secondproject.shoppingproject.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
