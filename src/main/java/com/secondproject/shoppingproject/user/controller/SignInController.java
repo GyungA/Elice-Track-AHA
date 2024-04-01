@@ -1,6 +1,7 @@
 package com.secondproject.shoppingproject.user.controller;
 
 import com.secondproject.shoppingproject.user.dto.request.SignInRequest;
+import com.secondproject.shoppingproject.user.dto.response.SignInResponse;
 import com.secondproject.shoppingproject.user.entity.User;
 import com.secondproject.shoppingproject.user.service.SignInService;
 import com.secondproject.shoppingproject.user.service.UserService;
@@ -22,12 +23,16 @@ public class SignInController {
         this.signInService=signInService;
     }
 
+    //    @GetMapping
+//    public ResponseEntity<User> get_User(@RequestBody SignInRequest signInRequest){
+//        User user = signInService.getUser(signInRequest.getEmail(), signInRequest.getPassword());
+//        if(user==null){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+//    }
     @GetMapping
-    public ResponseEntity<User> get_User(@RequestBody SignInRequest signInRequest){
-        User user = signInService.getUser(signInRequest.getEmail(), signInRequest.getPassword());
-        if(user==null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<? super SignInResponse> get_User(@RequestBody SignInRequest signInRequest){
+        return signInService.signIn(signInRequest);
     }
 }

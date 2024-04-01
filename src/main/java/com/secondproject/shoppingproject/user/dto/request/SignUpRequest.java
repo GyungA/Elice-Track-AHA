@@ -18,7 +18,7 @@ public class SignUpRequest {
     String email;
 
     @NotBlank
-    @Size(min=8, max=20)
+//    @Size(min=8, max=20)
     String password;
 
     @NotBlank
@@ -36,9 +36,5 @@ public class SignUpRequest {
 
     @NotBlank
     String phone;
-
-    public User toEntity(){
-        return new User(email,password, name, birthdate, status, address, phone);
-    }
 
 }

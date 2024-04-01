@@ -13,6 +13,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "user")
@@ -30,7 +31,7 @@ public class User extends BaseEntity{
     String email;
 
     @Column(name="password", nullable = false)
-    @Size(min=8, max=20)
+  //  @Size(min=8, max=20)
     String password;
 
     @Column(name="name", nullable = false)
@@ -40,21 +41,21 @@ public class User extends BaseEntity{
     String birthdate;//생년월일 6자리와 주민 번호 앞자리 1개를 받음 => ex) 9806101
 
     @Column(name="status", nullable = false)
-    boolean status;
+    boolean status = true;
 
-    @Column(name="address")
+    @Column(name="address", nullable = false)
     String address;
 
     @Column(name="phone", nullable = false)
     String phone;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "grade", nullable = true)
-    private Grade grade = Grade.BRONZE;
+    @Column(name = "grade", nullable = true,columnDefinition = "varchar(255) default 'BRONZE'")
+    Grade grade = Grade.BRONZE;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private Role role = Role.USER;
+    @Column(name = "role", nullable = true,columnDefinition = "varchar(255) default 'USER'")
+    Role role = Role.USER;
 
 //    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JsonIgnore
@@ -90,5 +91,7 @@ public class User extends BaseEntity{
         this.status=status;
         this.address=address;
         this.phone=phone;
+        this.grade=Grade.BRONZE;
+        this.role=Role.USER;
     }
 }
