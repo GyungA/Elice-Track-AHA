@@ -8,7 +8,7 @@ import lombok.Getter;
 public class OrderInstantRequestDto {
     private Long userId;
     private Long productId;
-    private int quantity;
+    private int amount;
     private String deliveryAddress;
     private String receiverName;
     private String receiverPhoneNumber;

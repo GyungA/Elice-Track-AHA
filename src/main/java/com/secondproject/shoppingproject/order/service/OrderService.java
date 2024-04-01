@@ -66,7 +66,7 @@ public class OrderService {
                 .receiverPhoneNumber(requestDto.getReceiverPhoneNumber())
                 .build();
 
-        OrderDetail orderDetail = orderDetailService.save(requestDto.getProductId(), requestDto.getQuantity(), order);
+        OrderDetail orderDetail = orderDetailService.save(requestDto.getProductId(), requestDto.getAmount(), order);
         order.setTotalPayment(orderDetail.getPayment());
         order = orderRepository.save(order);
 
