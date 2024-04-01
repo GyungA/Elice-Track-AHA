@@ -42,6 +42,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final BooleanPath status = createBoolean("status");
 
+    public final NumberPath<Integer> total_payment = createNumber("total_payment", Integer.class);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 

@@ -49,6 +49,9 @@ public class User extends BaseEntity{
 	@Column(name="phone", nullable = false)
 	String phone;
 
+	@Column(name="total_payment", nullable = false)
+	int total_payment=0;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "grade", nullable = true,columnDefinition = "varchar(255) default 'BRONZE'")
 	Grade grade = Grade.BRONZE;
