@@ -1,9 +1,6 @@
 package com.secondproject.shoppingproject.order.controller;
 
-import com.secondproject.shoppingproject.order.dto.order.user.OrderDetailHistoryResponseDto;
-import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryResponseDto;
-import com.secondproject.shoppingproject.order.dto.order.user.OrderInstantRequestDto;
-import com.secondproject.shoppingproject.order.dto.order.user.OrderUpdateRequestDto;
+import com.secondproject.shoppingproject.order.dto.order.user.*;
 import com.secondproject.shoppingproject.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -105,8 +102,8 @@ public class OrderController {
     /*
     주문 완료 후, "배송중" 상태 전까지 주문 취소 가능
      */
-    /*@PatchMapping("/cancel")
+    @PatchMapping("/cancel")
     public ResponseEntity<OrderDetailHistoryResponseDto> cancel(@RequestBody OrderCancelRequestDto requestDto){
         return ResponseEntity.ok(orderService.cancel(requestDto));
-    }*/
+    }
 }

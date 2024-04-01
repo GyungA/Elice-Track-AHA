@@ -1,9 +1,15 @@
 package com.secondproject.shoppingproject.order.controller;
 
+import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryResponseDto;
 import com.secondproject.shoppingproject.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

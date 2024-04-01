@@ -1,9 +1,6 @@
 package com.secondproject.shoppingproject.order.service;
 
-import com.secondproject.shoppingproject.order.dto.order.user.OrderDetailHistoryResponseDto;
-import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryResponseDto;
-import com.secondproject.shoppingproject.order.dto.order.user.OrderInstantRequestDto;
-import com.secondproject.shoppingproject.order.dto.order.user.OrderUpdateRequestDto;
+import com.secondproject.shoppingproject.order.dto.order.user.*;
 import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailCountAndProductNamesDto;
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
@@ -83,6 +80,7 @@ public class OrderService {
 
         if ((order.getUser().getUser_id() == requestDto.getUserId())) {
             if(order.getOrderStatus() == OrderStatus.ORDER_COMPLETE){
+
                 if(!requestDto.getDeliveryAddress().isBlank()){
                     order.setDeliveryAddress(requestDto.getDeliveryAddress());
                 }
@@ -93,6 +91,7 @@ public class OrderService {
                     order.setReceiverPhoneNumber(requestDto.getReceiverPhoneNumber());
                 }
 
+                order = orderRepository.save(order);
                 return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
             } else{
                 log.warn("이미 상품이 배송 중이거나 도착하였기 때문에 정보 수정 불가");
@@ -105,7 +104,19 @@ public class OrderService {
         }
     }
 
-//    public OrderDetailHistoryResponseDto cancel(OrderCancelRequestDto requestDto) {
-//
-//    }
+    @Transactional
+    public OrderDetailHistoryResponseDto cancel(OrderCancelRequestDto requestDto) {
+        Order order = orderRepository.findById(requestDto.getOrderId())
+                .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
+
+        if ((order.getUser().getUser_id() == requestDto.getUserId())) {
+            order.setOrderStatus(OrderStatus.REQUEST_CANCELLATION);
+            order = orderRepository.save(order);
+            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
+        } else {
+            String message = requestDto.getOrderId() + "번 주문을 취소할 권한이 없습니다.";
+            log.warn(message);
+            throw new AccessDeniedException(message);
+        }
+    }
 }

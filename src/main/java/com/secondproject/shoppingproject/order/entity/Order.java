@@ -21,6 +21,7 @@ public class Order extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -42,7 +43,7 @@ public class Order extends BaseEntity {
 
     @Builder
     public Order(User user, String deliveryAddress, OrderStatus orderStatus,
-                 String receiverName, String receiverPhoneNumber){
+                 String receiverName, String receiverPhoneNumber) {
         this.user = user;
         this.deliveryAddress = deliveryAddress;
         this.orderStatus = orderStatus;
