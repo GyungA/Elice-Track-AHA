@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminOrderController {
     private final OrderService orderService;
 
-        /*
+    /*
 //    관리자 페이지에서 자신의 상품을 구매한 회원들의 주문 내역을 조회 가능
-//     */
+//  */
 //    @GetMapping("/user/{user_id}/target/{target_id}")
 //    public ResponseEntity<List<OrderHistoryResponseDto>> getMyOrderHistory(@PathVariable("user_id") Long userId,
 //                                                                           @PathVariable("target_id") Long targetId){

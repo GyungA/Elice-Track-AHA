@@ -3,6 +3,7 @@ package com.secondproject.shoppingproject.order.controller;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderDetailHistoryResponseDto;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryResponseDto;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderInstantRequestDto;
+import com.secondproject.shoppingproject.order.dto.order.user.OrderUpdateRequestDto;
 import com.secondproject.shoppingproject.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -92,13 +93,14 @@ public class OrderController {
     }
 
     /*
-    주문 완료 후, 배송 전까지 주문 정보 수정 가능(요청 사항, 배송지)
+    주문 완료 후, "주문 완료" 상태일 때만 주문 정보 수정 가능(배송지, 수령인 이름, 수령인 연락처)
      */
-    /*
     @PatchMapping
     public ResponseEntity<OrderDetailHistoryResponseDto> update(@RequestBody OrderUpdateRequestDto requestDto){
+        //전과 달라진 게 없는 값의 경우, null값을 보내는지 or 원래 값 그대로 보내는지?
+        //일단 null 값 보내는 걸로 구현
         return ResponseEntity.ok(orderService.update(requestDto));
-    }*/
+    }
 
     /*
     주문 완료 후, "배송중" 상태 전까지 주문 취소 가능
