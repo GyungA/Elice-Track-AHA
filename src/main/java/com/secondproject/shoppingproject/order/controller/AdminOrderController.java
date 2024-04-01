@@ -1,9 +1,15 @@
 package com.secondproject.shoppingproject.order.controller;
 
+import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryResponseDto;
 import com.secondproject.shoppingproject.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -11,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminOrderController {
     private final OrderService orderService;
 
-        /*
+    /*
 //    관리자 페이지에서 자신의 상품을 구매한 회원들의 주문 내역을 조회 가능
-//     */
+//  */
 //    @GetMapping("/user/{user_id}/target/{target_id}")
 //    public ResponseEntity<List<OrderHistoryResponseDto>> getMyOrderHistory(@PathVariable("user_id") Long userId,
 //                                                                           @PathVariable("target_id") Long targetId){

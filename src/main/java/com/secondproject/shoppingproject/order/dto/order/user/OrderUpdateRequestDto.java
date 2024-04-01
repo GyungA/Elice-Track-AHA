@@ -7,4 +7,6 @@ public class OrderUpdateRequestDto {
     private Long userId;
     private Long OrderId;
     private String deliveryAddress;
+    private String receiverName;
+    private String receiverPhoneNumber;
 }
