@@ -23,7 +23,7 @@ public class SignInResponse extends ResponseDto {
         this.token = token;
         this.expirationTime = expirationTime;
     }
-//    public static ResponseEntity<SignInResponse> success(String token) {
+    //    public static ResponseEntity<SignInResponse> success(String token) {
 //        SignInResponse result = new SignInResponse(token, 60*60*1000);
 //        return ResponseEntity.ok().body(result);
 //    }

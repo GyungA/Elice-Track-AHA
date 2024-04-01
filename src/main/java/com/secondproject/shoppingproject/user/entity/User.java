@@ -22,40 +22,40 @@ import java.util.UUID;
 @Getter
 @Setter
 public class User extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id")
-    Long user_id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="user_id")
+	Long user_id;
 
-    @Column(name="email", nullable = false, unique = true)
-    String email;
+	@Column(name="email", nullable = false, unique = true)
+	String email;
 
-    @Column(name="password", nullable = false)
-  //  @Size(min=8, max=20)
-    String password;
+	@Column(name="password", nullable = false)
+	//  @Size(min=8, max=20)
+	String password;
 
-    @Column(name="name", nullable = false)
-    String name;
+	@Column(name="name", nullable = false)
+	String name;
 
-    @Column(name="birthdate", nullable = false, length = 7)
-    String birthdate;//생년월일 6자리와 주민 번호 앞자리 1개를 받음 => ex) 9806101
+	@Column(name="birthdate", nullable = false, length = 7)
+	String birthdate;//생년월일 6자리와 주민 번호 앞자리 1개를 받음 => ex) 9806101
 
-    @Column(name="status", nullable = false)
-    boolean status = true;
+	@Column(name="status", nullable = false)
+	boolean status = true;
 
-    @Column(name="address", nullable = false)
-    String address;
+	@Column(name="address", nullable = false)
+	String address;
 
-    @Column(name="phone", nullable = false)
-    String phone;
+	@Column(name="phone", nullable = false)
+	String phone;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "grade", nullable = true,columnDefinition = "varchar(255) default 'BRONZE'")
-    Grade grade = Grade.BRONZE;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "grade", nullable = true,columnDefinition = "varchar(255) default 'BRONZE'")
+	Grade grade = Grade.BRONZE;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = true,columnDefinition = "varchar(255) default 'USER'")
-    Role role = Role.USER;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role", nullable = true,columnDefinition = "varchar(255) default 'USER'")
+	Role role = Role.USER;
 
 //    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JsonIgnore
@@ -69,29 +69,29 @@ public class User extends BaseEntity{
 //    @JsonIgnore
 //    List<Product> products = new ArrayList<>();
 
-    @Builder
-    public User(String email,String password, String name, String birthdate, boolean status, String address, String phone, Grade grade, Role role){
-        this.email=email;
-        this.password=password;
-        this.name=name;
-        this.birthdate=birthdate;
-        this.status=status;
-        this.address=address;
-        this.phone=phone;
-        this.grade=grade;
-        this.role=role;
-    }
+	@Builder
+	public User(String email,String password, String name, String birthdate, boolean status, String address, String phone, Grade grade, Role role){
+		this.email=email;
+		this.password=password;
+		this.name=name;
+		this.birthdate=birthdate;
+		this.status=status;
+		this.address=address;
+		this.phone=phone;
+		this.grade=grade;
+		this.role=role;
+	}
 
-    @Builder
-    public User(String email,String password, String name, String birthdate, boolean status, String address, String phone){
-        this.email=email;
-        this.password=password;
-        this.name=name;
-        this.birthdate=birthdate;
-        this.status=status;
-        this.address=address;
-        this.phone=phone;
-        this.grade=Grade.BRONZE;
-        this.role=Role.USER;
-    }
+	@Builder
+	public User(String email,String password, String name, String birthdate, boolean status, String address, String phone){
+		this.email=email;
+		this.password=password;
+		this.name=name;
+		this.birthdate=birthdate;
+		this.status=status;
+		this.address=address;
+		this.phone=phone;
+		this.grade=Grade.BRONZE;
+		this.role=Role.USER;
+	}
 }
