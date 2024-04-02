@@ -41,7 +41,6 @@ public class SignUpService {
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))
                 .name(signUpRequest.getName())
                 .birthdate(signUpRequest.getBirthdate())
-                .status(signUpRequest.isStatus())
                 .address(signUpRequest.getAddress())
                 .phone(signUpRequest.getPhone())
                 .grade(Grade.BRONZE) // 기본값 설정
