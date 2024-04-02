@@ -61,7 +61,7 @@ public class AdminOrderController {
                     content = {@Content(schema = @Schema(implementation = OrderDetailHistoryResponseDto.class))}),
             @ApiResponse(responseCode = "404", description = "해당 유저 ID 또는 Order Id가 존재하지 않습니다."),
     })
-    @PatchMapping
+    @PatchMapping("/modify-status")
     public ResponseEntity<OrderDetailHistoryResponseDto> update(@RequestBody AdminOrderUpdateRequestDto requestDto) {
         return ResponseEntity.ok(orderService.update(requestDto));
     }
@@ -82,7 +82,7 @@ public class AdminOrderController {
                     content = {@Content(schema = @Schema(implementation = OrderDetailHistoryResponseDto.class))}),
             @ApiResponse(responseCode = "404", description = "해당 유저 ID 또는 Order Id가 존재하지 않습니다."),
     })
-    @PatchMapping
+    @PatchMapping("/delete")
     public ResponseEntity<OrderDetailHistoryResponseDto> delete(@RequestBody AdminOrderDeleteRequestDto requestDto) {
         return ResponseEntity.ok(orderService.delete(requestDto));
     }

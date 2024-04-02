@@ -54,7 +54,7 @@ dependencies {
     testAnnotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
 
 //    redis
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
