@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    List<Order> findByUser(User user);
+    List<Order> findByUserOrderByCreatedAtDesc(User user);
 
     //    Optional<Order> findByIdAndUserId(Long orderId, Long userId);
     @Query("SELECT o FROM Order o " +

@@ -33,7 +33,7 @@ public class OrderService {
     public List<OrderHistoryResponseDto> getMyOrder(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 user id를 찾을 수 없습니다."));
-        List<Order> orders = orderRepository.findByUser(user);
+        List<Order> orders = orderRepository.findByUserOrderByCreatedAtDesc(user);
 
         return orders.stream()
                 .map(order -> {
@@ -53,7 +53,7 @@ public class OrderService {
 
 //    public OrderDetailHistoryResponseDto orderProductInCart(Long userId) {
 //        //userId에 해당하는 장바구니 목록 가져오기
-//        //
+//        // 장바구니에 담겨있는 상품 정보를
 //    }
 
     @Transactional

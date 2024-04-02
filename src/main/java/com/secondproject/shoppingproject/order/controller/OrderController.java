@@ -71,23 +71,29 @@ public class OrderController {
 //        return ResponseEntity.ok(orderService.orderProductInCart(userId));
 //    }
 
-    /**
-     * 상품을 장바구니에 넣지 않고, 바로 구매
-     * @param requestDto 주문자 id, 상품 id, 상품 수량, 배송지, 수령인 이름, 수령인 연락처
-     * @return 주문한 상품 상세 조회
-     */
-    @Operation(summary = "상품 바로 구매", description = "상품을 장바구니에 넣지 않고, 바로 구매합니다.")
-    @Parameter(name = "requestDto", description = "주문자 id, 상품 id, 상품 수량, 배송지, 수령인 이름, 수령인 연락처")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "성공",
-                    content = {@Content(schema = @Schema(implementation = OrderDetailHistoryResponseDto.class))}),
-            @ApiResponse(responseCode = "404", description = "해당 ID의 유저 또는 상품이 존재하지 않습니다."),
-    })
-    @PostMapping("/buy-instantly")
-    public ResponseEntity<OrderDetailHistoryResponseDto> orderProductInstantly(@RequestBody OrderInstantRequestDto requestDto){
-        //TODO: 배송지, 수령인 이름, 연락처 유효성 검사
-        return ResponseEntity.ok(orderService.orderProductInstantly(requestDto));
-    }
+//    /**
+//     * 상품을 장바구니에 넣지 않고, 바로 구매
+//     * @param requestDto 주문자 id, 상품 id, 상품 수량, 배송지, 수령인 이름, 수령인 연락처
+//     * @return 주문한 상품 상세 조회
+//     */
+//    @Operation(summary = "상품 바로 구매", description = "상품을 장바구니에 넣지 않고, 바로 구매합니다.")
+//    @Parameter(name = "requestDto", description = "주문자 id, 상품 id, 상품 수량, 배송지, 수령인 이름, 수령인 연락처")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "성공",
+//                    content = {@Content(schema = @Schema(implementation = OrderDetailHistoryResponseDto.class))}),
+//            @ApiResponse(responseCode = "404", description = "해당 ID의 유저 또는 상품이 존재하지 않습니다."),
+//    })
+//    @PostMapping("/buy-instantly")
+//    public ResponseEntity<OrderDetailHistoryResponseDto> orderProductInstantly(@RequestBody OrderInstantRequestDto requestDto){
+//        //TODO: 배송지, 수령인 이름, 연락처 유효성 검사
+//        return ResponseEntity.ok(orderService.orderProductInstantly(requestDto));
+//    }
+    //결제하기
+
+//    redis 필요
+    //결제 정보 조회
+    //장바구니에 담긴 상품 주문하기
+    //바로 구매 이용해서 주문하기
 
 
     /**
