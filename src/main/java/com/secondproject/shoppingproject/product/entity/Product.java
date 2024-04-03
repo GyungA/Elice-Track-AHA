@@ -32,7 +32,8 @@ public class Product {
     @JoinColumn(name = "seller_id")
     private User seller; // 판매자 아이디
 
-    private String image; // 상품 이미지
+    private String imgName; // 이미지 파일명
+    private String imgPath; // 이미지 조회 경로
 
     @DateTimeFormat(pattern = "YYYY-MM-DD")
     private LocalDate createAt; // 상품 등록 날짜
