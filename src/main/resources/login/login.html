@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Category</title>
+  <link rel="stylesheet" type="text/css" href="header.css">
+  <link rel="stylesheet" type="text/css" href="login.css">
+</head>
+
+<body>
+<header id="header-component">
+  <div class="header-container">
+    <div class="header-logo">
+      <a href="#">
+      <img class="header-title-image" src="../assests/aha_logo.webp" alt="">
+      </a>
+    </div>
+    <div class="header-nav-list">
+      <div class="header-search">
+        <div class="header-search-light">
+          <img class="icon search-light" src="../assests/search-light.png" alt=""/>
+        </div>
+        <label>
+          <input class="header-search-input-placeholder" placeholder="search">
+        </label>
+      </div>
+
+      <div class="header-nav-login-button">
+          <span class="header-nav-login-button-text">
+            로그인
+          </span>
+      </div>
+      <div class="header-nav-signup-button">
+        <span class="header-nav-login-button-text">
+            회원가입
+          </span>
+      </div>
+    </div>
+  </div>
+
+</header>
+<div class="login-box">
+<div class="login-container">
+  <h1>Login</h1>
+  <form class="login-form">
+
+    <div class="input-group">
+      <input type="text" id="username" placeholder="이메일" required>
+      <input type="password" id="password" placeholder="비밀번호" required>
+    </div>
+
+    <div class="helper-group">
+      <div class="checkbox">
+        <input type="checkbox" id="remember-me">
+        <label for="remember-me">이메일 저장하기</label>
+      </div>
+      <span href="#">아이디 / 비밀번호 찾기</span>
+    </div>
+    <div class="footer-group">
+      <button type="submit">로그인</button>
+    </div>
+  </form>
+</div>
+</div>
+</body>
