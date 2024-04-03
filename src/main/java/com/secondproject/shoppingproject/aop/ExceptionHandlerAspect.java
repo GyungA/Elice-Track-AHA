@@ -1,5 +1,6 @@
 package com.secondproject.shoppingproject.aop;
 
+import com.secondproject.shoppingproject.global.exception.BadRequestException;
 import com.secondproject.shoppingproject.global.exception.ConflictException;
 import com.secondproject.shoppingproject.global.exception.ForbiddenException;
 import com.secondproject.shoppingproject.global.exception.NotFoundException;
@@ -19,18 +20,28 @@ public class ExceptionHandlerAspect {
     public void allServiceMethods() {
     }
 
+    //400
     @AfterThrowing(pointcut = "allServiceMethods()", throwing = "ex")
-    public void NotFoundException(NotFoundException ex) {
-        log.warn("Wrong NotFoundException Occurred! " + ex.getMessage());
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+    public void BadRequestException(BadRequestException ex) {
+        log.warn("Wrong BadRequestException Occurred! " + ex.getMessage());
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
+    //403
     @AfterThrowing(pointcut = "allServiceMethods()", throwing = "ex")
     public void ForbiddenException(ForbiddenException ex) {
         log.warn("Wrong ForbiddenException Occurred! " + ex.getMessage());
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, ex.getMessage());
     }
 
+    //404
+    @AfterThrowing(pointcut = "allServiceMethods()", throwing = "ex")
+    public void NotFoundException(NotFoundException ex) {
+        log.warn("Wrong NotFoundException Occurred! " + ex.getMessage());
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    //409
     @AfterThrowing(pointcut = "allServiceMethods()", throwing = "ex")
     public void ConflictException(ConflictException ex) {
         log.warn("Wrong ConflictException Occurred! " + ex.getMessage());

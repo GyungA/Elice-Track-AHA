@@ -5,6 +5,7 @@ import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailInfoDt
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.exception.EntityNotFoundException;
+import com.secondproject.shoppingproject.order.mapper.OrderDetailMapper;
 import com.secondproject.shoppingproject.order.repository.OrderDetailRepository;
 import com.secondproject.shoppingproject.product.entity.Product;
 import com.secondproject.shoppingproject.product.entity.ProductRepository;
@@ -52,7 +53,14 @@ public class OrderDetailService {
     public List<OrderDetailInfoDto> getOrderDetailList(Order order){
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
         return orderDetails.stream()
-                .map((orderDetail -> new OrderDetailInfoDto(orderDetail)))
+//                .map((orderDetail -> new OrderDetailInfoDto(orderDetail)))
+                .map(orderDetail -> OrderDetailMapper.INSTANCE.toOrderDetailInfoDto(orderDetail))
+                .collect(Collectors.toList());
+    }
+
+    public List<Integer> getProductPrice(List<Long> productIds){
+        return productIds.stream()
+                .map(productId -> productRepository.findPaymentByProductId(productId))
                 .collect(Collectors.toList());
     }
 
