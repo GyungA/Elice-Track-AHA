@@ -53,27 +53,41 @@ public class OrderService {
         return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
     }
 
-    public OrderPayResponseDto getPayInfo(Long userId, Long orderId){
+    public OrderPayResponseDto getPayInfo(Long userId, Long orderId) {
+        //TODO: 본인확인
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 user id를 찾을 수 없습니다."));
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
 
-        return OrderPayResponseDto.builder()
-                .name(user.getName())
-                .phone(user.getPhone())
-                .email(user.getEmail())
-                .grade(user.getGrade())
-                .address(user.getAddress())
+        if(userId == order.getUser().getUser_id()){
+            return OrderPayResponseDto.builder()
+                    .name(user.getName())
+                    .phone(user.getPhone())
+                    .email(user.getEmail())
+                    .grade(user.getGrade())
+                    .address(user.getAddress())
 
-                .orderDetailInfoDtos(orderDetailService.getOrderDetailList(order))
-                .totalPayment(order.getTotalPayment())
-                .build();
+                    .orderDetailInfoDtos(orderDetailService.getOrderDetailList(order))
+                    .totalPayment(order.getTotalPayment())
+                    .build();
+        }
+        throw new AccessDeniedException("해당 주문을 확인할 권한이 없습니다.");
     }
 
-//    public OrderDetailHistoryResponseDto payProduct(PayProductRequestDto requestDto){
-//
-//    }
+    @Transactional
+    public OrderDetailHistoryResponseDto payProduct(PayProductRequestDto requestDto) {
+        Order order = orderRepository.findById(requestDto.getOrderId())
+                .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
+        if(requestDto.getUserId() == order.getUser().getUser_id()){
+            order.setDeliveryAddress(requestDto.getDeliveryAddress());
+            order.setReceiverName(requestDto.getReceiverName());
+            order.setReceiverPhoneNumber(requestDto.getReceiverPhoneNumber());
+            order = orderRepository.save(order);
+            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
+        }
+        throw new AccessDeniedException("해당 주문을 결제할 권한이 없습니다.");
+    }
 
     @Transactional
     public Long buyProduct(BuyProductRequestDto requestDto) {

@@ -66,30 +66,6 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getDetailOrder(userId, orderId));
     }
 
-    /*
-    장바구니에 담긴 상품들을 주문
-     */
-//    @PostMapping("/user/{user_id}")
-//    public ResponseEntity<OrderDetailHistoryResponseDto> orderProductInCart(@PathVariable("user_id") Long userId){
-//        return ResponseEntity.ok(orderService.orderProductInCart(userId));
-//    }
-
-    //    /**
-//     * 상품을 장바구니에 넣지 않고, 바로 구매
-//     * @param requestDto 주문자 id, 상품 id, 상품 수량, 배송지, 수령인 이름, 수령인 연락처
-//     * @return 주문한 상품 상세 조회
-//     */
-//    @Operation(summary = "상품 바로 구매", description = "상품을 장바구니에 넣지 않고, 바로 구매합니다.")
-//    @Parameter(name = "requestDto", description = "주문자 id, 상품 id, 상품 수량, 배송지, 수령인 이름, 수령인 연락처")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "성공",
-//                    content = {@Content(schema = @Schema(implementation = OrderDetailHistoryResponseDto.class))}),
-//            @ApiResponse(responseCode = "404", description = "해당 ID의 유저 또는 상품이 존재하지 않습니다."),
-//    })
-//    @PostMapping("/buy-instantly")
-//    public ResponseEntity<OrderDetailHistoryResponseDto> orderProductInstantly(@RequestBody OrderInstantRequestDto requestDto){
-//        return ResponseEntity.ok(orderService.orderProductInstantly(requestDto));
-//    }
     //결제하기
     @PostMapping("/pay")
     public ResponseEntity<OrderDetailHistoryResponseDto> payProduct(@RequestBody PayProductRequestDto requestDto) {
