@@ -51,7 +51,7 @@ public class OrderController {
      * @param userId  자기자신의 user id
      * @param orderId 자신의 주문 내역 중, 상세 조회하고 싶은 주문의 id
      */
-    @Operation(summary = "모든 주문 내역 조회", description = "자신의 모든 주문 내역을 조회합니다.")
+    @Operation(summary = "주문 상세 조회", description = "자신의 주문 내역 중 하나를 상세 조회합니다.")
     @Parameters({
             @Parameter(name = "userId", description = "자신의 아이디"),
             @Parameter(name = "orderId", description = "상세 조회를 원하는 주문의 아이디")
@@ -69,9 +69,19 @@ public class OrderController {
 
     /**
      * 결제하기
-     * @param requestDto
-     * @return
+     * @param requestDto 결제하려는 유저 id, 결제하려는 주문의 id, 배송지 주소, 수령인 이름, 수령인 연락처
+     * @return 결제한 주문의 상세 조회
      */
+    @Operation(summary = "결제하기", description = "주문을 결제합니다.")
+    @Parameters({
+            @Parameter(name = "requestDto", description = "결제하려는 유저 id, 결제하려는 주문의 id, 배송지 주소, 수령인 이름, 수령인 연락처")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = {@Content(schema = @Schema(implementation = OrderDetailHistoryResponseDto.class))}),
+            @ApiResponse(responseCode = "403", description = "해당 주문을 결제할 권한이 없습니다."),
+            @ApiResponse(responseCode = "404", description = "해당 order ID가 존재하지 않습니다."),
+    })
     @PostMapping("/pay")
     public ResponseEntity<OrderDetailHistoryResponseDto> payProduct(@Valid @RequestBody PayProductRequestDto requestDto) {
         return ResponseEntity.ok(orderService.payProduct(requestDto));
@@ -79,10 +89,21 @@ public class OrderController {
 
     /**
      * 결제 정보 조회
-     * @param userId
-     * @param orderId
-     * @return
+     * @param userId 결제하려는 유저의 id
+     * @param orderId 결제하려는 주문의 id
+     * @return 결제창을 불러오는데 필요한 정보(결제자 정보, 상품 정보)
      */
+    @Operation(summary = "결제창 조회", description = "자신의 모든 주문 내역을 조회합니다.")
+    @Parameters({
+            @Parameter(name = "userId", description = "결제하려는 유저의 id"),
+            @Parameter(name = "orderId", description = "결제하려는 주문의 id")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = {@Content(schema = @Schema(implementation = OrderPayResponseDto.class))}),
+            @ApiResponse(responseCode = "403", description = "해당 주문을 조회할 권한이 없습니다."),
+            @ApiResponse(responseCode = "404", description = "해당 유저 ID 또는 Order Id가 존재하지 않습니다."),
+    })
     @GetMapping("/pay/user/{user_id}/order/{order_id}")
     public ResponseEntity<OrderPayResponseDto> getPayInfo(@PathVariable("user_id") Long userId,
                                                           @PathVariable("order_id") Long orderId) {
@@ -91,10 +112,19 @@ public class OrderController {
     }
 
     /**
-     * 상품을 구매하기 위해 상품 결제창으로 넘기기
-     * @param requestDto
-     * @return
+     * 상품을 구매하기 위해 주문 만들기
+     * @param requestDto 주문을 만드는 유저 id, 상품 id 리스트, 각 상품 수량 리스트
+     * @return 구매하려는 상품이 저장된 주문의 id
      */
+    @Operation(summary = "주문 생성", description = "상품을 구매하기 위해 주문을 만듭니다. 결제 x")
+    @Parameters({
+            @Parameter(name = "requestDto", description = "주문을 만드는 유저 id, 상품 id 리스트, 각 상품 수량 리스트")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = {@Content(schema = @Schema(implementation = Long.class))}),
+            @ApiResponse(responseCode = "404", description = "해당 유저 ID가 존재하지 않습니다."),
+    })
     @PostMapping("/buy")
     public ResponseEntity<Long> buyProduct(@RequestBody BuyProductRequestDto requestDto) {
         //TODO: 추후 redis 이용?
