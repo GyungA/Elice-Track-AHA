@@ -22,7 +22,7 @@ public class OrderDetailHistoryResponseDto {
     private String orderDate;
 
     public OrderDetailHistoryResponseDto(Order order, List<OrderDetailInfoDto> orderDetailInfoDtos){
-        this.id = order.getUser().getUser_id();
+        this.id = order.getUser().getId();
         this.orderDetailInfoDtos = orderDetailInfoDtos;
         this.orderStatus = order.getOrderStatus();
         this.deliveryAddress = order.getDeliveryAddress();

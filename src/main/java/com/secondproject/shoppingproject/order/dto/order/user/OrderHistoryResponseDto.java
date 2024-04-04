@@ -22,7 +22,7 @@ public class OrderHistoryResponseDto {
     private String orderDate;
 
     public OrderHistoryResponseDto(Order order, OrderDetailCountAndProductNamesDto orderDetailCountAndProductNamesDto){
-        this.userId = order.getUser().getUser_id();
+        this.userId = order.getUser().getId();
         this.orderId = order.getId();
         this.productName = orderDetailCountAndProductNamesDto.getName();
         this.productImage = orderDetailCountAndProductNamesDto.getImage();

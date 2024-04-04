@@ -24,8 +24,8 @@ import java.util.UUID;
 public class User extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="user_id")
-	Long user_id;
+	@Column(name="userId")
+	Long id;
 
 	@Column(name="email", nullable = false, unique = true)
 	String email;
@@ -49,8 +49,8 @@ public class User extends BaseEntity{
 	@Column(name="phone", nullable = false)
 	String phone;
 
-	@Column(name="total_payment", nullable = false)
-	int total_payment=0;
+	@Column(name="totalPayment", nullable = false)
+	int totalPayment=0;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "grade", nullable = true,columnDefinition = "varchar(255) default 'BRONZE'")
