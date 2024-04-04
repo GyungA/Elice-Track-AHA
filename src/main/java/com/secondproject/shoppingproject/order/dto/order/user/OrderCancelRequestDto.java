@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class OrderCancelRequestDto {
     private Long userId;
-    private Long OrderId;
+    private Long orderId;
 }

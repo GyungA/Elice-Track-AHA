@@ -53,8 +53,8 @@ public class OrderDetailService {
     public List<OrderDetailInfoDto> getOrderDetailList(Order order){
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
         return orderDetails.stream()
-//                .map((orderDetail -> new OrderDetailInfoDto(orderDetail)))
-                .map(orderDetail -> OrderDetailMapper.INSTANCE.toOrderDetailInfoDto(orderDetail))
+                .map((orderDetail -> new OrderDetailInfoDto(orderDetail)))
+//                .map(orderDetail -> OrderDetailMapper.INSTANCE.toOrderDetailInfoDto(orderDetail))
                 .collect(Collectors.toList());
     }
 

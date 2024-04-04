@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,15 +67,22 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getDetailOrder(userId, orderId));
     }
 
-    //결제하기
+    /**
+     * 결제하기
+     * @param requestDto
+     * @return
+     */
     @PostMapping("/pay")
-    public ResponseEntity<OrderDetailHistoryResponseDto> payProduct(@RequestBody PayProductRequestDto requestDto) {
-        //TODO: 배송지, 수령인 이름, 연락처 유효성 검사
+    public ResponseEntity<OrderDetailHistoryResponseDto> payProduct(@Valid @RequestBody PayProductRequestDto requestDto) {
         return ResponseEntity.ok(orderService.payProduct(requestDto));
     }
 
-
-    //결제 정보 조회
+    /**
+     * 결제 정보 조회
+     * @param userId
+     * @param orderId
+     * @return
+     */
     @GetMapping("/pay/user/{user_id}/order/{order_id}")
     public ResponseEntity<OrderPayResponseDto> getPayInfo(@PathVariable("user_id") Long userId,
                                                           @PathVariable("order_id") Long orderId) {
@@ -82,7 +90,11 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getPayInfo(userId, orderId));
     }
 
-    //상품을 구매하기 위해 상품 결제창으로 넘기기
+    /**
+     * 상품을 구매하기 위해 상품 결제창으로 넘기기
+     * @param requestDto
+     * @return
+     */
     @PostMapping("/buy")
     public ResponseEntity<Long> buyProduct(@RequestBody BuyProductRequestDto requestDto) {
         //TODO: 추후 redis 이용?
@@ -91,7 +103,6 @@ public class OrderController {
 
     /**
      * 주문 완료 후, "주문 완료" 상태일 때만 주문 정보 수정 가능(배송지, 수령인 이름, 수령인 연락처)
-     *
      * @param requestDto 유저 id, 수정을 원하는 order id, 배송지, 수령인 이름, 수령인 연락처
      * @return 수정한 주문 상세 조회
      */
@@ -105,16 +116,15 @@ public class OrderController {
             @ApiResponse(responseCode = "409", description = "이미 상품이 배송 중이거나 도착하였기 때문에 정보 수정이 불가합니다."),
     })
     @PatchMapping
-    public ResponseEntity<OrderDetailHistoryResponseDto> update(@RequestBody OrderUpdateRequestDto requestDto) {
-        //TODO: 배송지, 수령인 이름, 연락처 유효성 검사
+    public ResponseEntity<OrderDetailHistoryResponseDto> update(@Valid @RequestBody OrderUpdateRequestDto requestDto) {
         //전과 달라진 게 없는 값의 경우, null값을 보내는지 or 원래 값 그대로 보내는지?
         //일단 null 값 보내는 걸로 구현
         return ResponseEntity.ok(orderService.update(requestDto));
     }
 
+
     /**
      * 주문 완료 후, "배송중" 상태 전까지 주문 취소 가능
-     *
      * @param requestDto 유저 id, 주문 취소할 order id
      * @return 취소한 주문 상세 조회
      */

@@ -185,11 +185,11 @@ public class OrderService {
 
             List<Order> orders = null;
             if (sellerId != null && buyerId != null) {
-
+                orders = orderRepository.findByBuyerIdAndSellerId(buyerId, sellerId);
             } else if (sellerId != null) {
-
+                orders = orderRepository.findBySellerId(sellerId);
             } else if (buyerId != null) {
-
+                orders = orderRepository.findByBuyerId(buyerId);
             } else {
                 //결제일 최신순으로 정렬
                 orders = orderRepository.findAllByOrderByCreatedAtDesc();
