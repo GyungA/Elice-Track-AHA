@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 public class AdminOrderUpdateRequestDto {
     private Long userId; //관리자 아이디
-    private Long OrderId;
+    private Long orderId;
     private OrderStatus orderStatus;
 }

@@ -10,6 +10,6 @@ import org.mapstruct.factory.Mappers;
 public interface OrderDetailMapper {
     OrderDetailMapper INSTANCE = Mappers.getMapper(OrderDetailMapper.class);
 
-    @Mapping(source = "product.name", target = "name")
-    public OrderDetailInfoDto toOrderDetailInfoDto(OrderDetail orderDetail);
+//    @Mapping(source = "name", target = "product.name")
+//    public OrderDetailInfoDto toOrderDetailInfoDto(OrderDetail orderDetail);
 }

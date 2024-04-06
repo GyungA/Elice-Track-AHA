@@ -1,18 +1,12 @@
 package com.secondproject.shoppingproject.order.service;
 
-import com.secondproject.shoppingproject.order.dto.order.admin.AdminOrderDeleteRequestDto;
-import com.secondproject.shoppingproject.order.dto.order.admin.AdminOrderUpdateRequestDto;
 import com.secondproject.shoppingproject.order.dto.order.user.*;
 import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailCountAndProductNamesDto;
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
-import com.secondproject.shoppingproject.order.exception.AccessDeniedException;
-import com.secondproject.shoppingproject.order.exception.EntityNotFoundException;
-import com.secondproject.shoppingproject.order.exception.InvalidRequestDataException;
-import com.secondproject.shoppingproject.order.exception.OrderModificationDeniedException;
+import com.secondproject.shoppingproject.order.exception.*;
 import com.secondproject.shoppingproject.order.repository.OrderRepository;
 import com.secondproject.shoppingproject.order.status.OrderStatus;
-import com.secondproject.shoppingproject.user.constant.Role;
 import com.secondproject.shoppingproject.user.entity.User;
 import com.secondproject.shoppingproject.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -20,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,7 +55,10 @@ public class OrderService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
 
-        if(userId == order.getUser().getUser_id()){
+        if (userId == order.getUser().getUser_id()) {
+            DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+            String formattedPayment = decimalFormat.format(order.getTotalPayment());
+
             return OrderPayResponseDto.builder()
                     .name(user.getName())
                     .phone(user.getPhone())
@@ -69,7 +67,7 @@ public class OrderService {
                     .address(user.getAddress())
 
                     .orderDetailInfoDtos(orderDetailService.getOrderDetailList(order))
-                    .totalPayment(order.getTotalPayment())
+                    .totalPayment(formattedPayment)
                     .build();
         }
         throw new AccessDeniedException("해당 주문을 확인할 권한이 없습니다.");
@@ -79,14 +77,21 @@ public class OrderService {
     public OrderDetailHistoryResponseDto payProduct(PayProductRequestDto requestDto) {
         Order order = orderRepository.findById(requestDto.getOrderId())
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
-        if(requestDto.getUserId() == order.getUser().getUser_id()){
+        boolean isSamePerson = requestDto.getUserId() == order.getUser().getUser_id();
+        boolean isOrderPendingStatus = order.getOrderStatus() == OrderStatus.ORDER_PENDING;
+        if (isSamePerson && isOrderPendingStatus) {
+            order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
             order.setDeliveryAddress(requestDto.getDeliveryAddress());
             order.setReceiverName(requestDto.getReceiverName());
             order.setReceiverPhoneNumber(requestDto.getReceiverPhoneNumber());
             order = orderRepository.save(order);
-            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
+        } else if (!isSamePerson) {
+            throw new AccessDeniedException("해당 주문을 결제할 권한이 없습니다.");
+        } else if (!isOrderPendingStatus) {
+            throw new AlreadyOrderedException();
         }
-        throw new AccessDeniedException("해당 주문을 결제할 권한이 없습니다.");
+
+        return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
     }
 
     @Transactional
@@ -133,14 +138,17 @@ public class OrderService {
 
         if ((order.getUser().getUser_id() == requestDto.getUserId())) {
             if (order.getOrderStatus() == OrderStatus.ORDER_COMPLETE) {
+                String address = requestDto.getDeliveryAddress();
+                String name = requestDto.getReceiverName();
+                String phone = requestDto.getReceiverPhoneNumber();
 
-                if (!requestDto.getDeliveryAddress().isBlank()) {
+                if (address != null && !address.isBlank()) {
                     order.setDeliveryAddress(requestDto.getDeliveryAddress());
                 }
-                if (!requestDto.getReceiverName().isBlank()) {
+                if (name != null && !name.isBlank()) {
                     order.setReceiverName(requestDto.getReceiverName());
                 }
-                if (!requestDto.getReceiverPhoneNumber().isBlank()) {
+                if (phone != null && !phone.isBlank()) {
                     order.setReceiverPhoneNumber(requestDto.getReceiverPhoneNumber());
                 }
 
@@ -163,92 +171,11 @@ public class OrderService {
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
 
         if (order.getUser().getUser_id() == requestDto.getUserId() && (order.getOrderStatus() == OrderStatus.ORDER_COMPLETE)) {
-            order.setOrderStatus(OrderStatus.REQUEST_CANCELLATION);
-            order = orderRepository.save(order);
-            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
-        } else {
-            String message = requestDto.getOrderId() + "번 주문을 취소할 권한이 없습니다.";
-            log.warn(message);
-            throw new AccessDeniedException(message);
-        }
-    }
-
-
-    /*
-    admin
-     */
-
-    public List<OrderHistoryResponseDto> getOrderHistory(Long userId, Long sellerId, Long buyerId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("해당하는 user id를 찾을 수 없습니다."));
-        if (user.getRole() == Role.ADMIN) { //시큐리티 구현하면 없애기?
-
-            List<Order> orders = null;
-            if (sellerId != null && buyerId != null) {
-
-            } else if (sellerId != null) {
-
-            } else if (buyerId != null) {
-
-            } else {
-                //결제일 최신순으로 정렬
-                orders = orderRepository.findAllByOrderByCreatedAtDesc();
-            }
-            return orders.stream()
-                    .map(order -> {
-                        OrderDetailCountAndProductNamesDto dto = orderDetailService.getOrderDetailCountAndProductNames(order);
-                        return new OrderHistoryResponseDto(order, dto);
-                    })
-                    .collect(Collectors.toList());
-        }
-
-        throw new AccessDeniedException("관리자 권한이 없으므로 조회 불가합니다.");
-    }
-
-
-    @Transactional
-    public OrderDetailHistoryResponseDto update(AdminOrderUpdateRequestDto requestDto) {
-        User user = userRepository.findById(requestDto.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("해당하는 user id를 찾을 수 없습니다."));
-        if (user.getRole() == Role.ADMIN) { //시큐리티 구현하면 없애기?
-            Order order = orderRepository.findById(requestDto.getOrderId())
-                    .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
-            order.setOrderStatus(requestDto.getOrderStatus());
-            order = orderRepository.save(order);
-            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
-        } else {
-            throw new AccessDeniedException("관리자 권한이 없으므로 조회 불가합니다.");
-        }
-    }
-
-    public OrderDetailHistoryResponseDto delete(AdminOrderDeleteRequestDto requestDto) {
-        User user = userRepository.findById(requestDto.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("해당하는 user id를 찾을 수 없습니다."));
-        if (user.getRole() == Role.ADMIN) { //시큐리티 구현하면 없애기?
-            Order order = orderRepository.findById(requestDto.getOrderId())
-                    .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
-            order.setOrderStatus(OrderStatus.DELETE);
-            order = orderRepository.save(order);
-            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
-        } else {
-            throw new AccessDeniedException("관리자 권한이 없으므로 조회 불가합니다.");
-        }
-    }
-
-    @Transactional
-    public OrderDetailHistoryResponseDto adminCancel(OrderCancelRequestDto requestDto) {
-        Order order = orderRepository.findById(requestDto.getOrderId())
-                .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
-
-        User user = userRepository.findById(requestDto.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("해당하는 user id를 찾을 수 없습니다."));
-
-        if (user.getRole() == Role.ADMIN) {
             order.setOrderStatus(OrderStatus.CANCELLATION_COMPLETE);
             order = orderRepository.save(order);
             return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
         } else {
-            String message = "관리자 권한이 없으므로 취소 불가합니다.";
+            String message = requestDto.getOrderId() + "번 주문을 취소할 권한이 없습니다.";
             log.warn(message);
             throw new AccessDeniedException(message);
         }
