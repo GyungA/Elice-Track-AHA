@@ -5,6 +5,7 @@ import com.secondproject.shoppingproject.order.dto.order.admin.AdminOrderUpdateR
 import com.secondproject.shoppingproject.order.dto.order.user.OrderCancelRequestDto;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderDetailHistoryResponseDto;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryResponseDto;
+import com.secondproject.shoppingproject.order.service.AdminOrderService;
 import com.secondproject.shoppingproject.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,22 +25,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/admin/orders")
 public class AdminOrderController {
-    private final OrderService orderService;
+    private final AdminOrderService adminOrderService;
+
+    //TODO: 현재 admin을 판매자라고 하고 코드 수정. 추후 판매자 role 업데이트되면 수정하기
 
     /**
      * 관리자 페이지에서 모든 회원들의 주문 내역을 조회 가능
-     *
-     * @param userId   관리자 아이디
-     * @param sellerId 판매자 기준으로 필터링하고 싶다면, 판매자 아이디 입력
-     * @param buyerId  구매자 기준으로 필터링하고 싶다면, 판매자 아이디 입력
+     * @param userId 판매자 아이디
+     * @param buyerId 구매자 기준으로 필터링하고 싶다면, 구매자 아이디 입력
      * @return 전체 주문 내역 리스트
      */
     @Operation(summary = "모든 주문 내역 조회", description = "모든 주문 내역을 조회합니다.\n" +
-            "또는 구매자, 판매자를 기준으로 필터링도 가능합니다.\n" +
+            "또는 판매자를 기준으로 필터링도 가능합니다.\n" +
             "request param은 필수 아님. 비워둔다면, 필터링 없이 모든 주문 내역 조회")
     @Parameters({
-            @Parameter(name = "user_id", description = "자신의 아이디"),
-            @Parameter(name = "seller_id", description = "판매자 기준으로 필터링하고 싶다면, 판매자 아이디 입력"),
+            @Parameter(name = "user_id", description = "판매자 자신의 아이디"),
             @Parameter(name = "buyer_id", description = "구매자 기준으로 필터링하고 싶다면, 판매자 아이디 입력"),
     })
     @ApiResponses(value = {
@@ -54,12 +54,15 @@ public class AdminOrderController {
     @GetMapping("/user/{user_id}")
     public ResponseEntity<List<OrderHistoryResponseDto>> getOrderHistory(
             @PathVariable("user_id") Long userId,
-            @RequestParam(value = "seller_id", required = false) Long sellerId,
             @RequestParam(value = "buyer_id", required = false) Long buyerId) {
 
-        return ResponseEntity.ok(orderService.getOrderHistory(userId, sellerId, buyerId));
+        return ResponseEntity.ok(adminOrderService.getOrderHistory(userId, buyerId));
     }
 
+
+    //TODO: 판매자가 자신의 상품에 대해서만 배송 상태를 수정 가능
+    //TODO: 하나의 주문에 판매자가 여러 명인 경우는 어떡하지??
+    //TODO: 현재 admin을 판매자라고 하고 코드 수정. 추후 판매자 role 업데이트되면 수정하기
     /**
      * 관리자 페이지 -> 주문 상세보기에서 배송 상태를 수정 가능
      *
@@ -78,33 +81,14 @@ public class AdminOrderController {
     })
     @PatchMapping("/modify-status")
     public ResponseEntity<OrderDetailHistoryResponseDto> update(@RequestBody AdminOrderUpdateRequestDto requestDto) {
-        return ResponseEntity.ok(orderService.update(requestDto));
+        return ResponseEntity.ok(adminOrderService.update(requestDto));
     }
 
-//    /**
-//     * 관리자 페이지에서 회원들의 주문 내역을 삭제 가능
-//     *
-//     * @param requestDto 관리자 id, 주문 내역 삭제할 order id
-//     * @return "삭제" 상태로 수정한 주문의 상세 조회... 사실 이건 어떤 값을 리턴해야할지 모르겠음
-//     */
-//    @Operation(summary = "모든 주문 내역 조회", description = "자신의 모든 주문 내역을 조회합니다.")
-//    @Parameters({
-//            @Parameter(name = "userId", description = "자신의 아이디"),
-//            @Parameter(name = "orderId", description = "상세 조회를 원하는 주문의 아이디")
-//    })
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "성공",
-//                    content = {@Content(schema = @Schema(implementation = OrderDetailHistoryResponseDto.class))}),
-//            @ApiResponse(responseCode = "404", description = "해당 유저 ID 또는 Order Id가 존재하지 않습니다."),
-//    })
-//    @PatchMapping("/delete")
-//    public ResponseEntity<OrderDetailHistoryResponseDto> delete(@RequestBody AdminOrderDeleteRequestDto requestDto) {
-//        return ResponseEntity.ok(orderService.delete(requestDto));
-//    }
 
+    //TODO: 판매자가 자신의 상품을 구매한 주문에 대해 최소 가능
+    //TODO: 현재 admin을 판매자라고 하고 코드 수정. 추후 판매자 role 업데이트되면 수정하기
     /**
-     * 관리자 페이지에서 회원들의 주문 최소 가능 / 취소 신청된 주문들을 취소 완료로 상태 변경
-     *
+     * 관리자 페이지에서 회원들의 주문 최소 가능
      * @param requestDto 관리자 id, 주문 취소할 order id
      * @return 취소한 주문 상세 조회
      */
@@ -118,6 +102,6 @@ public class AdminOrderController {
     })
     @PatchMapping("/cancel")
     public ResponseEntity<OrderDetailHistoryResponseDto> cancel(@RequestBody OrderCancelRequestDto requestDto) {
-        return ResponseEntity.ok(orderService.adminCancel(requestDto));
+        return ResponseEntity.ok(adminOrderService.adminCancel(requestDto));
     }
 }

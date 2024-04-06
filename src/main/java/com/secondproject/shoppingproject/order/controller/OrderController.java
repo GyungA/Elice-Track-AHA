@@ -111,6 +111,9 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getPayInfo(userId, orderId));
     }
 
+    // 장바구니에서 주문시, 같은 seller별로 묶어서 주문 따로 생성??
+    // 근데 결제창 넘어가서 결제는 또 같이 해야하는데...
+    // 그냥 배송 상태를 orderDetail에 넣어버릴까
     /**
      * 상품을 구매하기 위해 주문 만들기
      * @param requestDto 주문을 만드는 유저 id, 상품 id 리스트, 각 상품 수량 리스트
@@ -128,6 +131,7 @@ public class OrderController {
     @PostMapping("/buy")
     public ResponseEntity<Long> buyProduct(@RequestBody BuyProductRequestDto requestDto) {
         //TODO: 추후 redis 이용?
+        //TODO: 상품 재고 고려, 상품 status가 true때 판매중, false면 품절
         return ResponseEntity.ok(orderService.buyProduct(requestDto));
     }
 

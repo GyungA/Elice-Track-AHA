@@ -5,7 +5,6 @@ import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailInfoDt
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.exception.EntityNotFoundException;
-import com.secondproject.shoppingproject.order.mapper.OrderDetailMapper;
 import com.secondproject.shoppingproject.order.repository.OrderDetailRepository;
 import com.secondproject.shoppingproject.product.entity.Product;
 import com.secondproject.shoppingproject.product.entity.ProductRepository;

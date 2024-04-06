@@ -1,5 +1,6 @@
 package com.secondproject.shoppingproject.order.entity;
 
+import com.secondproject.shoppingproject.order.status.OrderStatus;
 import com.secondproject.shoppingproject.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.Builder;

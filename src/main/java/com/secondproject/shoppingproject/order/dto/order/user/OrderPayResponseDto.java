@@ -23,5 +23,5 @@ public class OrderPayResponseDto {
 
     //상품 정보
     private List<OrderDetailInfoDto> orderDetailInfoDtos;
-    private int totalPayment;
+    private String totalPayment;
 }
