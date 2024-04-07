@@ -156,7 +156,7 @@ public class OrderService {
                 return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
             } else {
                 log.warn("이미 상품이 배송 중이거나 도착하였기 때문에 정보 수정 불가");
-                throw new OrderModificationDeniedException();
+                throw new OrderModificationDeniedException("정보 수정");
             }
         } else {
             String message = requestDto.getOrderId() + "번 주문을 수정할 권한이 없습니다.";
@@ -170,14 +170,19 @@ public class OrderService {
         Order order = orderRepository.findById(requestDto.getOrderId())
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
 
-        if (order.getUser().getUser_id() == requestDto.getUserId() && (order.getOrderStatus() == OrderStatus.ORDER_COMPLETE)) {
-            order.setOrderStatus(OrderStatus.CANCELLATION_COMPLETE);
-            order = orderRepository.save(order);
-            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
-        } else {
-            String message = requestDto.getOrderId() + "번 주문을 취소할 권한이 없습니다.";
-            log.warn(message);
-            throw new AccessDeniedException(message);
+        if (order.getUser().getUser_id() == requestDto.getUserId()) {
+            if(order.getOrderStatus() == OrderStatus.ORDER_COMPLETE){
+                order.setOrderStatus(OrderStatus.CANCELLATION_COMPLETE);
+                order = orderRepository.save(order);
+                return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
+            }
+
+            log.warn("이미 상품이 배송 중이거나 도착하였기 때문에 취소 불가");
+            throw new OrderModificationDeniedException("취소");
         }
+
+        String message = requestDto.getOrderId() + "번 주문을 취소할 권한이 없습니다.";
+        log.warn(message);
+        throw new AccessDeniedException(message);
     }
 }

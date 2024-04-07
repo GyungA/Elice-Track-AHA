@@ -1,5 +1,6 @@
 package com.secondproject.shoppingproject.order.service;
 
+import com.secondproject.shoppingproject.order.dto.order.user.OrderCancelRequestDto;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderDetailHistoryResponseDto;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryResponseDto;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderUpdateRequestDto;
@@ -191,5 +192,33 @@ public class OrderServiceTest {
 
         // when //then
         assertThrows(OrderModificationDeniedException.class, () -> orderService.update(requestDto));
+    }
+
+    @DisplayName("배송 전까지 주문을 취소할 수 있다.")
+    @Test
+    @Transactional
+    void can_cancel_order_before_delivery() {
+        // given
+        order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
+
+        OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L);
+
+        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000);
+        List<OrderDetailInfoDto> orderDetailInfoDtos = new ArrayList<>();
+        orderDetailInfoDtos.add(orderDetailInfoDto);
+
+        when(orderRepository.save(order)).thenReturn(order);
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderDetailService.getOrderDetailList(order)).thenReturn(orderDetailInfoDtos);
+
+        // when
+        OrderDetailHistoryResponseDto resultDto = orderService.cancel(requestDto);
+
+        // then
+        assertEquals(order.getUser().getUser_id(), resultDto.getId());
+        assertEquals(orderDetailInfoDtos, resultDto.getOrderDetailInfoDtos());
+
+        verify(orderRepository, times(1)).findById(1L);
+        verify(orderDetailService, times(1)).getOrderDetailList(order);
     }
 }
