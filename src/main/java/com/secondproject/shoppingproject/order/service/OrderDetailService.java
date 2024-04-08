@@ -5,6 +5,7 @@ import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailInfoDt
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.exception.EntityNotFoundException;
+import com.secondproject.shoppingproject.order.exception.InvalidRequestDataException;
 import com.secondproject.shoppingproject.order.repository.OrderDetailRepository;
 import com.secondproject.shoppingproject.order.status.OrderStatus;
 import com.secondproject.shoppingproject.product.entity.Product;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +40,7 @@ public class OrderDetailService {
         return orderDetailRepository.save(orderDetail);
     }
 
-    public OrderDetailCountAndProductNamesDto getOrderDetailCountAndProductNames(Order order){
+    OrderDetailCountAndProductNamesDto getOrderDetailCountAndProductNames(Order order) {
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
         if (orderDetails == null || orderDetails.isEmpty()) {
             throw new EntityNotFoundException("해당하는 user id가 없습니다.");
@@ -47,11 +49,20 @@ public class OrderDetailService {
                 .name(orderDetails.get(0).getProduct().getName())
                 .image(orderDetails.get(0).getProduct().getImage())
                 .count(orderDetails.size())
+                .orderStatus(getMinNumberOrderStatus(orderDetails))
                 .build();
     }
 
+    OrderStatus getMinNumberOrderStatus(List<OrderDetail> orderDetails) {
+        Optional<OrderStatus> minOrderStatus = orderDetails.stream()
+                .map(OrderDetail::getOrderStatus)
+                .min((o1, o2) -> Integer.compare(o1.getNumber(), o2.getNumber()));
+
+        return minOrderStatus.orElseThrow(() -> new InvalidRequestDataException("지정된 주문 상태가 없습니다."));
+    }
+
     //해당 order에 연관된 모든 product 리스트
-    public List<OrderDetailInfoDto> getOrderDetailList(Order order){
+    List<OrderDetailInfoDto> getOrderDetailList(Order order) {
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
         return orderDetails.stream()
                 .map((orderDetail -> new OrderDetailInfoDto(orderDetail)))
@@ -59,10 +70,27 @@ public class OrderDetailService {
                 .collect(Collectors.toList());
     }
 
-    public List<Integer> getProductPrice(List<Long> productIds){
+    List<Integer> getProductPrice(List<Long> productIds) {
         return productIds.stream()
                 .map(productId -> productRepository.findPaymentByProductId(productId))
                 .collect(Collectors.toList());
+    }
+
+    boolean isAllStatus(Order order, OrderStatus orderStatus) {
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
+        for (OrderDetail orderDetail : orderDetails) {
+            if (orderDetail.getOrderStatus() != orderStatus) return false;
+        }
+        return true;
+    }
+
+    @Transactional
+    public void setAllOrderStatus(Order order, OrderStatus orderStatus) {
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
+        for (OrderDetail orderDetail : orderDetails) {
+            orderDetail.setOrderStatus(orderStatus);
+            orderDetailRepository.save(orderDetail);
+        }
     }
 
 }

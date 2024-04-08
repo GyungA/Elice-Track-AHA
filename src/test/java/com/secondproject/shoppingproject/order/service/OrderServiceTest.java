@@ -109,7 +109,7 @@ public class OrderServiceTest {
     @Test
     void get_My_Order_Detail() {
         // given
-        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000);
+        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000, OrderStatus.ORDER_COMPLETE);
         List<OrderDetailInfoDto> orderDetailInfoDtos = new ArrayList<>();
         orderDetailInfoDtos.add(orderDetailInfoDto);
 
@@ -146,7 +146,7 @@ public class OrderServiceTest {
         OrderUpdateRequestDto requestDto = new OrderUpdateRequestDto(1L, 1L, "New Address",
                 "New Receiver", "010-1234-1234");
 
-        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000);
+        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000, OrderStatus.ORDER_COMPLETE);
         List<OrderDetailInfoDto> orderDetailInfoDtos = new ArrayList<>();
         orderDetailInfoDtos.add(orderDetailInfoDto);
 
@@ -184,7 +184,10 @@ public class OrderServiceTest {
     @Transactional
     void can_modify_shipping_info_before_delivery_OrderAlreadyCompleted() {
         // given
-        order.setOrderStatus(OrderStatus.ON_DELIVERY);
+        OrderDetail orderDetail = new  OrderDetail();
+        orderDetail.setOrder(order);
+        orderDetailService.setAllOrderStatus(order, OrderStatus.ON_DELIVERY);
+
         OrderUpdateRequestDto requestDto = new OrderUpdateRequestDto(1L, 1L, "New Address",
                 "New Receiver", "010-1234-1234");
 
@@ -199,11 +202,11 @@ public class OrderServiceTest {
     @Transactional
     void can_cancel_order_before_delivery() {
         // given
-        order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
+//        order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
 
         OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L);
 
-        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000);
+        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000, OrderStatus.ORDER_COMPLETE);
         List<OrderDetailInfoDto> orderDetailInfoDtos = new ArrayList<>();
         orderDetailInfoDtos.add(orderDetailInfoDto);
 

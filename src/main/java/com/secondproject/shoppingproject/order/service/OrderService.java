@@ -78,9 +78,9 @@ public class OrderService {
         Order order = orderRepository.findById(requestDto.getOrderId())
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
         boolean isSamePerson = requestDto.getUserId() == order.getUser().getUser_id();
-        boolean isOrderPendingStatus = order.getOrderStatus() == OrderStatus.ORDER_PENDING; //모든 상품이 order pending인지 확인
+        boolean isOrderPendingStatus = orderDetailService.isAllStatus(order, OrderStatus.ORDER_PENDING);
         if (isSamePerson && isOrderPendingStatus) {
-            order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
+            orderDetailService.setAllOrderStatus(order, OrderStatus.ORDER_COMPLETE);
             order.setDeliveryAddress(requestDto.getDeliveryAddress());
             order.setReceiverName(requestDto.getReceiverName());
             order.setReceiverPhoneNumber(requestDto.getReceiverPhoneNumber());
@@ -137,7 +137,7 @@ public class OrderService {
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
 
         if ((order.getUser().getUser_id() == requestDto.getUserId())) {
-            if (order.getOrderStatus() == OrderStatus.ORDER_COMPLETE) {
+            if (orderDetailService.isAllStatus(order, OrderStatus.ORDER_COMPLETE)) {
                 String address = requestDto.getDeliveryAddress();
                 String name = requestDto.getReceiverName();
                 String phone = requestDto.getReceiverPhoneNumber();
@@ -171,8 +171,9 @@ public class OrderService {
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
 
         if (order.getUser().getUser_id() == requestDto.getUserId()) {
-            if(order.getOrderStatus() == OrderStatus.ORDER_COMPLETE){
-                order.setOrderStatus(OrderStatus.CANCELLATION_COMPLETE);
+            if (orderDetailService.isAllStatus(order, OrderStatus.ORDER_COMPLETE)) {
+                orderDetailService.setAllOrderStatus(order, OrderStatus.CANCELLATION_COMPLETE);
+//                order.setOrderStatus(OrderStatus.CANCELLATION_COMPLETE);
                 order = orderRepository.save(order);
                 return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
             }

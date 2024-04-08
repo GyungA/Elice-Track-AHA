@@ -29,7 +29,6 @@ public class OrderDetailHistoryResponseDto {
     public OrderDetailHistoryResponseDto(Order order, List<OrderDetailInfoDto> orderDetailInfoDtos) {
         this.id = order.getUser().getUser_id();
         this.orderDetailInfoDtos = orderDetailInfoDtos;
-        this.orderStatus = order.getOrderStatus();
         this.deliveryAddress = order.getDeliveryAddress();
         this.receiverName = order.getReceiverName();
         this.receiverPhone = order.getReceiverPhoneNumber();

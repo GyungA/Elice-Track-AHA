@@ -32,7 +32,7 @@ public class OrderHistoryResponseDto {
         this.productImage = orderDetailCountAndProductNamesDto.getImage();
         this.totalProductCount = orderDetailCountAndProductNamesDto.getCount();
         this.totalPayment = new DecimalFormat("#,##0").format(order.getTotalPayment());
-        this.orderStatus = order.getOrderStatus();
+        this.orderStatus = orderDetailCountAndProductNamesDto.getOrderStatus();
         this.orderDate = order.getCreatedAt().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 }

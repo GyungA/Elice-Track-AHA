@@ -62,7 +62,8 @@ public class AdminOrderService {
             Order order = orderRepository.findById(requestDto.getOrderId())
                     .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
 
-            order.setOrderStatus(requestDto.getOrderStatus());
+//            order.setOrderStatus(requestDto.getOrderStatus());
+            orderDetailService.setAllOrderStatus(order, requestDto.getOrderStatus());
             order = orderRepository.save(order);
             return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
         } else {
@@ -79,7 +80,8 @@ public class AdminOrderService {
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 user id를 찾을 수 없습니다."));
 
         if (user.getRole() == Role.ADMIN) {
-            order.setOrderStatus(OrderStatus.CANCELLATION_COMPLETE);
+//            order.setOrderStatus(OrderStatus.CANCELLATION_COMPLETE);
+            orderDetailService.setAllOrderStatus(order, OrderStatus.CANCELLATION_COMPLETE);
             order = orderRepository.save(order);
             return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
         } else {
