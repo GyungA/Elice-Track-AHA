@@ -78,7 +78,7 @@ public class OrderService {
         Order order = orderRepository.findById(requestDto.getOrderId())
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
         boolean isSamePerson = requestDto.getUserId() == order.getUser().getUser_id();
-        boolean isOrderPendingStatus = order.getOrderStatus() == OrderStatus.ORDER_PENDING;
+        boolean isOrderPendingStatus = order.getOrderStatus() == OrderStatus.ORDER_PENDING; //모든 상품이 order pending인지 확인
         if (isSamePerson && isOrderPendingStatus) {
             order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
             order.setDeliveryAddress(requestDto.getDeliveryAddress());
@@ -104,7 +104,7 @@ public class OrderService {
 
         Order order = Order.builder()
                 .user(user)
-                .orderStatus(OrderStatus.ORDER_PENDING)
+//                .orderStatus(OrderStatus.ORDER_PENDING)
                 .totalPayment(calculateTotalPayment(orderDetailService.getProductPrice(productIds), amounts))
                 .build();
 

@@ -6,6 +6,7 @@ import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.exception.EntityNotFoundException;
 import com.secondproject.shoppingproject.order.repository.OrderDetailRepository;
+import com.secondproject.shoppingproject.order.status.OrderStatus;
 import com.secondproject.shoppingproject.product.entity.Product;
 import com.secondproject.shoppingproject.product.entity.ProductRepository;
 import jakarta.transaction.Transactional;
@@ -29,8 +30,9 @@ public class OrderDetailService {
         OrderDetail orderDetail = OrderDetail.builder()
                 .order(order)
                 .product(product)
-                .quantity(quantity)
+                .amount(quantity)
                 .payment(product.getPrice())
+                .orderStatus(OrderStatus.ORDER_PENDING)
                 .build();
 
         return orderDetailRepository.save(orderDetail);
