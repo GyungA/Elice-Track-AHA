@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor //test
 public class OrderCancelRequestDto {
     private Long userId;
-    private Long orderId;
+    private Long orderId; //없애기??
+    private Long orderDetailId;
 }

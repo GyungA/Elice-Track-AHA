@@ -4,6 +4,7 @@ import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailCountA
 import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailInfoDto;
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
+import com.secondproject.shoppingproject.order.exception.AccessDeniedException;
 import com.secondproject.shoppingproject.order.exception.EntityNotFoundException;
 import com.secondproject.shoppingproject.order.exception.InvalidRequestDataException;
 import com.secondproject.shoppingproject.order.repository.OrderDetailRepository;
@@ -92,6 +93,19 @@ public class OrderDetailService {
             orderDetail.setOrderStatus(orderStatus);
             orderDetailRepository.save(orderDetail);
         }
+    }
+
+    @Transactional
+    public void setOrderStatus(Long orderDetailId, OrderStatus orderStatus, Long sellerId) {
+        OrderDetail orderDetail = orderDetailRepository.findById(orderDetailId)
+                .orElseThrow(() -> new EntityNotFoundException("해당하는 order detail id가 없습니다."));
+        if(orderDetail.getProduct().getSeller().getUser_id() == sellerId){
+            orderDetail.setOrderStatus(orderStatus);
+            orderDetailRepository.save(orderDetail);
+            return;
+        }
+        throw new AccessDeniedException("해당 상품의 판매자가 아니기 때문에 권한이 없습니다.");
+
     }
 
     //user id를 받으면, 해당 user id가 판매한 상품에 대한 주문을 같은 buyer로 묶은(order detail 테이블)로 리턴
