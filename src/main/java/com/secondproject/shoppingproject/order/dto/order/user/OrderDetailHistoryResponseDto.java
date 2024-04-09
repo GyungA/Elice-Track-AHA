@@ -19,7 +19,6 @@ public class OrderDetailHistoryResponseDto {
     private Long id;
 
     private List<OrderDetailInfoDto> orderDetailInfoDtos;
-    private OrderStatus orderStatus;
     private String deliveryAddress;
     private String receiverName;
     private String receiverPhone;

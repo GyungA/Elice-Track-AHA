@@ -40,12 +40,18 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    public OrderDetailHistoryResponseDto getDetailOrder(Long userId, Long orderId) {
+    public OrderDetailHistoryResponseDto getDetailOrder(Long userId, Long orderId, boolean isSeller) {
         //user가 가지고 있는 order들 중, 해당 orderId를 가진 객체 가져오기
-        Order order = orderRepository.findByUserIdAndOrderId(userId, orderId)
-                .orElseThrow(() -> new EntityNotFoundException("해당하는 user id 또는 order id를 찾을 수 없습니다."));
+        if(isSeller){
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
+        return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailListBySeller(order, userId));
+        } else{
+            Order order = orderRepository.findByUserIdAndOrderId(userId, orderId)
+                    .orElseThrow(() -> new EntityNotFoundException("해당하는 user id 또는 order id를 찾을 수 없습니다."));
 
-        return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
+            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
+        }
     }
 
     public OrderPayResponseDto getPayInfo(Long userId, Long orderId) {
@@ -104,7 +110,6 @@ public class OrderService {
 
         Order order = Order.builder()
                 .user(user)
-//                .orderStatus(OrderStatus.ORDER_PENDING)
                 .totalPayment(calculateTotalPayment(orderDetailService.getProductPrice(productIds), amounts))
                 .build();
 
@@ -115,7 +120,7 @@ public class OrderService {
             Long productId = productIds.get(i);
             Integer amount = amounts.get(i);
 
-            orderDetails.add(orderDetailService.save(productId, amount, order));
+            orderDetails.add(orderDetailService.save(productId, amount, order)); //모든 상품 상태는 pending
         }
         return order.getId();
     }

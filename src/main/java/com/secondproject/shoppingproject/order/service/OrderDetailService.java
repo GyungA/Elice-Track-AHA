@@ -12,6 +12,7 @@ import com.secondproject.shoppingproject.product.entity.Product;
 import com.secondproject.shoppingproject.product.entity.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class OrderDetailService {
     private final OrderDetailRepository orderDetailRepository;
@@ -43,7 +45,7 @@ public class OrderDetailService {
     OrderDetailCountAndProductNamesDto getOrderDetailCountAndProductNames(Order order) {
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
         if (orderDetails == null || orderDetails.isEmpty()) {
-            throw new EntityNotFoundException("해당하는 user id가 없습니다.");
+            throw new EntityNotFoundException("해당하는 order detail이 없습니다.");
         }
         return OrderDetailCountAndProductNamesDto.builder()
                 .name(orderDetails.get(0).getProduct().getName())
@@ -66,7 +68,6 @@ public class OrderDetailService {
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
         return orderDetails.stream()
                 .map((orderDetail -> new OrderDetailInfoDto(orderDetail)))
-//                .map(orderDetail -> OrderDetailMapper.INSTANCE.toOrderDetailInfoDto(orderDetail))
                 .collect(Collectors.toList());
     }
 
@@ -91,6 +92,31 @@ public class OrderDetailService {
             orderDetail.setOrderStatus(orderStatus);
             orderDetailRepository.save(orderDetail);
         }
+    }
+
+    //user id를 받으면, 해당 user id가 판매한 상품에 대한 주문을 같은 buyer로 묶은(order detail 테이블)로 리턴
+    //해당 order에 연관된 모든 product 리스트
+
+    //이걸 조회하는 seller가 판매하는 아이템만 orderDetailInfoDto에 넣기
+    List<OrderDetailInfoDto> getOrderDetailListBySeller(Order order, Long sellerId) {
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrderIdAndSellerUserId(order.getId(), sellerId);
+        return orderDetails.stream()
+                .map((orderDetail -> new OrderDetailInfoDto(orderDetail)))
+                .collect(Collectors.toList());
+    }
+
+    //이를 조회하는 seller가 판매하는 아이템만으로 다시 재구성
+    OrderDetailCountAndProductNamesDto getOrderDetailCountAndProductNamesBySeller(Order order, Long sellerId) {
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrderIdAndSellerUserId(order.getId(), sellerId);
+        if (orderDetails == null || orderDetails.isEmpty()) {
+            throw new EntityNotFoundException("해당하는 order detail이 없습니다.");
+        }
+        return OrderDetailCountAndProductNamesDto.builder()
+                .name(orderDetails.get(0).getProduct().getName())
+                .image(orderDetails.get(0).getProduct().getImage())
+                .count(orderDetails.size())
+                .orderStatus(getMinNumberOrderStatus(orderDetails))
+                .build();
     }
 
 }

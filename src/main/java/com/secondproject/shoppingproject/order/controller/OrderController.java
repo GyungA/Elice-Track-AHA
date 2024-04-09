@@ -54,7 +54,9 @@ public class OrderController {
     @Operation(summary = "주문 상세 조회", description = "자신의 주문 내역 중 하나를 상세 조회합니다.")
     @Parameters({
             @Parameter(name = "userId", description = "자신의 아이디"),
-            @Parameter(name = "orderId", description = "상세 조회를 원하는 주문의 아이디")
+            @Parameter(name = "orderId", description = "상세 조회를 원하는 주문의 아이디"),
+            @Parameter(name = "isSeller", description = "이 api가 어디에서 호출되었는지\n" +
+                    "판매자 주문 내역 관리: true\n자신의 주문 내역 조회: false")
     })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공",
@@ -63,8 +65,10 @@ public class OrderController {
     })
     @GetMapping("/user/{user_id}/order/{order_id}")
     public ResponseEntity<OrderDetailHistoryResponseDto> getDetailOrder(@PathVariable("user_id") Long userId,
-                                                                        @PathVariable("order_id") Long orderId) {
-        return ResponseEntity.ok(orderService.getDetailOrder(userId, orderId));
+                                                                        @PathVariable("order_id") Long orderId,
+                                                                        @RequestParam("is_seller") boolean isSeller) {
+        //TODO: 관리자 페이지에서 조회하는 건지, 아니면 일반 유저 자격으로 조회하는 건지 확인
+        return ResponseEntity.ok(orderService.getDetailOrder(userId, orderId, isSeller));
     }
 
     /**

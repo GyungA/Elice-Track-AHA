@@ -6,8 +6,10 @@ import com.secondproject.shoppingproject.order.dto.order.user.OrderDetailHistory
 import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryResponseDto;
 import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailCountAndProductNamesDto;
 import com.secondproject.shoppingproject.order.entity.Order;
+import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.exception.AccessDeniedException;
 import com.secondproject.shoppingproject.order.exception.EntityNotFoundException;
+import com.secondproject.shoppingproject.order.repository.OrderDetailRepository;
 import com.secondproject.shoppingproject.order.repository.OrderRepository;
 import com.secondproject.shoppingproject.order.status.OrderStatus;
 import com.secondproject.shoppingproject.user.constant.Role;
@@ -44,7 +46,7 @@ public class AdminOrderService {
             }
             return orders.stream()
                     .map(order -> {
-                        OrderDetailCountAndProductNamesDto dto = orderDetailService.getOrderDetailCountAndProductNames(order);
+                        OrderDetailCountAndProductNamesDto dto = orderDetailService.getOrderDetailCountAndProductNamesBySeller(order, userId);
                         return new OrderHistoryResponseDto(order, dto);
                     })
                     .collect(Collectors.toList());

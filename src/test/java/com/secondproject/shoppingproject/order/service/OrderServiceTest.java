@@ -117,7 +117,7 @@ public class OrderServiceTest {
         when(orderDetailService.getOrderDetailList(order)).thenReturn(orderDetailInfoDtos);
 
         // when
-        OrderDetailHistoryResponseDto resultDto = orderService.getDetailOrder(1L, 1L);
+        OrderDetailHistoryResponseDto resultDto = orderService.getDetailOrder(1L, 1L, false);
 
         //then
         assertEquals(orderDetailInfoDtos, resultDto.getOrderDetailInfoDtos());
@@ -133,7 +133,7 @@ public class OrderServiceTest {
         when(orderRepository.findByUserIdAndOrderId(1L, 1L)).thenReturn(Optional.empty());
 
         // when //then
-        assertThrows(EntityNotFoundException.class, () -> orderService.getDetailOrder(1L, 1L));
+        assertThrows(EntityNotFoundException.class, () -> orderService.getDetailOrder(1L, 1L, false));
     }
 
     @DisplayName("배송 전까지 배송지, 수령인 이름, 수령인 연락처를 수정할 수 있다.")
@@ -141,7 +141,9 @@ public class OrderServiceTest {
     @Transactional
     void can_modify_shipping_info_before_delivery() {
         // given
-        order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
+        OrderDetail orderDetail = new  OrderDetail();
+        orderDetail.setOrder(order);
+        orderDetailService.setAllOrderStatus(order, OrderStatus.ORDER_COMPLETE);
 
         OrderUpdateRequestDto requestDto = new OrderUpdateRequestDto(1L, 1L, "New Address",
                 "New Receiver", "010-1234-1234");
@@ -202,8 +204,6 @@ public class OrderServiceTest {
     @Transactional
     void can_cancel_order_before_delivery() {
         // given
-//        order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
-
         OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L);
 
         OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000, OrderStatus.ORDER_COMPLETE);

@@ -7,6 +7,7 @@ import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryRespon
 import com.secondproject.shoppingproject.order.dto.order.user.OrderUpdateRequestDto;
 import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailInfoDto;
 import com.secondproject.shoppingproject.order.entity.Order;
+import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.service.OrderService;
 import com.secondproject.shoppingproject.order.status.OrderStatus;
 import com.secondproject.shoppingproject.user.constant.Grade;
@@ -102,7 +103,7 @@ public class OrderControllerTest {
         orderDetailHistoryResponseDto.setId(userId);
 
         // Mocking the service method
-        when(orderService.getDetailOrder(userId, orderId)).thenReturn(orderDetailHistoryResponseDto);
+        when(orderService.getDetailOrder(userId, orderId, false)).thenReturn(orderDetailHistoryResponseDto);
 
         // When & Then
         mockMvc.perform(
@@ -122,7 +123,10 @@ public class OrderControllerTest {
         Order order = new Order();
         order.setId(123L);
         order.setUser(user);
-        order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
+
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setOrder(order);
+        orderDetail.setOrderStatus(OrderStatus.ORDER_COMPLETE);
 
         OrderUpdateRequestDto requestDto = new OrderUpdateRequestDto(1L, 123L,
                 "배송지", "수령인 이름", "010-1234-1234");
@@ -150,11 +154,21 @@ public class OrderControllerTest {
     @Test
     public void testCancel() throws Exception {
         // Given
+        User user = new User(1L, "email", "password", "name", "0209244",
+                true, "address", "phone", Grade.BRONZE, Role.USER);
+
+        Order order = new Order();
+        order.setId(1L);
+        order.setUser(user);
+
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setOrder(order);
+        orderDetail.setOrderStatus(OrderStatus.ORDER_COMPLETE);
+
         OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L);
 
         OrderDetailHistoryResponseDto responseDto = new OrderDetailHistoryResponseDto();
         responseDto.setId(requestDto.getUserId());
-        responseDto.setOrderStatus(OrderStatus.CANCELLATION_COMPLETE);
 
         when(orderService.cancel(requestDto)).thenReturn(responseDto);
 
