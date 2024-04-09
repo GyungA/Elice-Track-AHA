@@ -66,8 +66,7 @@ public class OrderController {
     @GetMapping("/user/{user_id}/order/{order_id}")
     public ResponseEntity<OrderDetailHistoryResponseDto> getDetailOrder(@PathVariable("user_id") Long userId,
                                                                         @PathVariable("order_id") Long orderId,
-                                                                        @RequestParam("is_seller") boolean isSeller) {
-        //TODO: 관리자 페이지에서 조회하는 건지, 아니면 일반 유저 자격으로 조회하는 건지 확인
+                                                                        @RequestParam(value = "is_seller", defaultValue = "false") boolean isSeller) {
         return ResponseEntity.ok(orderService.getDetailOrder(userId, orderId, isSeller));
     }
 
