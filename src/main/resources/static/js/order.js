@@ -93,13 +93,48 @@ function searchAddress() {
 
 // 페이지 로드 시 실행되며, 결제정보 카드에 값을 삽입함.
 async function insertOrderSummary() {
-  const { ids, selectedIds, productsTotal } = await getFromDb(
+  /*const { ids, selectedIds, productsTotal } = await getFromDb(
     "order",
     "summary"
-  );
+  );*/
+  try {
+    const response = await Api.get("/orders/pay/user/1/order/1");
+    const {
+      userName,
+      phone,
+      email,
+      grade,
+      address,
+      orderDetailInfoDtos,
+      totalPayment,
+    } = response.data;
+
+    let productsTitle = "";
+
+    for (const orderDetail of orderDetailInfoDtos) {
+      const { productName, payment, amount, orderStatus } = orderDetail;
+
+      if (productsTitle) {
+        productsTitle += "\n";
+      }
+
+      productsTitle += `${productName} / ${amount}개`;
+    }
+    productsTitleElem.innerText = productsTitle;
+    productsTotalElem.innerText = `${addCommas(totalPayment)}원`;
+
+    receiverNameInput.focus();
+  } catch (err) {
+    console.log(err);
+    alert(`페이지 로드 중 문제가 발생하였습니다: ${err.message}`);
+  }
+
+  //const { ids, selectedIds, productsTotal } = response.data;
+
+  // 화면에 보일 상품명
 
   // 구매할 아이템이 없다면 다른 페이지로 이동시킴
-  const hasItemInCart = ids.length !== 0;
+  /*const hasItemInCart = ids.length !== 0;
   const hasItemToCheckout = selectedIds.length !== 0;
 
   if (!hasItemInCart) {
@@ -115,11 +150,9 @@ async function insertOrderSummary() {
     alert("구매할 제품이 없습니다. 장바구니에서 선택해 주세요.");
 
     return window.location.replace("/cart");
-  }
+  }*/
 
-  // 화면에 보일 상품명
-  let productsTitle = "";
-
+  /*
   for (const id of selectedIds) {
     const { title, quantity } = await getFromDb("cart", id);
     // 첫 제품이 아니라면, 다음 줄에 출력되도록 \n을 추가함
@@ -128,20 +161,16 @@ async function insertOrderSummary() {
     }
 
     productsTitle += `${title} / ${quantity}개`;
-  }
+  }*/
 
-  productsTitleElem.innerText = productsTitle;
-  productsTotalElem.innerText = `${addCommas(productsTotal)}원`;
-
+  /*
   if (hasItemToCheckout) {
     deliveryFeeElem.innerText = `3,000원`;
     orderTotalElem.innerText = `${addCommas(productsTotal + 3000)}원`;
   } else {
     deliveryFeeElem.innerText = `0원`;
     orderTotalElem.innerText = `0원`;
-  }
-
-  receiverNameInput.focus();
+  }*/
 }
 
 async function insertUserData() {
@@ -223,7 +252,7 @@ async function doCheckout() {
 
   try {
     // 전체 주문을 등록함
-    const orderData = await Api.post("/api/order", {
+    const orderData = await Api.post("/orders/pay", {
       summaryTitle,
       totalPrice,
       address,
