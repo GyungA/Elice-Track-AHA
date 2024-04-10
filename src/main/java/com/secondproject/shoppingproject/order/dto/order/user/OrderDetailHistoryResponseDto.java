@@ -6,6 +6,7 @@ import com.secondproject.shoppingproject.order.status.OrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
+import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -18,15 +19,15 @@ public class OrderDetailHistoryResponseDto {
     private List<OrderDetailInfoDto> orderDetailInfoDtos;
     private OrderStatus orderStatus;
     private String deliveryAddress;
-    private int totalPayment;
+    private String totalPayment;
     private String orderDate;
 
     public OrderDetailHistoryResponseDto(Order order, List<OrderDetailInfoDto> orderDetailInfoDtos){
-        this.id = order.getUser().getId();
+        this.id = order.getUser().getUser_id();
         this.orderDetailInfoDtos = orderDetailInfoDtos;
         this.orderStatus = order.getOrderStatus();
         this.deliveryAddress = order.getDeliveryAddress();
-        this.totalPayment = order.getTotalPayment();
-        this.orderDate = order.getCreatedAt().toLocalDate().format(DateTimeFormatter.ofPattern("yy-MM-dd"));
+        this.totalPayment = new DecimalFormat("#,##0").format(order.getTotalPayment());
+        this.orderDate = order.getCreatedAt().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 }

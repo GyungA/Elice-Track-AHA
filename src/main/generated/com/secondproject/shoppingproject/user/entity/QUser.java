@@ -32,8 +32,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<com.secondproject.shoppingproject.user.constant.Grade> grade = createEnum("grade", com.secondproject.shoppingproject.user.constant.Grade.class);
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
-
     public final StringPath name = createString("name");
 
     public final StringPath password = createString("password");
@@ -44,10 +42,10 @@ public class QUser extends EntityPathBase<User> {
 
     public final BooleanPath status = createBoolean("status");
 
-    public final NumberPath<Integer> totalPayment = createNumber("totalPayment", Integer.class);
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
+
+    public final NumberPath<Long> user_id = createNumber("user_id", Long.class);
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

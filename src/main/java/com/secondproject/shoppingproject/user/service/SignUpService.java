@@ -17,16 +17,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SignUpService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<? super SignUpResponse> signUp(SignUpRequest signUpRequest) {
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new DuplicatedEmailException();
-        }
-        if (userRepository.existsByPhone(signUpRequest.getPhone())) {
-            throw new DuplicatedPhoneException();
-        }
+	public ResponseEntity<? super SignUpResponse> signUp(SignUpRequest signUpRequest) {
+		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+			throw new DuplicatedEmailException();
+		}
+		if (userRepository.existsByPhone(signUpRequest.getPhone())) {
+			throw new DuplicatedPhoneException();
+		}
 
 //        User user = User.builder()
 //                .email(signUpRequest.getEmail())
@@ -36,18 +36,18 @@ public class SignUpService {
 //                .status(signUpRequest.isStatus())
 //                .address(signUpRequest.getAddress())
 //                .phone(signUpRequest.getPhone()).build();
-        User user = User.builder()
-                .email(signUpRequest.getEmail())
-                .password(passwordEncoder.encode(signUpRequest.getPassword()))
-                .name(signUpRequest.getName())
-                .birthdate(signUpRequest.getBirthdate())
-                .address(signUpRequest.getAddress())
-                .phone(signUpRequest.getPhone())
-                .grade(Grade.BRONZE) // 기본값 설정
-                .role(Role.USER) // 기본값 설정
-                .build();
+		User user = User.builder()
+				.email(signUpRequest.getEmail())
+				.password(passwordEncoder.encode(signUpRequest.getPassword()))
+				.name(signUpRequest.getName())
+				.birthdate(signUpRequest.getBirthdate())
+				.address(signUpRequest.getAddress())
+				.phone(signUpRequest.getPhone())
+				.grade(Grade.BRONZE) // 기본값 설정
+				.role(Role.USER) // 기본값 설정
+				.build();
 
-        userRepository.save(user);
-        return SignUpResponse.success();
-    }
+		userRepository.save(user);
+		return SignUpResponse.success();
+	}
 }

@@ -12,12 +12,39 @@ import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    List<Order> findByUser(User user);
+    //    List<Order> findByUserOrderByCreatedAtDesc(User user);
+    @Query("SELECT o FROM Order o " +
+            "WHERE o.user = :user AND o.orderStatus != 'DELETE' " +
+            "ORDER BY o.createdAt DESC")
+    List<Order> findByUserOrderByCreatedAtDesc(@Param("user") User user);
+
+    //    Optional<Order> findByIdAndUserid(Long orderId, Long userId);
+    @Query("SELECT o FROM Order o " +
+            "WHERE o.user.user_id = :userId AND o.id = :orderId")
+    Optional<Order> findByUserIdAndOrderId(@Param("userId") Long userId, @Param("orderId") Long orderId);
+
+    List<Order> findAllByOrderByCreatedAtDesc();
+
+    @Query("SELECT o FROM Order o " +
+            "JOIN OrderDetail od ON o.id = od.order.id " +
+            "WHERE od.product.seller.user_id = :sellerId " +
+            "ORDER BY o.createdAt DESC ")
+    List<Order> findAllBySellerIdOrderByCreatedAtDesc(@Param("sellerId") Long sellerId);
+
+    @Query("SELECT o FROM Order o " +
+            "JOIN OrderDetail od ON o.id = od.order.id " +
+            "WHERE o.user.user_id = :buyerId AND od.product.seller.user_id = :sellerId " +
+            "ORDER BY o.createdAt DESC ")
+    List<Order> findByBuyerIdAndSellerIdOrderByCreatedAtDesc(@Param("buyerId") Long buyerId, @Param("sellerId") Long sellerId);
 
 //    @Query("SELECT o FROM Order o " +
-//            "WHERE o.user.user_id = :userId AND o.id = :orderId")
-//    Optional<Order> findByUserIdAndOrderId(@Param("userId") Long userId, @Param("orderId") Long orderId);
-@Query("SELECT o FROM Order o " +
-        "WHERE o.user.id = :userId AND o.id = :orderId")
-Optional<Order> findByUserIdAndOrderId(@Param("userId") Long userId, @Param("orderId") Long orderId);
+//            "WHERE o.user.user_id = :buyerId " +
+//            "ORDER BY o.createdAt DESC")
+//    List<Order> findByBuyerId(@Param("buyerId") Long buyerId);
+//
+//    @Query("SELECT o FROM Order o " +
+//            "JOIN OrderDetail od ON o.id = od.order.id " +
+//            "WHERE od.product.seller.user_id = :sellerId " +
+//            "ORDER BY o.createdAt DESC")
+//    List<Order> findBySellerId(@Param("sellerId") Long sellerId);
 }

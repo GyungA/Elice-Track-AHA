@@ -4,6 +4,7 @@ import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailCountA
 import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailInfoDto;
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
+import com.secondproject.shoppingproject.order.exception.EntityNotFoundException;
 import com.secondproject.shoppingproject.order.repository.OrderDetailRepository;
 import com.secondproject.shoppingproject.product.entity.Product;
 import com.secondproject.shoppingproject.product.entity.ProductRepository;
@@ -12,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +24,7 @@ public class OrderDetailService {
     @Transactional
     public OrderDetail save(Long productId, int quantity, Order order) { //유저 아이디, 상품 아이디, 수량
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new NoSuchElementException("해당하는 product id가 없습니다."));
+                .orElseThrow(() -> new EntityNotFoundException("해당하는 product id가 없습니다."));
 
         OrderDetail orderDetail = OrderDetail.builder()
                 .order(order)
@@ -39,7 +39,7 @@ public class OrderDetailService {
     public OrderDetailCountAndProductNamesDto getOrderDetailCountAndProductNames(Order order){
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
         if (orderDetails == null || orderDetails.isEmpty()) {
-            throw new NoSuchElementException("해당하는 user id가 없습니다.");
+            throw new EntityNotFoundException("해당하는 user id가 없습니다.");
         }
         return OrderDetailCountAndProductNamesDto.builder()
                 .name(orderDetails.get(0).getProduct().getName())
@@ -53,6 +53,13 @@ public class OrderDetailService {
         List<OrderDetail> orderDetails = orderDetailRepository.findByOrder(order);
         return orderDetails.stream()
                 .map((orderDetail -> new OrderDetailInfoDto(orderDetail)))
+//                .map(orderDetail -> OrderDetailMapper.INSTANCE.toOrderDetailInfoDto(orderDetail))
+                .collect(Collectors.toList());
+    }
+
+    public List<Integer> getProductPrice(List<Long> productIds){
+        return productIds.stream()
+                .map(productId -> productRepository.findPaymentByProductId(productId))
                 .collect(Collectors.toList());
     }
 

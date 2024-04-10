@@ -14,5 +14,7 @@ public class OrderDetailCountAndProductNamesDto {
 
     @Schema(description = "주문한 상품들 중 첫번째 이미지", implementation = String.class)
     private String image;
+
+    @Schema(description = "총 주문한 상품 수량")
     private int count;
 }
