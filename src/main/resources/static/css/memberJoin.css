@@ -8,13 +8,61 @@
     padding: 139.15px 79px 704px 79px;
     width: 100%;
     box-sizing: border-box;
-    max-width: 1440px;
+    /*max-width: 1440px;*/
     margin: 0
     }
 
 .frame {
     display: flex;
     width: 640px;
+    padding: 27px 40px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 13px;
+    border: 1px solid #000;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 18px;
+}
+.field-birth {
+}
+.birth-input-container {
+    display: flex;
+    width: 720px;
+    padding: 8px 40px;
+    margin: 0 0 5px 0;
+    align-items: center;
+    gap: 10px;
+    background: #FFFFFF;
+    font-size: 18px;
+}
+.birth-frame {
+    width: 240px;
+    display: flex;
+    padding: 27px 40px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 13px;
+    border: 1px solid #000;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 18px;
+}
+.month-frame {
+    width: 200px;
+    display: flex;
+    padding: 27px 40px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 13px;
+    border: 1px solid #000;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 18px;
+}
+.day-frame {
+    width: 200px;
+    display: flex;
     padding: 27px 40px;
     align-items: center;
     gap: 10px;
@@ -44,10 +92,7 @@
 }
 
 #name-frame {
-    margin: 12px 0 13px 0;
-}
-#birth-frame {
-    margin: 0 0 13px 0;
+    margin: 12px 0 5px 0;
 }
 
 #address-frame {
@@ -109,29 +154,15 @@
     box-sizing: border-box;
     }
 
-.footer-navigation {
-    border-bottom: 1px solid #d9d9d9;
-    border-top: 3px solid #ef7014;
-    display: flex;
-    font-size: 14px;
-}
-.text-center {
-    text-align: center;
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-.body3-regular-medium {
-    line-height: 1.5;
-}
-
-.body3-regular-medium {
-    font-family: -apple-system, BlinkMacSystemFont, Malgun Gothic, 맑은 고딕, helvetica, Apple SD Gothic Neo, sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: normal;
-    word-spacing: normal;
-}
-
-.text-left {
-    text-align: left;
+/* Firefox  */
+input[type='number'] {
+    -moz-appearance: textfield;
 }
 

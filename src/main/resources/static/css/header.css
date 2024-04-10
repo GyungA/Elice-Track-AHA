@@ -72,8 +72,7 @@
 
 .header-nav-login-button {
   border-radius: 30px;
-  background-color: rgba(255, 255, 255, 0);
-  border: 1px solid #D4D2E3;
+  background-color: rgba(93, 90, 136, 1);
   margin-right: 24px;
   display: flex;
   flex-direction: row;
@@ -86,14 +85,15 @@
 }
 
 .header-nav-login-button:hover {
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: rgba(93, 90, 136, 0.8);
 }
 
 .header-nav-login-button-text {
   font-weight: 700;
   font-size: 16px;
   line-height: 1.125;
-  color: black;
+  color: white;
+  font-family: "DM Sans", "Helvetica";
 }
 
 .header-nav-signup-button {
@@ -106,20 +106,20 @@
   padding: 20px 0;
   width: 107px;
   box-sizing: border-box;
-
   cursor: pointer;
+}
+.header-nav-signup-button-text {
+    overflow-wrap: break-word;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: "DM Sans", "Helvetica";
+    line-height: 1.125;
+    color: rgba(93, 90, 136, 1);
 }
 
 .header-nav-signup-button:hover {
   background-color: rgba(0, 0, 0, 0.03);
 }
 
-.header-nav-login-button-text {
-  overflow-wrap: break-word;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.125;
-  color: #5D5A88;
-}
 
 
