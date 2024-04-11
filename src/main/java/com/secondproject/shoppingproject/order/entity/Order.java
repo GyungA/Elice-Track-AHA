@@ -27,26 +27,27 @@ public class Order extends BaseEntity {
     @Column(nullable = false)
     private int totalPayment;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String deliveryAddress;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private OrderStatus orderStatus;
+//    @Enumerated(EnumType.STRING)
+//    @Column(nullable = false)
+//    private OrderStatus orderStatus;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String receiverName;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String receiverPhoneNumber;
 
     @Builder
-    public Order(User user, String deliveryAddress, OrderStatus orderStatus,
-                 String receiverName, String receiverPhoneNumber){
+    public Order(User user, /*String deliveryAddress, OrderStatus orderStatus,*/
+                 /*String receiverName, String receiverPhoneNumber, */int totalPayment) {
         this.user = user;
-        this.deliveryAddress = deliveryAddress;
-        this.orderStatus = orderStatus;
-        this.receiverName = receiverName;
+//        this.deliveryAddress = deliveryAddress;
+//        this.orderStatus = orderStatus;
+//        this.receiverName = receiverName;
+        this.totalPayment = totalPayment;
         this.receiverPhoneNumber = receiverPhoneNumber;
     }
 
