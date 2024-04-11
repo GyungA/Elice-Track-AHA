@@ -110,7 +110,8 @@ public class OrderService {
 
         Order order = Order.builder()
                 .user(user)
-                .totalPayment(calculateTotalPayment(orderDetailService.getProductPrice(productIds), amounts))
+//                .totalPayment(calculateTotalPayment(orderDetailService.getProductPrice(productIds), amounts))
+                .totalPayment(orderDetailService.calculateTotalPayment(productIds, amounts))
                 .build();
 
         order = orderRepository.save(order);

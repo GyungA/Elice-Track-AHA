@@ -14,8 +14,10 @@ import com.secondproject.shoppingproject.product.entity.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,10 +74,58 @@ public class OrderDetailService {
                 .collect(Collectors.toList());
     }
 
-    List<Integer> getProductPrice(List<Long> productIds) {
-        return productIds.stream()
-                .map(productId -> productRepository.findPaymentByProductId(productId))
-                .collect(Collectors.toList());
+//    @Transactional
+//    public List<Integer> getProductPrice(List<Long> productIds) {
+//
+//        return productIds.stream()
+//                .map(productId -> {
+//                    if (productRepository.findStatusById(productId)) {
+//                        Product product = productRepository.findById(productId)
+//                                .orElseThrow(() -> new EntityNotFoundException("해당하는 product id가 없습니다."));
+//
+//                        if (product.getCurrent_stock() > )
+//
+//                            return productRepository.findPaymentByProductId(productId);
+//                    }
+//                    throw new InvalidRequestDataException("이미 품절된 상품입니다. product id: " + productId);
+//                })
+//                .collect(Collectors.toList());
+//        //TODO: 만약 이 주문을 결제하지 않고 없앤다면, 재고 -한만큼 다시 더해주기
+//    }
+
+    @Transactional
+    public boolean deductStock(Long productId, int quantity) {
+        if (productRepository.findStatusById(productId)) {
+            Product product = productRepository.findById(productId)
+                    .orElseThrow(() -> new EntityNotFoundException("해당하는 product id가 없습니다."));
+
+            int currentStock = product.getCurrent_stock();
+            if (currentStock >= quantity) {
+                product.setCurrent_stock(currentStock - quantity);
+                productRepository.save(product);
+            }
+
+        }
+        throw new InvalidRequestDataException("이미 품절된 상품입니다. product id: " + productId);
+    }
+
+    int calculateTotalPayment(List<Long> productIds, List<Integer> amounts) {
+
+        if (productIds.size() == amounts.size()) {
+            List<Integer> productPayments = new ArrayList<>();
+            int sum = 0;
+
+            for (int i = 0; i < productIds.size(); i++) {
+                Long productId = productIds.get(i);
+                int amount = amounts.get(i);
+                if (deductStock(productId, amount)) {
+                    sum += productRepository.findPaymentByProductId(productId) * amount;
+                }
+            }
+            return sum;
+            //TODO: 만약 이 주문을 결제하지 않고 없앤다면, 재고 -한만큼 다시 더해주기
+        }
+        throw new InvalidRequestDataException("상품 id와 상품 수량의 개수가 맞지 않습니다.");
     }
 
     boolean isAllStatus(Order order, OrderStatus orderStatus) {
@@ -99,7 +149,7 @@ public class OrderDetailService {
     public void setOrderStatus(Long orderDetailId, OrderStatus orderStatus, Long sellerId) {
         OrderDetail orderDetail = orderDetailRepository.findById(orderDetailId)
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order detail id가 없습니다."));
-        if(orderDetail.getProduct().getSeller().getUser_id() == sellerId){
+        if (orderDetail.getProduct().getSeller().getUser_id() == sellerId) {
             orderDetail.setOrderStatus(orderStatus);
             orderDetailRepository.save(orderDetail);
             return;
