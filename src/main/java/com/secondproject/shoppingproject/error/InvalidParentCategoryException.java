@@ -1,4 +1,4 @@
-package com.secondproject.shoppingproject.category.service;
+package com.secondproject.shoppingproject.error;
 
 public class InvalidParentCategoryException extends RuntimeException {
     public InvalidParentCategoryException(String message) {
