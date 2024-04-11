@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+
 @NoArgsConstructor
 @Getter @Setter
 public class Category {
@@ -29,5 +29,6 @@ public class Category {
     private List<Category> subCategory = new ArrayList<>();
 
     private Integer level;
+
 
 }

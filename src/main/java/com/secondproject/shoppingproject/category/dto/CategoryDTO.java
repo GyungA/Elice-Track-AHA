@@ -11,11 +11,20 @@ import java.util.List;
 @NoArgsConstructor
 public class CategoryDTO {
 
-    private Long categoryId;
+    private Long id;
     private String name;
-    private List<CategoryDTO> subCategories;
-    private String parentName;
     private Integer level;
+    private Long parentId;
+
+    private List<CategoryDTO> subCategories;
+
+    public CategoryDTO(Long id, String name, Long parentId) {
+        this.id = id;
+        this.name = name;
+        this.parentId = parentId;
+    }
+
+
 
 
 }
