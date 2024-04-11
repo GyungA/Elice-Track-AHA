@@ -1,0 +1,120 @@
+.footer-navigation {
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 3px solid #5D5A88;
+    display: flex;
+    font-size: 14px;
+}
+.footer-navigation>div {
+    color: #666;
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: -.5px;
+    padding: 10px 8px 11px;
+}
+
+.footer-navigation .bar {
+    vertical-align: middle;
+}
+
+.footer-container {
+    margin: 0 120px 0 120px;
+    width: 1280px;
+    height: 250px;
+}
+
+.float-left {
+    float: left;
+    padding: 32px 0 32px 0;
+    margin-right: 32px;
+}
+.float-middle {
+    float: left;
+    padding: 32px 0 32px 0;
+}
+.footer-button {
+    margin: 12px 0 24px 0;
+    box-sizing: border-box;
+    display: flex;
+}
+.CoreButton {
+    background-color: #ffffff;
+    color: #333333;
+    white-space: nowrap;
+    height: 30px;
+    flex-direction: row;
+    font-size: 12px;
+    padding: 0 8px 0 8px;
+    margin-right: 4px;
+    border-color: #acacac;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    gap: 1px;
+}
+
+.grid-container {
+    display: flex;
+}
+.grid-item {
+    flex: 0 0 calc(50% - 8px); /* 2개씩 정렬하므로 50% */
+    margin-right: 16px; /* 각 요소 사이의 간격 조절 */
+}
+
+.float-right {
+    padding: 32px 0 32px 0;
+    float: right;
+    width: 250px;
+    height: 200px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.body3-regular-medium {
+    line-height: 1.5;
+}
+
+.body3-regular-medium {
+    font-family: -apple-system, BlinkMacSystemFont, Malgun Gothic, 맑은 고딕, helvetica, Apple SD Gothic Neo, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: normal;
+    word-spacing: normal;
+}
+
+.text-left {
+    text-align: left;
+}
+.right-title {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, Malgun Gothic, 맑은 고딕, helvetica, Apple SD Gothic Neo, sans-serif;
+}
+.TheFooter__snsLink {
+    margin-bottom: 36px;
+}
+
+.TheFooter__snsLink>a {
+    color: #FFFFFF;
+    height: 36px;
+    width: 36px;
+}
+
+.TheFooter__award {
+    display: flex;
+}
+.TheFooter__award1 {
+    width: 106px;
+    height: 60px;
+}
+.TheFooter__award2 {
+    width: 106px;
+    height: 60px;
+}

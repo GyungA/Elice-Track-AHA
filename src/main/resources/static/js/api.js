@@ -1,3 +1,4 @@
+
 async function get(endpoint, params = "") {
   const apiUrl = params ? `${endpoint}/${params}` : endpoint;
   console.log(`%cGET 요청: ${apiUrl} `, "color: #a25cd1;");
@@ -51,6 +52,7 @@ async function post(endpoint, data) {
 
   return result;
 }
+
 
 // api 로 PATCH 요청 (/endpoint/params 로, JSON 데이터 형태로 요청함)
 async function patch(endpoint, params = "", data) {
