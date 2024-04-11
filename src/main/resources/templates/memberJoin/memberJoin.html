@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="/static/css//header.css">
     <link rel="stylesheet" href="/static/css//memberJoin.css">
     <script src="/static/js/memberJoin.js"></script>
+=======
+    <link rel="stylesheet" type="text/css" href="/templates/header.css">
+    <link rel="stylesheet" type="text/css" href="/templates/memberJoin/memberJoin.css">
+>>>>>>> 4eaa6bde743602b94e757063aaa3cae1ef15f0e3
 </head>
 <body>
     <header id="header-component">
@@ -47,12 +52,15 @@
             <div class="label" id="password-label">
                 비밀번호*
             </div>
-            <input class="frame" id="password-frame" type="password" id="password" placeholder="비밀번호 입력" required>
-            <input class="frame" id="password-check-frame" type="password" id="password-check" placeholder="비밀번호 확인" required>
+
+            <input class="frame" id="password-frame" type="text" id="password" placeholder="비밀번호 입력" required>
+            <input class="frame" id="password-check-frame" type="text" id="password-check" placeholder="비밀번호 확인" required>
+
             <div class="label" id="information-label">
                 부가정보*
             </div>
             <input class="frame" id="name-frame" type="text" id="name" placeholder="이름" required>
+
 <!--            <input class="frame" id="birth-frame" type="text" placeholder="생년월일" required>-->
             <div class="field-birth">
                 <div class="birth-input-container">
@@ -75,6 +83,9 @@
                     <input class="day-frame" type="number" min="1" max="31" placeholder="일" oninput="handleInput(this, 2)" inputmode="numeric">
                 </div>
             </div>
+=======
+            <input class="frame" id="birth-frame" type="text" id="birth" placeholder="생년월일" required>
+>>>>>>> 4eaa6bde743602b94e757063aaa3cae1ef15f0e3
             <input class="frame" id="address-frame" type="text" id="address" placeholder="주소" required>
             <input class="frame" id="number-frame" type="text" id="number" placeholder="전화번호" required>
             <div class="button" onclick="register()">
@@ -85,7 +96,10 @@
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         </div>
+=======
+>>>>>>> 4eaa6bde743602b94e757063aaa3cae1ef15f0e3
     </form>
     <footer class="footer">
         <div class="footer-navigation body3-regular-medium text-center">
