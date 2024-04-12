@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
-    <link rel="stylesheet" type="text/css" href="/templates/header.css">
-    <link rel="stylesheet" type="text/css" href="/templates/memberJoin/memberJoin.css">
+    <link rel="stylesheet" href="/static/css//header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css//memberJoin.css">
+    <script src="/static/js/memberJoin.js"></script>
 </head>
 <body>
-    <header id="header-component">
-        <div class="header-container">
-            <div class="header-logo">
+<header id="header-component">
+    <div class="header-container">
+        <div class="header-logo">
             <a href="#">
                 <img class="header-title-image" src="https://i.ibb.co/N20ZLds/logo.jpg" alt="">
             </a>
-            </div>
+        </div>
         <div class="header-nav-list">
             <div class="header-search">
                 <div class="header-search-light">
@@ -30,120 +32,162 @@
                 </span>
             </div>
             <div class="header-nav-signup-button">
-                <span class="header-nav-login-button-text">
+                <span class="header-nav-signup-button-text">
                     회원가입
                 </span>
             </div>
         </div>
+    </div>
+</header>
+<form action="/signUp" method="post">
+    <div class="container">
+        <div class="label" id="email-label">
+            이메일*
         </div>
-    </header>
-    <form action="/signUp" method="post">
-        <div class="container">
-            <div class="label" id="email-label">
-                이메일*
+        <input class="frame" type="text" id="email" name="email" placeholder="이메일" required>
+        <div class="label" id="password-label">
+            비밀번호*
+        </div>
+        <input class="frame" type="password" id="password" name="password" placeholder="비밀번호 입력" required>
+        <input class="frame" type="password" id="password-check" name="passwordCheck" placeholder="비밀번호 확인" required>
+        <div class="label" id="information-label">
+            부가정보*
+        </div>
+        <input class="frame" type="text" id="name" name="name" placeholder="이름" required>
+        <!--            <input class="frame" id="birth-frame" type="text" placeholder="생년월일" required>-->
+        <div class="field-birth">
+            <div class="birth-input-container">
+                <input class="frame" type="number" id="birth-year" name="birthYear" placeholder="연도" oninput="handleInput(this, 4)" inputmode="numeric">
+                <select class="month-frame" name="birthMonth">
+                    <option value="">월</option>
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                    <option value="">4</option>
+                    <option value="">5</option>
+                    <option value="">6</option>
+                    <option value="">7</option>
+                    <option value="">8</option>
+                    <option value="">9</option>
+                    <option value="">10</option>
+                    <option value="">11</option>
+                    <option value="">12</option>
+                </select>
+                <input class="day-frame" type="number" id="birth-day" name="birthDay" min="1" max="31" placeholder="일" oninput="handleInput(this, 2)" inputmode="numeric">
+                <input type="radio" id="male" name="gender" value="1">
+                <label for="male">남</label>
+                <input type="radio" id="female" name="gender" value="2">
+                <label for="female">여</label>
             </div>
-            <input class="frame" type="text" id="e mail" placeholder="이메일" required>
-            <div class="label" id="password-label">
-                비밀번호*
-            </div>
-            <input class="frame" type="text" id="password" placeholder="비밀번호 입력" required>
-            <input class="frame" type="text" id="password-check" placeholder="비밀번호 확인" required>
-            <div class="label" id="information-label">
-                부가정보*
-            </div>
-            <input class="fram e" type="text" id="name" placeholder="이름" required>
-            <input class="frame" type="text" id="birthdate" placeholder="생년월일" required>
-            <input class="frame" type="text" id="address" placeholder="주소" required>
-            <input class="frame" type="text" id="phone" placeholder="전화번호" required>
-            <div class="button" onclick="register()">
-                <div class="master-primary-button">
+        </div>
+        <input class="frame" type="text" id="address" name="address" placeholder="주소" required>
+        <input class="frame" type="text" id="phone" name="phone" placeholder="전화번호" required>
+        <div class="button" onclick="register()">
+            <div class="master-primary-button">
                 <span class="button-text">
                     회원가입
                 </span>
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+<footer class="footer">
+    <div class="footer-navigation body3-regular-medium text-center">
+        <div>이용약관</div>
+        <div class="bar">|</div>
+        <div class="body3-bold-medium" rel="nosublink">개인정보 처리방침</div>
+        <div class="bar">|</div>
+        <div>공지사항</div>
+        <div class="bar">|</div>
+        <div>자주묻는 질문</div>
+        <div class="bar">|</div>
+        <div>이벤트</div>
+        <div class="bar">|</div>
+        <div>입점문의</div>
+        <div class="bar">|</div>
+        <div>about idea house</div>
+        <div class="bar">|</div>
+        <div>인재영입</div>
+    </div>
+    <div class="footer-container">
+        <div class="full">
+            <div class="body3-regular-medium text-left">
+                <div class="float-left">
+                    <img class="baseLogo" src="https://i.ibb.co/N20ZLds/logo.jpg" style="height: 42px; width: 100px;"/>
+                </div>
+                <div class="float-left" style="width: 450px;">
+                    <div class="mb-[8px] body3-bold-medium">(주) 아이디어하우스</div>
+                    <div data-v-f1827758="">대표이사 : 빌게이츠</div>
+                    <div data-v-f1827758="">서울특별시 성동구 아차산로17길 48 성수낙낙 C동 2층 엘리스Lab 성수점</div>
+                    <div data-v-f1827758="">사업자 등록번호 : 123-45-67890</div>
+                    <div data-v-f1827758="">통신판매업신고 : 2024-서울성수-1234호</div>
+                    <div data-v-f1827758="">호스팅서비스 제공자 : AWS WEB Service, Inc</div>
+                    <div class="caption2-regular-medium mt-[8px] tracking-tight">아이디어하우스는 통신판매중개자이며 통신판매의 당사자가 아닙니다. <br data-v-f1827758=""> 따라서 아이디어하우스는 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.</div>
+                    <div class="mt-[8px] caption2-regular-medium" data-v-f1827758="">Copyright ©Ideahouse Inc. all rights reserved.</div>
+                </div>
+                <div class="float-middle" style="width: 240px;">
+                    <div>
+                        <div class>
+                            <span class="body3-bold-medium">고객센터</span>
+                            <span class="caption2-regular-medium"> (평일 오전 10시 ~ 오후 6시) </span>
+                        </div>
+                        <div class>
+                            <a href="https://bit.ly/3IDiamS"></a>
+                        </div>
+                        <div class="footer-button">
+                            <button type="outline" class="CoreButton">
+                                <span>단체선물 문의</span>
+                            </button>
+                            <button type="outline" class="CoreButton">
+                                <span>아이디어하우스 채팅 상담</span>
+                            </button>
+                        </div>
+                        <div class="grid-container">
+                            <div class="grid-item">
+                                <div>대표번호</div>
+                                <div>1668-1234</div>
+                            </div>
+                            <div class="grid-item">
+                                <div>제휴문의</div>
+                                <div>aha@ideahouse.kr</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div clas="float-right">
+                    <div class="float-right">
+                        <div class="right-title">Follow Us</div>
+                        <div class="TheFooter__snsLink">
+                            <a href="https://www.facebook.com" class="TheFooter__snsLink_facebook">
+                                <img src="https://i.ibb.co/Q6q1JL6/image.png" alt="Facebook">
+                            </a>
+                            <a href="https://www.instagram.com" class="TheFooter__snsLink_instagram">
+                                <img src="https://i.ibb.co/KzPgnvr/1.png" alt="1">
+                            </a>
+                            <a href="https://blog.naver.com" class="TheFooter__snsLink_naverBlog">
+                                <img src="https://i.ibb.co/98r3RVb/2.png" alt="2">
+                            </a>
+                            <a href="https://post.naver.com" class="TheFooter__snsLink_naverPost">
+                                <img src="https://i.ibb.co/vLXD634/3.png" alt="3">
+                            </a>
+                            <a href="https://twitter.com" class="TheFooter__snsLink_twitter">
+                                <img src="https://i.ibb.co/Wts8MrJ/4.png" alt="4">
+                            </a>
+                        </div>
+                        <div class="TheFooter__award" style="width: 76px;">
+                            <div class="TheFooter__award1">
+                                <img src="https://i.ibb.co/3stzBxs/5.png" alt="5" style="width: 106px; height: 60px;">
+                            </div>
+                            <div class="TheFooter__award2">
+                                <img src="https://i.ibb.co/KNFZJTK/6.png" alt="6" style="width: 76px; height: 60px;">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </form>
-    <script>
-        function register(event) {
-            event.preventDefault(); // 기본 이벤트(폼 전송) 방지
-
-            // 회원가입 폼 데이터 수집
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            // 나머지 입력 필드도 데이터 수집
-
-            // 회원가입 데이터를 JSON 형식으로 구성
-            const signUpData = {
-                email: email,
-                password: password,
-                // 나머지 필드 추가
-            };
-
-            // POST 요청으로 서버에 회원가입 데이터 전송
-            fetch('/signUp', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(signUpData),
-            })
-            .then(response => {
-                if (response.ok) {
-                    // 회원가입 성공 시 페이지 이동 등 추가 처리
-                    window.location.href = '/'; // 성공 시 이동할 페이지 설정
-                } else {
-                    // 오류 처리
-                    console.error('회원가입 실패');
-                }
-            })
-            .catch(error => {
-                console.error('네트워크 오류:', error);
-            });
-        }
-    </script>
-    <footer class="footer">
-        <div class="footer-navigation body3-regular-medium text-center">
-            <div>이용약관</div>
-            <span class="bar">|</span>
-            <div class="body3-bold-medium" rel="nosublink">개인정보 처리방침</div>
-            <span class="bar">|</span>
-            <div>공지사항</div>
-            <span class="bar">|</span>
-            <div>자주묻는 질문</div>
-            <span class="bar">|</span>
-            <div>이벤트</div>
-            <span class="bar">|</span>
-            <div>입점문의</div>
-            <span class="bar">|</span>
-            <div>about idea house</div>
-            <span class="bar">|</span>
-            <div>인재영입</div>
-        </div>
-        <div class="footer-container">
-            <div class="full">
-                <div class="body3-regular-medium text-left">
-                    <div class="float-left">
-                        <div class="baseLogo"></div>
-                    </div>
-                    <div class="float-left py-[32px] mr-[32px]">
-                        <div class="mb-[8px] body3-bold-medium" data-v-f1827758="">(주) 백패커</div>
-                        <div data-v-f1827758="">대표이사 : 김동환</div>
-                        <div data-v-f1827758="">서울시 서초구 서초대로 398 BNK디지털타워 20층</div>
-                        <div data-v-f1827758="">사업자 등록번호 : 107-87-83297 <a href="http://www.ftc.go.kr/info/bizinfo/communicationViewPopup.jsp?wrkr_no=1078783297" target="_blank" class="TheFooter__button px-[8px] ml-[8px] caption2-regular-medium rounded-sm" data-v-f1827758="">사업자 정보 확인</a></div>
-                        <div data-v-f1827758="">통신판매업신고 : 2023-서울서초-2114호</div>
-                        <div data-v-f1827758="">호스팅서비스 제공자 : AWS WEB Service, Inc</div>
-                        <div class="caption2-regular-medium mt-[8px] tracking-tight" data-v-f1827758="">아이디어스는 통신판매중개자이며 통신판매의 당사자가 아닙니다. <br data-v-f1827758=""> 따라서 아이디어스는 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.</div>
-                        <div class="mt-[8px] caption2-regular-medium" data-v-f1827758="">Copyright ©Backpackr Inc. all rights reserved.</div>
-                    </div>
-                    <div class="float-left py-[32px]" data-v-f1827758=""><div class="mb-[8px]" data-v-f1827758=""><span class="body3-bold-medium" data-v-f1827758="">고객센터</span><span class="caption2-regular-medium" data-v-f1827758=""> (평일 오전 10시 ~ 오후 6시) </span></div><div class="mt-[12px] mb-[24px]" data-v-f1827758=""><a href="https://bit.ly/3IDiamS" rel="nosublink" target="_blank" data-v-f1827758=""><button type="outline" class="CoreButton BaseButtonRectangle body3-regular-small BaseButtonRectangle__outline mr-[4px]" style="background-color:#ffffff;color:#333333;height:28px;flex-direction:row;--core-button-padding-x:8;--button-rectangle-border-color:#acacac;" data-v-876bf9cf="" data-v-45c8c185="" data-v-f1827758=""><!----><span data-v-876bf9cf="">단체선물 문의</span></button></a><button type="outline" class="CoreButton BaseButtonRectangle body3-regular-small BaseButtonRectangle__outline" style="background-color:#ffffff;color:#333333;height:28px;flex-direction:row;--core-button-padding-x:8;--button-rectangle-border-color:#acacac;" data-v-876bf9cf="" data-v-45c8c185="" data-v-f1827758=""><!----><span data-v-876bf9cf="">아이디어스 채팅 상담</span></button></div><div class="grid-cols-2 gap-[0px] grid w-[130px]" data-v-f1827758=""><!--[--><div data-v-f1827758="">대표번호</div><div data-v-f1827758="">1668-3651</div><div data-v-f1827758="">제휴문의</div><div data-v-f1827758="">biz@backpac.kr</div><!--]--></div></div>
-                    <div class="float-right py-[32px]" data-v-f1827758=""><div class="body3-bold-medium mb-[8px]" data-v-f1827758="">Follow Us</div><div class="mb-[36px] TheFooter__snsLink" data-v-f1827758=""><!--[--><a href="https://www.facebook.com/idus.me" class="TheFooter__snsLink_facebook inline-block ml-[8px] first-of-type:ml-0" target="_blank" data-v-f1827758=""></a><a href="https://www.instagram.com/idus.me" class="TheFooter__snsLink_instagram inline-block ml-[8px] first-of-type:ml-0" target="_blank" data-v-f1827758=""></a><a href="https://blog.naver.com/idus_me" class="TheFooter__snsLink_naverBlog inline-block ml-[8px] first-of-type:ml-0" target="_blank" data-v-f1827758=""></a><a href="https://post.naver.com/my.naver?memberNo=6057293" class="TheFooter__snsLink_naverPost inline-block ml-[8px] first-of-type:ml-0" target="_blank" data-v-f1827758=""></a><a href="https://twitter.com/IDus_kr" class="TheFooter__snsLink_twitter inline-block ml-[8px] first-of-type:ml-0" target="_blank" data-v-f1827758=""></a><!--]--></div><div class="grid-cols-2 gap-[0px] grid TheFooter__award" data-v-f1827758=""><!--[--><div class="TheFooter__award_reddot" data-v-f1827758=""></div><div class="TheFooter__award_idea" data-v-f1827758=""></div><!--]--></div></div>
-                </div>
-                <hr class="gray-d9--background clear-both" data-v-f1827758="">
-                <div class="caption2-regular-medium ml-[150px]" data-v-f1827758=""><div class="TheFooter__certificate float-left py-[32px] mr-[20px]" data-v-f1827758=""><div class="inline-block TheFooter__certificate_isms mr-[16px] align-middle" data-v-f1827758=""></div><div class="inline-block align-middle" data-v-f1827758=""><div data-v-f1827758="">[인증범위] 온라인 마켓 플랫폼 운영(아이디어스) <br data-v-f1827758=""> [유효기간] 2023.11.18 - 2026.11.17</div></div></div><div class="TheFooter__certificate float-left py-[32px]" data-v-f1827758=""><div class="inline-block TheFooter__certificate_escrow mr-[16px]" data-v-f1827758=""></div><div class="inline-block" data-v-f1827758=""><div data-v-f1827758="">고객님은 현금 등으로 결제시 당사에서 가입한 <br data-v-f1827758=""> 구매안전서비스를 이용하실 수 있습니다.</div><div data-v-f1827758=""><a class="TheFooter__button px-[8px] caption2-regular-medium rounded-sm cursor-pointer" data-v-f1827758="">가입사실 확인</a></div></div></div></div>
-
-            </div>
-        </div>
-    </footer>
+    </div>
+</footer>
 </body>
 </html>
