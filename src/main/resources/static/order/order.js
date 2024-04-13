@@ -9,6 +9,7 @@ import * as Api from "../js/api.js";
 } from "../useful-functions.js";*/
 //import { deleteFromDb, getFromDb, putToDb } from "../indexed-db.js";
 
+
 // 요소(element), input 혹은 상수
 const subtitleCart = document.querySelector("#subtitleCart");
 const receiverNameInput = document.querySelector("#receiverName");
@@ -29,6 +30,7 @@ const productsTotalElem = document.querySelector("#productsTotal");
 const orderTotalElem = document.querySelector("#orderTotal");
 const checkoutButton = document.querySelector("#checkoutButton");
 
+
 // 결제자
 const buyerNameElem = document.querySelector("#buyerName");
 const buyerPhoneElem = document.querySelector("#buyerPhone");
@@ -45,9 +47,11 @@ const requestOption = {
   6: "직접 입력",
 };
 
+
 // checkLogin();
 addAllElements();
 addAllEvents();
+
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
@@ -56,6 +60,7 @@ function addAllElements() {
   // insertUserData();
 }
 
+
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   // subtitleCart.addEventListener("click", navigate("/cart"));
@@ -63,6 +68,7 @@ function addAllEvents() {
   // requestSelectBox.addEventListener("change", handleRequestChange); //요청사항
   checkoutButton.addEventListener("click", doCheckout); //나중에 userId, orderId 넣기
 }
+
 
 // Daum 주소 API (사용 설명 https://postcode.map.daum.net/guide)
 function searchAddress() {
@@ -83,7 +89,7 @@ function searchAddress() {
         }
         if (data.buildingName !== "" && data.apartment === "Y") {
           extraAddr +=
-            extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+              extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
         }
         if (extraAddr !== "") {
           extraAddr = " (" + extraAddr + ")";
@@ -98,6 +104,7 @@ function searchAddress() {
     },
   }).open();
 }
+
 
 // 페이지 로드 시 실행되며, 결제정보 카드에 값을 삽입함.
 async function insertOrderSummary(userId, orderId) {
@@ -149,6 +156,7 @@ async function insertOrderSummary(userId, orderId) {
   }
 }
 
+
 // async function insertUserData() {
 //   const userData = await Api.get("/user");
 //   const { fullName, phoneNumber, address } = userData;
@@ -172,6 +180,83 @@ async function insertOrderSummary(userId, orderId) {
 // "직접 입력" 선택 시 input칸 보이게 함
 // default값(배송 시 요청사항을 선택해 주세여) 이외를 선택 시 글자가 진해지도록 함
 /*function handleRequestChange(e) {
+=======
+async function insertOrderSummary() {
+  const { ids, selectedIds, productsTotal } = await getFromDb(
+    "order",
+    "summary"
+  );
+
+  // 구매할 아이템이 없다면 다른 페이지로 이동시킴
+  const hasItemInCart = ids.length !== 0;
+  const hasItemToCheckout = selectedIds.length !== 0;
+
+  if (!hasItemInCart) {
+    const categorys = await Api.get("/api/categorylist");
+    const categoryTitle = randomPick(categorys).title;
+
+    alert(`구매할 제품이 없습니다. 제품을 선택해 주세요.`);
+
+    return window.location.replace(`/product/list?category=${categoryTitle}`);
+  }
+
+  if (!hasItemToCheckout) {
+    alert("구매할 제품이 없습니다. 장바구니에서 선택해 주세요.");
+
+    return window.location.replace("/cart");
+  }
+
+  // 화면에 보일 상품명
+  let productsTitle = "";
+
+  for (const id of selectedIds) {
+    const { title, quantity } = await getFromDb("cart", id);
+    // 첫 제품이 아니라면, 다음 줄에 출력되도록 \n을 추가함
+    if (productsTitle) {
+      productsTitle += "\n";
+    }
+
+    productsTitle += `${title} / ${quantity}개`;
+  }
+
+  productsTitleElem.innerText = productsTitle;
+  productsTotalElem.innerText = `${addCommas(productsTotal)}원`;
+
+  if (hasItemToCheckout) {
+    deliveryFeeElem.innerText = `3,000원`;
+    orderTotalElem.innerText = `${addCommas(productsTotal + 3000)}원`;
+  } else {
+    deliveryFeeElem.innerText = `0원`;
+    orderTotalElem.innerText = `0원`;
+  }
+
+  receiverNameInput.focus();
+}
+
+async function insertUserData() {
+  const userData = await Api.get("/user");
+  const { fullName, phoneNumber, address } = userData;
+
+  // 만약 db에 데이터 값이 있었다면, 배송지정보에 삽입
+  if (fullName) {
+    receiverNameInput.value = fullName;
+  }
+
+  if (phoneNumber) {
+    receiverPhoneNumberInput.value = phoneNumber;
+  }
+
+  if (address) {
+    postalCode.value = address.postalCode;
+    address1Input.value = address.address1;
+    address2Input.value = address.address2;
+  }
+}
+
+// "직접 입력" 선택 시 input칸 보이게 함
+// default값(배송 시 요청사항을 선택해 주세여) 이외를 선택 시 글자가 진해지도록 함
+function handleRequestChange(e) {
+>>>>>>> dc9b605dda086287ec7c9c6692798c4a2cd4f45e:src/main/resources/templates/order/order.js
   const type = e.target.value;
 
   if (type === "6") {
@@ -186,6 +271,7 @@ async function insertOrderSummary(userId, orderId) {
   } else {
     requestSelectBox.style.color = "rgba(0, 0, 0, 1)";
   }
+<<<<<<< HEAD:src/main/resources/static/order/order.js
 }*/
 
 // 결제 진행
@@ -284,6 +370,7 @@ async function doCheckout() {
     alert(`결제 중 문제가 발생하였습니다: ${err.message}`);
   }
 }
+
 
 function formatPhoneNumber(phoneNumber) {
   // 전화번호에서 "-"를 제외한 숫자만 추출

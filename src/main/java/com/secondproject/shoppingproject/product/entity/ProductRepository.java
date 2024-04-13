@@ -15,4 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Integer findPaymentByProductId(@Param("productId") Long productId);
     Page<Product> findByNameContaining(String searchKeyword, Pageable pageable);
 
+    boolean findStatusById(Long productId);
+
 }
