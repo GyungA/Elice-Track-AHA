@@ -18,7 +18,7 @@ const totalPaymentElem = document.querySelector("#totalPayment");
 
 //모달
 const modalNomal = document.querySelector(".modal-nomal");
-const modalSeller = document.querySelector(".modal-seller");
+// const modalSeller = document.querySelector(".modal-seller");
 const btnOpenModal = document.querySelector(".order-modify-button");
 const btnModify = document.querySelector(".modal_body .modify-btn");
 const btnCloseModal = document.querySelector(".cancel-btn");
@@ -47,6 +47,7 @@ function addAllElements() {
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   //클릭시 모달창 열림
+
   btnOpenModal.addEventListener("click", () => {
     modalNomal.style.display = "flex";
   });
@@ -54,7 +55,6 @@ function addAllEvents() {
   btnCloseModal.addEventListener("click", () => {
     modalNomal.style.display = "none";
   });
-
   searchAddressButton.addEventListener("click", searchAddress);
 
   btnModify.addEventListener("click", () => {
