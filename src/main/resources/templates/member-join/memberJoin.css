@@ -1,0 +1,166 @@
+.container {
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 139.15px 79px 704px 79px;
+    width: 100%;
+    box-sizing: border-box;
+    /*max-width: 1440px;*/
+    margin: 0
+    }
+
+.frame {
+    display: flex;
+    width: 640px;
+    padding: 27px 40px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 13px;
+    border: 1px solid #000;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 18px;
+}
+.field-birth {
+}
+.birth-input-container {
+    display: flex;
+    width: 720px;
+    padding: 8px 40px;
+    margin: 0 0 5px 0;
+    align-items: center;
+    gap: 10px;
+    background: #FFFFFF;
+    font-size: 18px;
+}
+.birth-frame {
+    width: 240px;
+    display: flex;
+    padding: 27px 40px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 13px;
+    border: 1px solid #000;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 18px;
+}
+.month-frame {
+    width: 200px;
+    display: flex;
+    padding: 27px 40px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 13px;
+    border: 1px solid #000;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 18px;
+}
+.day-frame {
+    width: 200px;
+    display: flex;
+    padding: 27px 40px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 13px;
+    border: 1px solid #000;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 18px;
+}
+.frame::placeholder {
+    font-family: 'DM Sans';
+    font-weight: 400;
+    font-size: 18px;
+    line-height:  1;
+    color: #ADABC3;
+}
+#email-frame {
+    margin: 12px 0px 34px 0px;
+}
+
+#password-frame {
+    margin: 12px 0 12px 0;
+}
+
+#password-check-frame {
+    margin: 0 0 42px 0;
+}
+
+#name-frame {
+    margin: 12px 0 5px 0;
+}
+
+#address-frame {
+    margin: 0 0 13px 0;
+}
+#number-frame {
+    margin: 0 0 31px 0;
+}
+
+.label {
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'DM Sans';
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1;
+    color: #5D5A88;
+    }
+
+#email-label {
+    margin: 0px 650px 0px 0px;
+    }
+
+#password-label {
+    margin: 0px 630px 0px 0px;
+}
+
+#information-label {
+    margin: 0 630px 0 0;
+}
+
+.button-text {
+    overflow-wrap: break-word;
+    font-family: 'DM Sans';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.125;
+    color: #FFFFFF;
+    }
+
+.button {
+    margin: 0 3px 704px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 640px;
+    box-sizing: border-box;
+    cursor: pointer;
+    }
+.master-primary-button {
+    border-radius: 30px;
+    background: #5D5A88;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px 0;
+    width: 640px;
+    height: fit-content;
+    box-sizing: border-box;
+    }
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox  */
+input[type='number'] {
+    -moz-appearance: textfield;
+}

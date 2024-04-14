@@ -21,12 +21,16 @@ public class SignUpRequest {
 //    @Size(min=8, max=20)
 	String password;
 
+//	@NotBlank
+//    @Size(min=8, max=20)
+	//String password_check;
+
 	@NotBlank
 	String name;
 
 	@NotBlank
-	@Size(min = 7, max = 7)
-	String birthdate;//생년월일 6자리와 주민 번호 앞자리 1개를 받음 => ex) 9806101
+	@Size(min = 6, max = 6)
+	String birthdate;//생년월일 6자리와 주민 번호 앞자리 1개를 받음 => ex) 9806101 => 수정 : 남녀를 입력받는 것이 업으므로 생년월일만을 저장하게 함
 
 	@NotBlank
 	String address;

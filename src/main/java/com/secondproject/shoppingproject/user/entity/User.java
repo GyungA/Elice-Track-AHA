@@ -31,7 +31,7 @@ public class User extends BaseEntity {
 	String email;
 
 	@Column(name = "password", nullable = false)
-	@Size(min = 8, max = 20)
+//	@Size(min = 8, max = 20)
 	String password;
 
 	@Column(name = "name", nullable = false)
