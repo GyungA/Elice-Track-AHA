@@ -148,13 +148,13 @@ public class OrderService {
                 String name = requestDto.getReceiverName();
                 String phone = requestDto.getReceiverPhoneNumber();
 
-                if (address != null && !address.isBlank()) {
+                if(!address.equals(order.getDeliveryAddress())){
                     order.setDeliveryAddress(requestDto.getDeliveryAddress());
                 }
-                if (name != null && !name.isBlank()) {
+                if (!name.equals(order.getReceiverName())) {
                     order.setReceiverName(requestDto.getReceiverName());
                 }
-                if (phone != null && !phone.isBlank()) {
+                if (!phone.equals(order.getReceiverPhoneNumber())) {
                     order.setReceiverPhoneNumber(requestDto.getReceiverPhoneNumber());
                 }
 

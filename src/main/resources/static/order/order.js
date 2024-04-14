@@ -9,7 +9,6 @@ import * as Api from "../js/api.js";
 } from "../useful-functions.js";*/
 //import { deleteFromDb, getFromDb, putToDb } from "../indexed-db.js";
 
-
 // 요소(element), input 혹은 상수
 const subtitleCart = document.querySelector("#subtitleCart");
 const receiverNameInput = document.querySelector("#receiverName");
@@ -30,7 +29,6 @@ const productsTotalElem = document.querySelector("#productsTotal");
 const orderTotalElem = document.querySelector("#orderTotal");
 const checkoutButton = document.querySelector("#checkoutButton");
 
-
 // 결제자
 const buyerNameElem = document.querySelector("#buyerName");
 const buyerPhoneElem = document.querySelector("#buyerPhone");
@@ -47,11 +45,9 @@ const requestOption = {
   6: "직접 입력",
 };
 
-
 // checkLogin();
 addAllElements();
 addAllEvents();
-
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
@@ -60,15 +56,15 @@ function addAllElements() {
   // insertUserData();
 }
 
-
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   // subtitleCart.addEventListener("click", navigate("/cart"));
   searchAddressButton.addEventListener("click", searchAddress);
   // requestSelectBox.addEventListener("change", handleRequestChange); //요청사항
-  checkoutButton.addEventListener("click", doCheckout); //나중에 userId, orderId 넣기
+  checkoutButton.addEventListener("click", () => {
+    doCheckout(1, 4);
+  });
 }
-
 
 // Daum 주소 API (사용 설명 https://postcode.map.daum.net/guide)
 function searchAddress() {
@@ -89,7 +85,7 @@ function searchAddress() {
         }
         if (data.buildingName !== "" && data.apartment === "Y") {
           extraAddr +=
-              extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+            extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
         }
         if (extraAddr !== "") {
           extraAddr = " (" + extraAddr + ")";
@@ -104,7 +100,6 @@ function searchAddress() {
     },
   }).open();
 }
-
 
 // 페이지 로드 시 실행되며, 결제정보 카드에 값을 삽입함.
 async function insertOrderSummary(userId, orderId) {
@@ -155,7 +150,6 @@ async function insertOrderSummary(userId, orderId) {
     alert(`페이지 로드 중 문제가 발생하였습니다: ${err.message}`);
   }
 }
-
 
 // async function insertUserData() {
 //   const userData = await Api.get("/user");
@@ -275,89 +269,22 @@ function handleRequestChange(e) {
 }*/
 
 // 결제 진행
-async function doCheckout() {
+async function doCheckout(userId, orderId) {
   const receiverName = receiverNameInput.value;
   const receiverPhoneNumber = receiverPhoneNumberInput.value;
   const postalCode = postalCodeInput.value;
   const address1 = address1Input.value;
   const address2 = address2Input.value;
-  // const requestType = requestSelectBox.value;
-  // const customRequest = customRequestInput.value;
-  // const summaryTitle = productsTitleElem.innerText;
-  // const totalPrice = convertToNumber(orderTotalElem.innerText);
-  // const { selectedIds } = await getFromDb("order", "summary");
 
   if (!receiverName || !receiverPhoneNumber || !postalCode || !address2) {
     return alert("배송지 정보를 모두 입력해 주세요.");
   }
 
-  // 요청사항의 종류에 따라 request 문구가 달라짐
-  // let request;
-  // if (requestType === "0") {
-  //   request = "요청사항 없음.";
-  // } else if (requestType === "6") {
-  //   if (!customRequest) {
-  //     return alert("요청사항을 작성해 주세요.");
-  //   }
-  //   request = customRequest;
-  // } else {
-  //   request = requestOption[requestType];
-  // }
-
-  // const address = {
-  //   postalCode,
-  //   address1,
-  //   address2,
-  //   receiverName,
-  //   receiverPhoneNumber,
-  // };
-
   try {
-    // // 전체 주문을 등록함
-    // const orderData = await Api.post("/orders/pay", {
-    //   summaryTitle,
-    //   totalPrice,
-    //   address,
-    //   request,
-    // });
-
-    // const orderId = orderData._id;
-
-    // // 제품별로 주문아이템을 등록함
-    // for (const productId of selectedIds) {
-    //   const { quantity, price } = await getFromDb("cart", productId);
-    //   const totalPrice = quantity * price;
-
-    //   await Api.post("/api/orderitem", {
-    //     orderId,
-    //     productId,
-    //     quantity,
-    //     totalPrice,
-    //   });
-
-    //   // indexedDB에서 해당 제품 관련 데이터를 제거함
-    //   await deleteFromDb("cart", productId);
-    //   await putToDb("order", "summary", (data) => {
-    //     data.ids = data.ids.filter((id) => id !== productId);
-    //     data.selectedIds = data.selectedIds.filter((id) => id !== productId);
-    //     data.productsCount -= 1;
-    //     data.productsTotal -= totalPrice;
-    //   });
-    // }
-
-    // 입력된 배송지정보를 유저db에 등록함
-    // const data = {
-    //   phoneNumber: receiverPhoneNumber,
-    //   address: {
-    //     postalCode,
-    //     address1,
-    //     address2,
-    //   },
-    // };
     const data = {
-      userId: 1,
-      orderId: 4,
-      deliveryAddress: `${postalCode}, ${address1} ${address2}`,
+      userId: userId,
+      orderId: orderId,
+      deliveryAddress: `${postalCode};${address1};${address2}`,
       receiverName: receiverName,
       receiverPhoneNumber: formatPhoneNumber(receiverPhoneNumber),
     };
@@ -370,7 +297,6 @@ async function doCheckout() {
     alert(`결제 중 문제가 발생하였습니다: ${err.message}`);
   }
 }
-
 
 function formatPhoneNumber(phoneNumber) {
   // 전화번호에서 "-"를 제외한 숫자만 추출
@@ -390,3 +316,5 @@ function formatPhoneNumber(phoneNumber) {
 
   return formatted;
 }
+
+// export { formatPhoneNumber, searchAddress };
