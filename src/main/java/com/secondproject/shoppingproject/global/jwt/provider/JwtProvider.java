@@ -17,7 +17,7 @@ public class JwtProvider {
 
 	public String generate(String email) {
 		Date expiredTime = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
-		Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.ES256);
+		Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 		return Jwts.builder()
 				.setSubject(email)
