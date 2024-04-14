@@ -31,9 +31,17 @@ const address2Input = document.querySelector("#address2");
 const receiverNameInput = document.querySelector("#receiverNameInput");
 const receiverPhoneNumberInput = document.querySelector("#receiverPhoneNumber");
 
-//user id, order id
-const userId = 1;
-const orderId = 1;
+// 현재 URL 가져오기
+const currentUrl = window.location.href;
+
+// URL에서 쿼리 문자열 파싱
+const urlParams = new URLSearchParams(currentUrl);
+
+// 파라미터 값 가져오기
+const userId = urlParams.get("userId");
+const orderId = urlParams.get("orderId");
+console.log("user id: " + userId);
+console.log("order id: " + orderId);
 
 // checkLogin();
 addAllElements();
