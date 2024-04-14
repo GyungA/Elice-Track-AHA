@@ -42,14 +42,14 @@ public class SignUpController {
 //        signUpService.signUp(signUpRequest);
 //        return "redirect:/"; // 회원가입 성공 후 로그인 페이지로 이동
 //    }
-@PostMapping
-public String postNewSignUp(@RequestBody SignUpRequest signUpRequest,
+    @PostMapping
+    public String postNewSignUp(@RequestBody SignUpRequest signUpRequest,
                             BindingResult bindingResult){
 //        if (bindingResult.hasErrors()) {
 //            return "member-join/memberJoin"; // 유효성 검사 에러 발생 시 다시 회원가입 폼으로 이동
 //        }
 
-    signUpService.signUp(signUpRequest);
-    return "redirect:/"; // 회원가입 성공 후 로그인 페이지로 이동
-}
+        signUpService.signUp(signUpRequest);
+        return "redirect:/"; // 회원가입 성공 후 로그인 페이지로 이동
+    }
 }
