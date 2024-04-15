@@ -152,13 +152,50 @@
   margin-top: 40px;
 }
 .modal_body .modify-btn,
-.modal_body .cancel-btn {
+.modal_body .cancel-btn,
+.modal_body .create-btn,
+.modal_body .cancel-add-btn,
+.filtering-btn {
   cursor: pointer;
   background-color: #eeeeee;
   border: none;
   border-radius: 5px;
   padding: 5px 30px;
   margin: 0px 3px;
+}
+
+.modal-add .product-name {
+  width: 50px;
+  margin-left: -10px;
+}
+
+.modal-add #productStatusDropdown {
+  width: 200px;
+  height: 30px;
+  border: #d9d9d9 solid 1px;
+}
+
+/* 필터링 검색 버튼 */
+#filtering {
+  margin-left: 5px;
+}
+.product-add-filterSearch {
+  display: flex;
+}
+
+.filtering-wrapper {
+  margin-left: 20px;
+  margin-top: 5px;
+}
+.filtering-wrapper .filtering-input {
+  border: #d9d9d9 solid 1px;
+  border-radius: 5px;
+  height: 25px;
+}
+.filtering-wrapper .filtering-btn {
+  width: 70px;
+  padding: 5px 0px;
+  margin-left: 5px;
 }
 
 @media only screen and (max-width: 500px) {

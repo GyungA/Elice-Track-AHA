@@ -21,15 +21,13 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
-    <!-- Daum 주소 API 사용하기 위한 파일 -->
-    <!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="../css//header.css" />
     <link rel="stylesheet" href="product-management.css" />
     <script src="product-management.js" type="module" defer></script>
   </head>
   <body>
-    <div class="modal">
+    <div class="modal-modify modal">
       <div class="modal_body">
         <div class="modal-inner">
           <h2>상품 정보 수정</h2>
@@ -56,6 +54,95 @@
           <div class="buttons">
             <button type="submit" class="modify-btn">수정</button>
             <button type="button" class="cancel-btn">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-add modal">
+      <div class="modal_body">
+        <div class="modal-inner">
+          <h2>상품 추가</h2>
+          <!-- 가격 수정 -->
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label" for="price">가격</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input
+                    class="input"
+                    id="price"
+                    type="text"
+                    placeholder="상품의 가격 입력"
+                    autocomplete="on"
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- 상품명 -->
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label product-name" for="productName">상품명</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input
+                    class="input"
+                    id="productName"
+                    type="text"
+                    placeholder="상품명 입력"
+                    autocomplete="on"
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 상태-->
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label" for="status">상태</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <select id="productStatusDropdown">
+                  <option value="1" selected>판매중</option>
+                  <option value="2">일시품절</option>
+                  <option value="3">판매중단</option>
+                </select>
+                
+              </div>
+            </div>
+          </div>
+
+          <!-- 현재 재고 -->
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label" for="stock">재고</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input
+                    class="input"
+                    id="stock"
+                    type="text"
+                    placeholder="상품의 재고 입력"
+                    autocomplete="on"
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 상품 이미지(이미지 등록?) -->
+
+          <div class="buttons">
+            <button type="submit" class="create-btn">추가</button>
+            <button type="button" class="cancel-add-btn">취소</button>
           </div>
         </div>
       </div>
@@ -101,6 +188,12 @@
     <!-- 제품 목록 -->
     <section class="section">
       <div class="container product-item-container" id="producItemContainer">
+        <div class="buttons-container product-add-filterSearch">
+          <button class="button" id="addToProductButton">
+            상품 추가
+          </button>
+          <button class="button" id="filtering">필터링</button>
+        </div>
         <!-- api 요청 후 만들어진 제품들 카드 요소가 삽입되는 곳 -->
         <!-- 상품이 n개면 <dic class="one-product">가 n번 반복되게 -->
           <dic class="one-product">
@@ -123,7 +216,6 @@
                   <div class="product-name-status">
                     <!-- 상품 이름 -->
                     <p class="subtitle is-4 is-family-monospace" id="titleTag">
-
                     </p>
                     <div class="status-wrapper">
                       <!-- 상품 상태를 나타내는 아이콘 -->
@@ -151,7 +243,7 @@
                         delete
                         </span>
                     </button>
-                    <button class="button" id="purchaseButton">수정하기</button>
+                    <button class="button product-modify-btn" id="purchaseButton">수정하기</button>
                   </div>
                 </div>
               </div>
