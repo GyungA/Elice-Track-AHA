@@ -2,7 +2,7 @@
     justify-content: center;
     text-align: center;
     border-bottom: 1px solid #d9d9d9;
-    border-top: 3px solid #5D5A88;
+    /*border-top: 3px solid #5D5A88;*/
     display: flex;
     font-size: 14px;
 }
