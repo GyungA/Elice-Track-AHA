@@ -21,15 +21,28 @@ const statusTag = document.querySelector("#statusTag");
 const priceTag = document.querySelector("#priceTag");
 const remainStock = document.querySelector("#remainStock");
 
+const filteringButton = document.querySelector("#filtering");
+
 //상품 상태를 나타내는 아이콘
 const statusWrapper = document.querySelector(".status-wrapper");
 const icon = statusWrapper.querySelector(".material-symbols-outlined");
 
-//모달
-const modalNomal = document.querySelector(".modal"); //모달창
-const btnOpenModal = document.querySelector("#purchaseButton"); //모달 여는 버튼
+//가격 수정 모달
+const modalNomal = document.querySelector(".modal-modify"); //모달창
+const btnOpenModal = document.querySelector(".product-modify-btn"); //모달 여는 버튼
 const btnModify = document.querySelector(".modal_body .modify-btn"); //모달창 안의 "수정하기" 버튼
 const btnCloseModal = document.querySelector(".cancel-btn");
+
+//상품 추가 모달
+const modalAdd = document.querySelector(".modal-add"); //모달창
+const btnOpenAddModal = document.querySelector("#addToProductButton"); //모달 여는 버튼
+const btnCreate = document.querySelector(".modal_body .create-btn"); //모달창 안의 "추가" 버튼
+const btnCloseAddModal = document.querySelector(".cancel-add-btn");
+
+const statusDropdown = document.querySelector("#productStatusDropdown");
+
+//필터링
+const filteringInput = document.querySelector(".filtering-input"); //input태그에 작성한 값
 
 // checkUrlParams("category");
 // addAllElements();
@@ -43,7 +56,9 @@ function addAllElements() {
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  //클릭시 모달창 열림
+  filteringButton.addEventListener("click", createFilter);
+
+  //클릭시 상품 수정 모달창 열림
   btnOpenModal.addEventListener("click", () => {
     modalNomal.style.display = "flex";
   });
@@ -51,6 +66,40 @@ function addAllEvents() {
   btnCloseModal.addEventListener("click", () => {
     modalNomal.style.display = "none";
   });
+
+  //클릭시 상품 수정 모달창 열림
+  btnOpenAddModal.addEventListener("click", () => {
+    modalAdd.style.display = "flex";
+  });
+
+  btnCloseAddModal.addEventListener("click", () => {
+    modalAdd.style.display = "none";
+  });
+}
+
+function createFilter() {
+  const filterWrapper = document.createElement("div");
+  filterWrapper.classList.add("filtering-wrapper");
+
+  // 버튼을 대체할 input 요소를 생성합니다.
+  const input = document.createElement("input");
+  input.classList.add("filtering-input");
+  input.type = "text";
+
+  // 새로운 버튼을 생성
+  const newButton = document.createElement("button");
+  newButton.textContent = "검색";
+  newButton.classList.add("filtering-btn");
+
+  // 버튼 삭제
+  filteringButton.remove();
+
+  // container 요소에 input 요소를 추가합니다.
+  const container = document.querySelector(".product-add-filterSearch");
+  container.appendChild(filterWrapper);
+
+  filterWrapper.appendChild(input);
+  filterWrapper.appendChild(newButton);
 }
 
 async function addProductItemsToContainer() {

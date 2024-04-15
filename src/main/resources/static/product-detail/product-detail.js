@@ -13,6 +13,7 @@ const productImageTag = document.querySelector("#productImageTag");
 const manufacturerTag = document.querySelector("#manufacturerTag");
 const titleTag = document.querySelector("#titleTag");
 const priceTag = document.querySelector("#priceTag");
+const statusTag = document.querySelector("#statusTag");
 const sellerName = document.querySelector("#sellerName");
 const detailDescriptionTag = document.querySelector("#detailDescriptionTag");
 const remainStock = document.querySelector("#remainStock");
