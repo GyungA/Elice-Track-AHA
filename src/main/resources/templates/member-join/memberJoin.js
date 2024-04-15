@@ -56,6 +56,7 @@ function register() {
         // 회원가입 성공 시 처리할 내용
         alert("회원가입이 완료되었습니다.");
         // 필요하다면 페이지를 리디렉션하거나 다른 작업을 수행할 수 있습니다.
+       // window.location.href = "/home";
     })
     .catch(error => {
         // 오류 발생 시 처리할 내용

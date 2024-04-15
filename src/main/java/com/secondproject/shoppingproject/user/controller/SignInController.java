@@ -45,17 +45,17 @@ public class SignInController {
 
     @PostMapping
     public String signIn(@RequestBody SignInRequest signInRequest, Model model) {
-//        try {
-//            ResponseEntity<? super SignInResponse> responseEntity = signInService.signIn(signInRequest);
-//            SignInResponse signInResponse = (SignInResponse) responseEntity.getBody();
-//            model.addAttribute("message", "로그인 성공");
-//            model.addAttribute("token", signInResponse.getToken()); // 로그인 성공시 토큰을 받아서 저장하는 예시
-//            return "redirect:/"; // 로그인 성공 후 홈페이지로 이동
-//        } catch (InvalidEmailException | InvalidPasswordException e) {
-//            model.addAttribute("error", "이메일 또는 비밀번호가 올바르지 않습니다.");
-//            return "login/login";
-//        }
-        signInService.signIn(signInRequest);
-        return "redirect:/";
+        try {
+            ResponseEntity<? super SignInResponse> responseEntity = signInService.signIn(signInRequest);
+            SignInResponse signInResponse = (SignInResponse) responseEntity.getBody();
+            model.addAttribute("message", "로그인 성공");
+            model.addAttribute("token", signInResponse.getToken()); // 로그인 성공시 토큰을 받아서 저장하는 예시
+            return "redirect:/home"; // 로그인 성공 후 홈페이지로 이동
+        } catch (InvalidEmailException | InvalidPasswordException e) {
+            model.addAttribute("error", "이메일 또는 비밀번호가 올바르지 않습니다.");
+            return "login/login";
+        }
+//        signInService.signIn(signInRequest);
+//        return "redirect:/";
     }
 }

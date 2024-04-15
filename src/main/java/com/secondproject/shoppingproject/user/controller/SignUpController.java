@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 //@RestController
 @Controller
-@RequestMapping("/signUp")
 public class SignUpController {
     private final SignUpService signUpService;
 
@@ -26,7 +25,7 @@ public class SignUpController {
 //    public ResponseEntity<? super SignUpResponse> signUp(@RequestBody SignUpRequest signUpRequest){
 //        return signUpService.signUp(signUpRequest);
 //    }
-    @GetMapping
+    @GetMapping("/signUp")
     public String getSignUp(Model model){
         model.addAttribute("signUpRequest", new SignUpRequest());
         return "member-join/memberJoin";
@@ -42,14 +41,14 @@ public class SignUpController {
 //        signUpService.signUp(signUpRequest);
 //        return "redirect:/"; // 회원가입 성공 후 로그인 페이지로 이동
 //    }
-    @PostMapping
+    @PostMapping("/signUp")
     public String postNewSignUp(@RequestBody SignUpRequest signUpRequest,
                             BindingResult bindingResult){
-//        if (bindingResult.hasErrors()) {
-//            return "member-join/memberJoin"; // 유효성 검사 에러 발생 시 다시 회원가입 폼으로 이동
-//        }
+        if (bindingResult.hasErrors()) {
+            return "member-join/memberJoin"; // 유효성 검사 에러 발생 시 다시 회원가입 폼으로 이동
+        }
 
         signUpService.signUp(signUpRequest);
-        return "redirect:/"; // 회원가입 성공 후 로그인 페이지로 이동
+        return "redirect:/home"; // 회원가입 성공 후 로그인 페이지로 이동
     }
 }
