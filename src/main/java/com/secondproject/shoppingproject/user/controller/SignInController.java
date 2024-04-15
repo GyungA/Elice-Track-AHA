@@ -15,8 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 @Controller
-@RequestMapping("/signIn")
 public class SignInController {
     private final SignInService signInService;
 
@@ -37,20 +37,21 @@ public class SignInController {
 //    public ResponseEntity<? super SignInResponse> get_User(@RequestBody SignInRequest signInRequest){
 //        return signInService.signIn(signInRequest);
 //    }
-    @GetMapping
+    @GetMapping("/signIn")
     public String getSignIn(Model model){
         model.addAttribute("signInRequest", new SignInRequest());
         return "login/login";
     }
 
-    @PostMapping
+    @PostMapping("/signIn")
     public String signIn(@RequestBody SignInRequest signInRequest, Model model) {
         try {
             ResponseEntity<? super SignInResponse> responseEntity = signInService.signIn(signInRequest);
             SignInResponse signInResponse = (SignInResponse) responseEntity.getBody();
             model.addAttribute("message", "로그인 성공");
             model.addAttribute("token", signInResponse.getToken()); // 로그인 성공시 토큰을 받아서 저장하는 예시
-            return "redirect:/home"; // 로그인 성공 후 홈페이지로 이동
+            return "redirect:/";  // 로그인 성공 후 홈페이지로 이동
+           // return "login/login";
         } catch (InvalidEmailException | InvalidPasswordException e) {
             model.addAttribute("error", "이메일 또는 비밀번호가 올바르지 않습니다.");
             return "login/login";

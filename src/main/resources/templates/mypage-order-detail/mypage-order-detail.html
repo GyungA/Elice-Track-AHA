@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopping Mall</title>
+
+    <!-- bulma css 관련 -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+            defer
+            src="https://kit.fontawesome.com/9daa42bcef.js"
+            crossorigin="anonymous"
+    ></script>
+    <!-- Daum 주소 API 사용하기 위한 파일 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/templates/css/header.css" />
+    <link rel="stylesheet" href="/templates/mypage-order-detailail/mypage-order-detail.css" />
+    <script src="/templates/mypage-order-detailail/mypage-order-detail.js" type="module" defer></script>
+</head>
+<body>
+<div class="modal-nomal modal">
+    <div class="modal_body">
+        <div class="modal-inner">
+            <h2>배송 정보 수정</h2>
+            <!-- 주소 수정 -->
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label" for="address2">주소</label>
+                </div>
+                <div class="field-body search">
+                    <div class="field">
+                        <p class="control">
+                            <input
+                                    class="input"
+                                    id="postalCode"
+                                    type="text"
+                                    placeholder="주소찾기를 클릭해 주세요."
+                                    readonly
+                            />
+                        </p>
+                    </div>
+                    <div>
+                        <button
+                                class="button is-light is-hovered"
+                                id="searchAddressButton"
+                        >
+                            주소찾기
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 자세한 주소 -->
+            <div class="field is-horizontal">
+                <div class="field-label is-normal no-label"></div>
+                <div class="field-body">
+                    <div class="field">
+                        <p class="control">
+                            <input
+                                    class="input"
+                                    id="address1"
+                                    type="text"
+                                    placeholder=""
+                                    autocomplete="on"
+                                    readonly
+                            />
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="field-label is-normal no-label"></div>
+                <div class="field-body">
+                    <div class="field">
+                        <p class="control">
+                            <input
+                                    class="input"
+                                    id="address2"
+                                    type="text"
+                                    placeholder=""
+                                    autocomplete="on"
+                            />
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 수령인 이름 수정 -->
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label" for="receiverName">이름</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <p class="control">
+                            <input
+                                    class="input"
+                                    id="receiverNameInput"
+                                    type="text"
+                                    placeholder="받는 분 이름을 입력해 주세요."
+                                    autocomplete="on"
+                            />
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 수령인 연락처 수정 -->
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label" for="receiverPhoneNumber">연락처</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <p class="control">
+                            <input
+                                    class="input"
+                                    id="receiverPhoneNumber"
+                                    type="number"
+                                    placeholder="- 없이 입력해 주세요."
+                                    autocomplete="on"
+                            />
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button type="submit" class="modify-btn">수정</button>
+                <button type="button" class="cancel-btn">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="modal-seller modal">
+  <div class="modal_body">
+    <h2>모달창 제목</h2>
+    <p>모달창 내용</p>
+
+    <button type="submit" class="modify-btn">수정</button>
+    <button type="button" class="cancel-btn">취소</button>
+  </div>
+</div> -->
+<header id="header-component">
+    <div class="header-container">
+        <div class="header-logo">
+            <a href="#">
+                <img
+                        class="header-title-image"
+                        src="https://i.ibb.co/N20ZLds/logo.jpg"
+                        alt=""
+                />
+            </a>
+        </div>
+        <div class="header-nav-list">
+            <div class="header-search">
+                <div class="header-search-light">
+                    <img
+                            class="icon search-light"
+                            src="https://i.ibb.co/yf6Xpw4/search-light.png"
+                            alt=""
+                    />
+                </div>
+                <label>
+                    <input
+                            class="header-search-input-placeholder"
+                            placeholder="search"
+                    />
+                </label>
+            </div>
+
+            <div class="header-nav-login-button">
+                <span class="header-nav-login-button-text"> 로그인 </span>
+            </div>
+            <div class="header-nav-signup-button">
+                <span class="header-nav-login-button-text"> 회원가입 </span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- 주문 상세 내용 -->
+<section class="section">
+    <div class="page-title">
+        <p class="title-name">주문 상세</p>
+    </div>
+    <div class="order-wrapper">
+        <div class="product-list">
+            <p class="pay-time" id="payTime"></p>
+            <div class="one-product-outer" id="oneProductOuter">
+                <!-- <div class="one-product-inner">
+                    <div class="image-url"></div>
+                    <div class="other-product-info">
+                      <p class="product-name"></p>
+                      <p class="product-amount-payment"></p>
+                      <p class="product-order-status"></p>
+                    </div>
+                  </div> -->
+            </div>
+        </div>
+        <div class="right">
+            <div class="right-inner">
+                <div class="delivery-info">
+                    <p class="delivery-title">배송지 정보</p>
+                    <div class="delivery-info-list">
+                        <!-- <p class="receiver-name"></p>
+                          <p class="receiver-phone"></p>
+                          <p class="receiver-address"></p> -->
+
+                        <div class="info">
+                            <p>받는 사람:</p>
+                            <p class="receiver" id="receiverName"></p>
+                        </div>
+                        <div class="info">
+                            <p>연락처:</p>
+                            <p class="receiver" id="receiverPhone"></p>
+                        </div>
+                        <div class="info">
+                            <p>받는 주소:</p>
+                            <p class="receiver" id="receiverAddress"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-payment-section">
+                    <div class="info">
+                        <p>총 결제 금액:</p>
+                        <p class="total-payment" id="totalPayment"></p>
+                    </div>
+                </div>
+                <button type="button" class="order-modify-button">주문 수정</button>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -12,13 +12,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping
 public class ProductController {
 
     private final ProductService productService;
 
+
+    @GetMapping("/home")
+    public String get_Home(Model model) {
+        List<Product> latestProducts = productService.getLatestProducts();
+        model.addAttribute("products", latestProducts);
+        return "main/main";
+    }
     // 상품 등록 페이지(GET)
     @GetMapping("/product/new")
     public String productSaveForm(){
@@ -54,11 +65,18 @@ public class ProductController {
     }
 
     // 상품 상세 페이지
-    @GetMapping("/product/view/{id}")
-    public String productView(Model model, @PathVariable("id") Long id){
-        model.addAttribute("product", productService.productView(id));
-        return "/seller/productView";
+//    @GetMapping("/product/view/{id}")
+//    public String productView(Model model, @PathVariable("id") Long id){
+//        model.addAttribute("product", productService.productView(id));
+//        return "/seller/productView";
+//    }
+    @GetMapping("/product/detail/{id}")
+    public String productDetail(Model model, @PathVariable("id") Long id) {
+        Product product = productService.productView(id);
+        model.addAttribute("product", product);
+        return "product-detail/productDetail"; // 상품 상세 페이지로 이동
     }
+
 
     // 상품 리스트 페이지
     @GetMapping("/product/list/{id}")

@@ -28,13 +28,17 @@
                     <input class="header-search-input-placeholder" placeholder="search">
                 </label>
             </div>
-
-            <div class="header-nav-login-button">
+            <div th:if="${session.user}" class="header-nav-user-info">
+                <span class="header-nav-username" th:text="${session.user.username} + ' 님'"></span>
+                <a href="/logout">로그아웃</a>
+                <a href="/mypage">마이페이지</a>
+            </div>
+            <div th:unless="${session.user}" class="header-nav-login-button">
                 <span class="header-nav-login-button-text" onclick="window.location.href='/signIn'">
                     로그인
                 </span>
             </div>
-            <div class="header-nav-signup-button">
+            <div th:unless="${session.user}" class="header-nav-signup-button">
             <span class="header-nav-signup-button-text" onclick="window.location.href='/signUp'">
                 회원가입
             </span>
@@ -73,65 +77,10 @@
 </div>
 
 <div class="product-grid">
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
+    <div th:each="product : ${products}" class="product">
+        <img th:src="${product.image}" th:alt="${product.name}" alt="Product Image">
+        <div class="product-name" th:text="${product.name}">Product Name</div>
+        <div class="product-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA')} + '원'">0원</div>
     </div>
 </div>
 

@@ -4,13 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shopping Mall</title>
-  <!-- 아이콘 -->
-  <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/elice-rabbit-favicon.png"
-  />
   <!-- bulma css 관련 -->
   <link
           rel="stylesheet"
@@ -25,10 +18,11 @@
   <!-- Daum 주소 API 사용하기 위한 파일 -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <!-- 커스텀 css, js -->
-  <link rel="stylesheet" href="/templates/css//header.css">
-  <link rel="stylesheet" href="/templates/css//order.css" />
-  <script src="/order/order.js" type="module" defer></script>
+  <link rel="stylesheet" href="/templates/css/header.css">
+  <link rel="stylesheet" href="order.css" />
+  <script src="order.js" type="module" defer></script>
 </head>
+
 <header id="header-component">
   <div class="header-container">
     <div class="header-logo">
@@ -52,13 +46,14 @@
             </span>
       </div>
       <div class="header-nav-signup-button">
-            <span class="header-nav-signup-button-text">
+            <span class="header-nav-login-button-text">
                 회원가입
             </span>
       </div>
     </div>
   </div>
 </header>
+
 
 <!-- 배송지 정보 입력 박스 -->
 <section class="section">
@@ -72,6 +67,35 @@
       </div>
       <div class="subtitle">
         <p class="is-size-6">&gt; &nbsp;주문완료</p>
+      </div>
+    </div>
+
+    <div class="tile outer-box">
+      <div class="inner-box">
+        <p class="subtitle is-4">결제자 정보</p>
+        <div class="buyer-info">
+          <div class="info">
+            <p>구매자명: </p>
+            <p class="buyer" id="buyerName"></p>
+          </div>
+          <div class="info">
+            <p>연락처:</p>
+            <p class="buyer" id="buyerPhone"></p>
+          </div>
+          <div class="info">
+            <p>이메일: </p>
+            <p class="buyer" id="buyerEmail"></p>
+          </div>
+          <div class="info">
+            <p>회원 등급: </p>
+            <p class="buyer" id="buyerGrade"></p>
+          </div>
+          <div class="info">
+            <p>회원 주소: </p>
+            <p class="buyer" id="buyerAddress"></p>
+          </div>
+
+        </div>
       </div>
     </div>
 
@@ -180,7 +204,7 @@
             </div>
           </div>
 
-          <div class="field is-horizontal">
+          <!-- <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label" for="requestSelectBox">요청사항</label>
             </div>
@@ -209,7 +233,7 @@
                 </select>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div
                   class="field is-horizontal custom-request"
@@ -243,22 +267,27 @@
           <div class="order-info">
             <div class="info">
               <p>주문상품</p>
+              <!-- <div class="one-product"> -->
               <p class="products-title" id="productsTitle"></p>
+              <p class="products-amount" id="productsAmount"></p>
+              <p class="products-payment" id="productsPayment"></p>
+              <!-- </div> -->
             </div>
             <div class="info">
               <p>상품총액</p>
               <p id="productsTotal"></p>
             </div>
-            <div class="info">
+            <!-- <div class="info">
               <p>배송비</p>
               <p id="deliveryFee"></p>
-            </div>
+            </div> -->
           </div>
           <div class="total">
             <p class="total-label">총 결제금액</p>
             <p class="total-price" id="orderTotal"></p>
           </div>
           <div class="purchase">
+
             <button class="button is-custom" id="checkoutButton" style="background-color: #5D5A88; color: #FFFFFF; ">
               결제하기
             </button>

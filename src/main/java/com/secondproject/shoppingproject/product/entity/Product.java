@@ -1,6 +1,9 @@
 package com.secondproject.shoppingproject.product.entity;
 
 
+import com.secondproject.shoppingproject.category.entity.Category;
+import com.secondproject.shoppingproject.user.constant.Grade;
+import com.secondproject.shoppingproject.user.constant.Role;
 import com.secondproject.shoppingproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +23,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private int price; //가격
     private String name; //상품명
@@ -32,6 +35,11 @@ public class Product {
     @JoinColumn(name = "seller_id")
     private User seller; // 판매자 아이디
 
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     private String image; // 상품 이미지
 
     @DateTimeFormat(pattern = "YYYY-MM-DD")
@@ -42,4 +50,13 @@ public class Product {
         this.createAt = LocalDate.now();
     }
 
+    @Builder
+    public Product(int price, String name, String description, boolean status, int current_stock, String image) {
+        this.price=price;
+        this.name=name;
+        this.description=description;
+        this.status=status;
+        this.current_stock=current_stock;
+        this.image=image;
+    }
 }
