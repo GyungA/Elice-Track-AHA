@@ -30,7 +30,14 @@
             </div>
             <div th:if="${session.user}" class="header-nav-user-info">
                 <span class="header-nav-username" th:text="${session.user.name} + ' 님'"></span>
-                <a href="/logout">로그아웃</a>
+                <form
+                        action="/signOut"
+                        method="post"
+                        class="header-nav-login-button-text"
+                >
+                    <!-- 수정된 부분: 버튼 클래스를 로그인 버튼과 동일하게 설정 -->
+                    <button type="submit" class="header-nav-login-button-text">로그아웃</button>
+                </form>
                 <a href="/mypage">마이페이지</a>
             </div>
             <div th:unless="${session.user}" class="header-nav-login-button">
@@ -75,7 +82,7 @@
 <div class="banner">
     아이디어 하우스에 오신 것을 환영합니다.
 </div>
-
+<!--
 <div class="product-grid">
     <div th:each="product : ${products}" class="product">
         <img th:src="${product.image}" th:alt="${product.name}" alt="Product Image">
@@ -83,7 +90,69 @@
         <div class="product-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA')} + '원'">0원</div>
     </div>
 </div>
-
+-->
+<div class="product-grid">
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+</div>
 <div class="footer-line">
     Idea House © 2024
 </div>
