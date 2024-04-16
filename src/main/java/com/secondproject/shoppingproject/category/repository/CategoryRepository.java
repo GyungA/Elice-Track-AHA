@@ -10,18 +10,13 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    @Query("SELECT c FROM Category c WHERE c.parentCategory IS NULL")
-    List<Category> findTopLevelCategories();
+    @Query("SELECT c FROM Category c WHERE c.parentId IS NULL")
+    List<Category> findParentCategories();
 
-    List<Category> findByLevel(Integer level);
+    List<Category> findAllByParentId(Long parentId);
 
-    List<Category> findAllByParentCategoryId(Long parentId);
-
-    Category findByName(String categoryName);
-
-    Category findCategoryIdByName(String categoryName);
+    Long findCategoryIdByName(String categoryName);
 
 
 
 }
-

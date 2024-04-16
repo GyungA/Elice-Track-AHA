@@ -1,16 +1,19 @@
 package com.secondproject.shoppingproject.category.service;
 
 import com.secondproject.shoppingproject.category.dto.CategoryDTO;
-import com.secondproject.shoppingproject.category.dto.ParentCategoryDTO;
 import com.secondproject.shoppingproject.category.entity.Category;
 import com.secondproject.shoppingproject.category.repository.CategoryRepository;
-import com.secondproject.shoppingproject.error.CategoryAlreadyExistsException;
-import com.secondproject.shoppingproject.error.InvalidParentCategoryException;
+import com.secondproject.shoppingproject.error.CategoryNotFoundException;
+import com.secondproject.shoppingproject.product.entity.Product;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 @Service
 public class CategoryService {
@@ -20,55 +23,46 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> getAllTopLevelCategories() {
-        return categoryRepository.findTopLevelCategories();
+    public List<CategoryDTO> getParentCategories() {
+        return categoryRepository.findParentCategories().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    public List<CategoryDTO> getAllByParentId(Long parentId) {
+        return categoryRepository.findAllByParentId(parentId).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Category> findTopLevelCategories() {
-        return categoryRepository.findByLevel(1);
+    public Long findCategoryId(String name) {
+        return categoryRepository.findCategoryIdByName(name);
     }
 
-    public List<Category> getAllSubCategories(Long parentId) {
-        return categoryRepository.findAllByParentCategoryId(parentId);
+    private CategoryDTO convertToDTO(Category category) {
+        return new CategoryDTO(category.getCategoryId(), category.getName(), category.getParentId());
     }
 
-    @Transactional
-    public void addCategory(CategoryDTO categoryDTO, ParentCategoryDTO parentCategoryDTO) throws CategoryAlreadyExistsException, InvalidParentCategoryException {
-        String categoryName = categoryDTO.getName();
-        String parentCategoryName = parentCategoryDTO.getName();
-
-        Category existingCategory = categoryRepository.findByName(categoryName);
-
-        if (existingCategory != null) {
-            throw new CategoryAlreadyExistsException("이미 존재하는 카테고리입니다.");
+    public CategoryDTO addCategory(CategoryDTO categoryDTO) {
+        if(StringUtils.isBlank(categoryDTO.getName())) {
+            throw new IllegalArgumentException("Category name cannot be empty");
         }
 
-        if (parentCategoryName == null) {
-            Category category = new Category();
-            category.setName(categoryName);
-            category.setLevel(1);
-            categoryRepository.save(category);
-        } else {
-            Category parentCategory = categoryRepository.findByName(parentCategoryName);
-            if (parentCategory == null) {
-                throw new InvalidParentCategoryException("상위 카테고리 이름이 올바르지 않습니다.");
-            }
+        Category category = new Category();
+        category.setName(categoryDTO.getName());
+        category.setParentId(categoryDTO.getParentId());
+        category = categoryRepository.save(category);
 
-            Category category = new Category();
-            category.setName(categoryName);
-            category.setLevel(2);
-            Category parentId = categoryRepository.findCategoryIdByName(parentCategoryName);
-            category.setParentCategory(parentId);
-            categoryRepository.save(category);
-        }
-
+        return convertToDTO(category);
     }
-
     @Transactional
     public void deleteCategory(Long categoryId) {
-        categoryRepository.deleteById(categoryId);
+        // 삭제하기 전에 존재하는지 확인
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundException("Category with id: " + categoryId + " not found."));
+
+        categoryRepository.delete(category);
     }
 
-}
 
+}
 

@@ -1,23 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Mall Homepage</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>계정 관리</title>
+
+    <!-- bulma css -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+            defer
+            src="https://kit.fontawesome.com/9daa42bcef.js"
+            crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/templates/account/account.css" />
     <link rel="stylesheet" href="/templates/css/header.css" />
-    <link rel="stylesheet" href="/templates/css/navigation.css" />
     <link rel="stylesheet" href="/templates/css/footer.css" />
-    <link rel="stylesheet" href="/templates/main/main.css"/>
+    <link rel="stylesheet" href="/templates/css/navigation.css" />
+    <script src="/templates/account/account.js" type="module" defer></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          var dropdowns = document.querySelectorAll('.navbar .dropdown');
+          dropdowns.forEach(function(dropdown) {
+            dropdown.addEventListener('mouseover', function() {
+              this.querySelector('.dropdown-content').style.display = 'block';
+            });
+            dropdown.addEventListener('mouseout', function() {
+              this.querySelector('.dropdown-content').style.display = 'none';
+            });
+          });
+        });
+    </script>
 </head>
 <body>
-<!--<div class="header">-->
-<!--    <div class="logo">Shopping Mall</div>-->
-<!--</div>-->
 <header id="header-component">
     <div class="header-container">
         <div class="header-logo">
             <a href="/home">
-                <img class="header-title-image" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" alt="아하">
+                <img class="header-title-image" src="https://i.ibb.co/N20ZLds/logo.jpg" alt="아하">
             </a>
         </div>
         <div class="header-nav-list">
@@ -38,7 +63,7 @@
                 </form>
             </div>
             <div th:if="${session.user}" class="header-nav-user-info">
-<!--                <button type="button" class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</button> -->
+                <!--                <button type="button" class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</button> -->
                 <span class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</span>
             </div>
             <div th:unless="${session.user}" class="header-nav-login-button">
@@ -79,86 +104,73 @@
     <a href="#authorfeed">소담상회</a>
 
 </div>
+<!-- 계정관리 관련 목록 -->
+<section class="section">
+    <div class="container">
+        <div class="block account-header">
+            <h1 class="title">계정관리</h1>
+        </div>
+        <div class="menu-container">
+            <!-- 주문조회 -->
+            <a class="menu-card" href="/account/orders">
+                <div class="menu-icon">
+              <span class="icon has-text-info">
+                <i class="fa-solid fa-credit-card"></i>
+              </span>
+                </div>
+                <div class="menu-body">
+                    <p class="title is-3">주문조회</p>
+                    <p class="subtitle is-5">
+                        지난 주문 내역을 확인, 취소할 수 있습니다.
+                    </p>
+                </div>
+            </a>
 
+            <!-- 회원정보 관리 -->
+            <a class="menu-card" href="/account/security">
+                <div class="menu-icon">
+              <span class="icon has-text-info">
+                <i class="fa-solid fa-user-gear"></i>
+              </span>
+                </div>
+                <div class="menu-body">
+                    <p class="title is-3">회원정보 관리</p>
+                    <p class="subtitle is-5">회원 정보를 확인, 수정할 수 있습니다.</p>
+                </div>
+            </a>
 
-<div class="banner">
-    아이디어 하우스에 오신 것을 환영합니다.
-</div>
-<!--
-<div class="product-grid">
-    <div th:each="product : ${products}" class="product">
-        <img th:src="${product.image}" th:alt="${product.name}" alt="Product Image">
-        <div class="product-name" th:text="${product.name}">Product Name</div>
-        <div class="product-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA')} + '원'">0원</div>
-    </div>
-</div>
--->
-<div class="product-grid">
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-</div>
+            <!-- 제품 추가하기 -->
+            <a class="menu-card" href="/product/add">
+                <div class="menu-icon">
+              <span class="icon has-text-info">
+                <i class="fa-solid fa-won-sign"></i>
+              </span>
+                </div>
+                <div class="menu-body">
+                    <p class="title is-3">제품판매</p>
+                    <p class="subtitle is-5">
+                        제품 정보를 등록하여, 판매를 시작할 수 있습니다.
+                    </p>
+                </div>
+            </a>
 
-<div class="footer-line">
-    Idea House © 2024
-</div>
+            <!-- 회원 탈퇴하기 -->
+            <!--          <a class="menu-card" href="/account/signout">-->
+            <!--            <div class="menu-icon">-->
+            <!--              <span class="icon has-text-info">-->
+            <!--                <i class="fa-solid fa-user-slash"></i>-->
+            <!--              </span>-->
+            <!--            </div>-->
+            <!--            <div class="menu-body">-->
+            <!--              <p class="title is-3">회원 탈퇴</p>-->
+            <!--              <p class="subtitle is-5">-->
+            <!--                모든 정보를 안전하게 삭제한 후 탈퇴할 수 있습니다.-->
+            <!--              </p>-->
+            <!--            </div>-->
+            <!--          </a>-->
+        </div>
+    </div>
+</section>
 <footer class="footer">
     <div class="footer-navigation body3-regular-medium text-center">
         <div>이용약관</div>
@@ -181,7 +193,7 @@
         <div class="full">
             <div class="body3-regular-medium text-left">
                 <div class="float-left">
-                    <img class="baseLogo" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" style="height: 42px; width: 100px;"/>
+                    <img class="baseLogo" src="https://i.ibb.co/N20ZLds/logo.jpg" style="height: 42px; width: 100px;"/>
                 </div>
                 <div class="float-left" style="width: 450px;">
                     <div class="mb-[8px] body3-bold-medium">(주) 아이디어하우스</div>
@@ -247,7 +259,7 @@
                                 <img src="https://i.ibb.co/fFHCHkq/1-removebg-preview.png" alt="5" style="width: 106px; height: 60px;">
                             </div>
                             <div class="TheFooter__award2">
-                                <img src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png"  alt="6" style="width: 76px; height: 60px;">
+                                <img src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png" alt="6" style="width: 76px; height: 60px;">
                             </div>
                         </div>
                     </div>

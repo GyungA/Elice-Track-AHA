@@ -1,69 +1,48 @@
 package com.secondproject.shoppingproject.category.controller;
 
 import com.secondproject.shoppingproject.category.dto.CategoryDTO;
-import com.secondproject.shoppingproject.category.dto.ParentCategoryDTO;
-import com.secondproject.shoppingproject.error.CategoryAlreadyExistsException;
 import com.secondproject.shoppingproject.category.service.CategoryService;
-import com.secondproject.shoppingproject.error.InvalidParentCategoryException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-@Controller
-@RequestMapping("/categories")
+@RestController
+@RequestMapping("/api/categories")
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @Autowired
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
-
     @GetMapping
-    public String showTopLevelCategories(Model model) {
-        model.addAttribute("categories", categoryService.getAllTopLevelCategories());
-        return "topLevelCategories";
+    public ResponseEntity<?> showParentCategories(Model model) {
+//        model.addAttribute("parentCategories", categoryService.getParentCategories());
+        return ResponseEntity.ok(categoryService.getParentCategories());
     }
 
     @GetMapping("/{parentId}")
-    public String showSubCategories(@PathVariable("parentId") Long parentId, Model model) {
-        model.addAttribute("categories", categoryService.getAllSubCategories(parentId));
-        return "subCategories";
+    public ResponseEntity<?> showSubCategories(@PathVariable("parentId") Long parentId, Model model) {
+//        model.addAttribute("subCategories", categoryService.getAllByParentId(parentId));
+        return ResponseEntity.ok(categoryService.getAllByParentId(parentId));
     }
     @GetMapping("/add")
     public String showAddCategoryForm() {
-        return "addCategory";
+        return "category-add";
     }
 
-
-    @PostMapping("/add")
-    public ResponseEntity<String> addCategory(@RequestParam("name") String name, @RequestParam("parent") String parentCategoryName) {
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setName(name);
-        ParentCategoryDTO parentCategoryDTO = new ParentCategoryDTO();
-        parentCategoryDTO.setName(parentCategoryName);
-
-        try {
-            categoryService.addCategory(categoryDTO, parentCategoryDTO);
-            return ResponseEntity.ok("카테고리가 성공적으로 추가되었습니다.");
-        } catch (CategoryAlreadyExistsException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (InvalidParentCategoryException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    @PostMapping
+    public ResponseEntity<?> addCategory(@RequestBody CategoryDTO categoryDTO) {
+        CategoryDTO newCategory = categoryService.addCategory(categoryDTO);
+        return ResponseEntity.ok(newCategory);
     }
 
-    @PostMapping("/{categoryId}")
-    public ResponseEntity<String> deleteCateogry(@PathVariable Long categoryId) {
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<?> delete(@PathVariable Long categoryId) {
         categoryService.deleteCategory(categoryId);
-        return ResponseEntity.ok("카테고리 삭제 완료");
+        return ResponseEntity.ok().build();
     }
-
 
 
 }

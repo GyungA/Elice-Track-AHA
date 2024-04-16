@@ -5,7 +5,7 @@ body {
 }
 
 .header {
-    background: #5D5A88; /* Adjusted color */
+    background: #5D5A88;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -13,43 +13,43 @@ body {
 .logo {
     font-size: 24px;
     font-weight: bold;
-    color: #FFF; /* Changed to white for contrast */
+    color: #FFF;
 }
 
-.navbar {
-    overflow: hidden;
-    background-color: #5D5A88; /* Adjusted color */
-    place-items: center;
-    display: flex;
-    justify-content: center;
-}
+/*.navbar {*/
+/*    overflow: hidden;*/
+/*    background-color: #5D5A88;*/
+/*    place-items: center;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*}*/
 
-.navbar a {
-    float: left;
-    display: block;
-    color: white; /* Ensuring contrast */
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-    font-size: 17px;
-}
+/*.navbar a {*/
+/*    float: left;*/
+/*    display: block;*/
+/*    color: white;*/
+/*    text-align: center;*/
+/*    padding: 14px 20px;*/
+/*    text-decoration: none;*/
+/*    font-size: 17px;*/
+/*}*/
 
-.navbar a:hover {
-    background-color: #817B9F; /* Lighter shade for hover effect */
-    color: black;
-}
+/*.navbar a:hover {*/
+/*    background-color: #817B9F;*/
+/*    color: black;*/
+/*}*/
 
-.banner {
-    width: 100%;
-    display: block;
-    padding: 20px;
-    text-align: center;
-    background-image: url('banner-image.jpg');
-    background-size: cover;
-    color: #5D5A88;
-    font-size: 28px;
-    font-weight: bold;
-}
+/*.banner {*/
+/*    width: 100%;*/
+/*    display: block;*/
+/*    padding: 20px;*/
+/*    text-align: center;*/
+/*    !*background-image: url('banner-image.jpg');*!*/
+/*    background-size: cover;*/
+/*    color: #5D5A88;*/
+/*    font-size: 28px;*/
+/*    font-weight: bold;*/
+/*}*/
 
 .product-grid {
     display: grid;
@@ -59,7 +59,7 @@ body {
 }
 
 .product {
-    background: #FFF; /* Keeping product background white for contrast */
+    background: #FFF;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -70,19 +70,19 @@ body {
 }
 
 .product-name {
-    color: #5D5A88; /* Adjusted color */
+    color: #5D5A88;
     font-size: 20px;
     margin-top: 15px;
 }
 
 .product-price {
-    color: #666; /* Keeping this subtle */
+    color: #666;
     font-size: 16px;
 }
 
 .footer-line {
-    background-color: #5D5A88; /* Adjusted color */
-    color: white; /* Changed to white for contrast */
+    background-color: #5D5A88;
+    color: white;
     text-align: center;
     padding: 20px;
     position: relative;
@@ -90,49 +90,49 @@ body {
     width: 100%;
 }
 
-.dropdown {
-    float: left;
-    overflow: hidden;
-}
+/*.dropdown {*/
+/*    float: left;*/
+/*    overflow: hidden;*/
+/*}*/
 
-.dropdown .dropbtn {
-    cursor: pointer;
-    font-size: 17px;
-    border: none;
-    outline: none;
-    color: #FFFFFF;
-    padding: 14px 20px;
-    background-color: #5D5A88;
-    font-family: inherit;
-    margin: 0;
-}
+/*.dropdown .dropbtn {*/
+/*    cursor: pointer;*/
+/*    font-size: 17px;*/
+/*    border: none;*/
+/*    outline: none;*/
+/*    color: #FFFFFF;*/
+/*    padding: 14px 20px;*/
+/*    background-color: #5D5A88;*/
+/*    font-family: inherit;*/
+/*    margin: 0;*/
+/*}*/
 
-.navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: #817B9F;
-}
+/*.navbar a:hover, .dropdown:hover .dropbtn {*/
+/*    background-color: #817B9F;*/
+/*}*/
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
+/*.dropdown-content {*/
+/*    display: none;*/
+/*    position: absolute;*/
+/*    background-color: #f9f9f9;*/
+/*    min-width: 160px;*/
+/*    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+/*    z-index: 1;*/
+/*}*/
 
-.dropdown-content a {
-    float: none;
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
+/*.dropdown-content a {*/
+/*    float: none;*/
+/*    color: black;*/
+/*    padding: 12px 16px;*/
+/*    text-decoration: none;*/
+/*    display: block;*/
+/*    text-align: left;*/
+/*}*/
 
-.dropdown-content a:hover {
-    background-color: #817B9F;
-}
+/*.dropdown-content a:hover {*/
+/*    background-color: #817B9F;*/
+/*}*/
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+/*.dropdown:hover .dropdown-content {*/
+/*    display: block;*/
+/*}*/

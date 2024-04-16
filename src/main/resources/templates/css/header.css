@@ -120,3 +120,66 @@
 .header-nav-signup-button:hover {
     background-color: rgba(0, 0, 0, 0.03);
 }
+
+.header-nav-username{
+    overflow-wrap: break-word;
+     font-weight: 700;
+     font-size: 16px;
+     font-family: "DM Sans", "Helvetica";
+     line-height: 1.125;
+     color: rgba(93, 90, 136, 1);
+}
+
+.header-nav-logout-button {
+    border-radius: 30px;
+    background-color: rgba(93, 90, 136, 1);
+    margin-right: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px;
+    width: 93px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.header-nav-logout-button:hover {
+    background-color: rgba(93, 90, 136, 0.8);
+}
+
+.header-nav-logout-button-text {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.125;
+    color: white;
+    font-family: "DM Sans", "Helvetica";
+    background: none; /* 배경 없음 */
+    border: none; /* 테두리 없음 */
+    cursor: pointer;
+    outline: none; /* 포커스 효과 제거 */
+}
+
+.header-nav-user-info {
+    border-radius: 30px;
+    border: 1px solid #D4D2E3;
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px 0;
+    width: 107px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.header-nav-user-info-text {
+    overflow-wrap: break-word;
+    font-weight: 700;
+    font-size: 15px;
+    font-family: "DM Sans", "Helvetica";
+    line-height: 1.125;
+    color: rgba(93, 90, 136, 1);
+}
+
+.header-nav-user-info:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}

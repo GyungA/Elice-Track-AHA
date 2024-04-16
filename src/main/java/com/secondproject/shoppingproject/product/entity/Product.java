@@ -51,12 +51,14 @@ public class Product {
     }
 
     @Builder
-    public Product(int price, String name, String description, boolean status, int current_stock, String image) {
+    public Product(int price, String name, String description, boolean status, int current_stock, User seller, Category category, String image) {
         this.price=price;
         this.name=name;
         this.description=description;
         this.status=status;
         this.current_stock=current_stock;
+        this.seller=seller;
+        this.category=category;
         this.image=image;
     }
 }

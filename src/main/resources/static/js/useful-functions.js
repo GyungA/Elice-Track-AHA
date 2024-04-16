@@ -1,3 +1,4 @@
+// 문자열+숫자로 이루어진 랜덤 5글자 반환
 export const randomId = () => {
   return Math.random().toString(36).substring(2, 7);
 };
@@ -146,4 +147,4 @@ export const randomPick = (items) => {
 };
 
 // 주변 다른 파일 것도 여기서 일괄 export 함
-export { createNavbar } from "static/js/navbar.js";
+export { createNavbar } from "./navbar.js";

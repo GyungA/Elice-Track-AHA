@@ -30,6 +30,13 @@ public class ProductController {
         model.addAttribute("products", latestProducts);
         return "main/main";
     }
+
+    @GetMapping("/product/{id}")
+    public String productDetail(Model model, @PathVariable("id") Long id) {
+        Product product = productService.productView(id);
+        model.addAttribute("product", product);
+        return "product-detail/product-detail"; // 상품 상세 페이지로 이동
+    }
     // 상품 등록 페이지(GET)
     @GetMapping("/product/new")
     public String productSaveForm(){
@@ -70,12 +77,6 @@ public class ProductController {
 //        model.addAttribute("product", productService.productView(id));
 //        return "/seller/productView";
 //    }
-    @GetMapping("/product/detail/{id}")
-    public String productDetail(Model model, @PathVariable("id") Long id) {
-        Product product = productService.productView(id);
-        model.addAttribute("product", product);
-        return "product-detail/productDetail"; // 상품 상세 페이지로 이동
-    }
 
 
     // 상품 리스트 페이지

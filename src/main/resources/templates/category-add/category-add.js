@@ -67,3 +67,22 @@ async function handleSubmit(e) {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
+
+// 사용자가 사진을 업로드했을 때, 파일 이름이 화면에 나타나도록 함.
+function handleImageUpload() {
+  const file = imageInput.files[0];
+  if (file) {
+    fileNameSpan.innerText = file.name;
+  } else {
+    fileNameSpan.innerText = "";
+  }
+}
+
+// 색상 선택 시, 선택박스에 해당 색상 반영되게 함.
+function handleColorChange() {
+  const index = themeSelectBox.selectedIndex;
+
+  themeSelectBox.style.color = themeSelectBox[index].style.color;
+  themeSelectBox.style.backgroundColor =
+    themeSelectBox[index].style.backgroundColor;
+}

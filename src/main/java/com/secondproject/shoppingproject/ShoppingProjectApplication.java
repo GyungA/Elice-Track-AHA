@@ -1,5 +1,6 @@
 package com.secondproject.shoppingproject;
 
+import com.secondproject.shoppingproject.product.entity.ProductRepository;
 import com.secondproject.shoppingproject.user.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +18,7 @@ public class ShoppingProjectApplication {
 
     @Bean
     @Profile("local")
-    public DataInit stubDataInit(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        return new DataInit(userRepository, passwordEncoder);
+    public DataInit stubDataInit(UserRepository userRepository, ProductRepository productRepository, PasswordEncoder passwordEncoder) {
+        return new DataInit(userRepository, productRepository,passwordEncoder);
     }
 }

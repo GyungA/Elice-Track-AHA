@@ -7,12 +7,12 @@ import com.secondproject.shoppingproject.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/users")
+@Controller
 public class UserController {
     private final UserService userService;
 
@@ -20,14 +20,24 @@ public class UserController {
     public UserController(UserService userService){
         this.userService=userService;
     }
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUser(){
-        List<User> userList = userService.getAllUsers();
-        if(userList.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(userList, HttpStatus.OK);
+//    @GetMapping("/account-manage")
+//    public ResponseEntity<List<User>> getAllUser(){
+//        List<User> userList = userService.getAllUsers();
+//        if(userList.isEmpty()){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(userList, HttpStatus.OK);
+//    }
+    @GetMapping("/account")
+    public String get_Account(){
+        return "account/account";
     }
+
+    @GetMapping("/account/security")
+    public String get_AccountSecurity(){
+        return "account-security/account-security";
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable("userId") Long userId){
         User user = userService.getUserById(userId);

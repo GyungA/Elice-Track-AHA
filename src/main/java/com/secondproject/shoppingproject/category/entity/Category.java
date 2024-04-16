@@ -8,6 +8,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
 @Entity
 @NoArgsConstructor
 @Getter @Setter
@@ -15,20 +18,22 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_key")
-    private Long id;
 
-    @Column(name = "category_name")
+    private Long categoryId;
+
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_key")
-    private Category parentCategory;
+    private Long parentId;
 
-    @OneToMany(mappedBy = "parentCategory")
-    private List<Category> subCategory = new ArrayList<>();
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "parent_key")
+//    private Category parentCategory;
 
-    private Integer level;
+//    @OneToMany(mappedBy = "parentCategory")
+//    private List<Category> subCategory = new ArrayList<>();
 
-
+    public Category(String name, Long parentId) {
+        this.name = name;
+        this.parentId = parentId;
+    }
 }

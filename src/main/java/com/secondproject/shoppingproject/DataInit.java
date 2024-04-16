@@ -1,5 +1,6 @@
 package com.secondproject.shoppingproject;
 
+import com.secondproject.shoppingproject.product.entity.ProductRepository;
 import com.secondproject.shoppingproject.user.constant.Grade;
 import com.secondproject.shoppingproject.user.constant.Role;
 import com.secondproject.shoppingproject.user.dto.request.SignUpRequest;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class DataInit {
     private final UserRepository userRepository;
+    private final ProductRepository productRepository;
     private final PasswordEncoder passwordEncoder;
     @PostConstruct
     public void init() {

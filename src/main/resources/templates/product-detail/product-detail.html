@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,7 +24,7 @@
     <!-- Daum 주소 API 사용하기 위한 파일 -->
     <!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="../css//header.css" />
+    <link rel="stylesheet" href="/templates/css/header.css" />
     <link rel="stylesheet" href="product-detail.css" />
     <script src="product-detail.js" type="module" defer></script>
 </head>
@@ -32,7 +32,7 @@
 <header id="header-component">
     <div class="header-container">
         <div class="header-logo">
-            <a href="#">
+            <a href="/home">
                 <img
                         class="header-title-image"
                         src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png"
@@ -56,12 +56,27 @@
                     />
                 </label>
             </div>
-
-            <div class="header-nav-login-button">
-                <span class="header-nav-login-button-text"> 로그인 </span>
+            <div th:if="${session.user}" class="header-nav-user-info">
+                <span class="header-nav-username" th:text="${session.user.name} + ' 님'"></span>
+                <form
+                        action="/signOut"
+                        method="post"
+                        class="header-nav-login-button-text"
+                >
+                    <!-- 수정된 부분: 버튼 클래스를 로그인 버튼과 동일하게 설정 -->
+                    <button type="submit" class="header-nav-login-button-text">로그아웃</button>
+                </form>
+                <a href="/mypage">마이페이지</a>
             </div>
-            <div class="header-nav-signup-button">
-                <span class="header-nav-signup-button-text"> 회원가입 </span>
+            <div th:unless="${session.user}" class="header-nav-login-button">
+                <span class="header-nav-login-button-text" onclick="window.location.href='/signIn'">
+                    로그인
+                </span>
+            </div>
+            <div th:unless="${session.user}" class="header-nav-signup-button">
+                <span class="header-nav-signup-button-text" onclick="window.location.href='/signUp'">
+                    회원가입
+                </span>
             </div>
         </div>
     </div>
@@ -75,7 +90,8 @@
                 <div class="tile is-child box product-image">
                     <figure class="image is-sqaure">
                         <!-- 상품 이미지 -->
-                        <img id="productImageTag" src="" />
+                        <img id="productImageTag" src="" th:src="${product.image}" />
+                    </figure>
                     </figure>
                 </div>
             </div>
@@ -84,39 +100,36 @@
                     <div class="tabs">
                         <ul>
                             <!-- 카테고리 -->
-                            <li id="manufacturerTag"></li>
+                            <li th:text="${product.category.name}"></li>
                         </ul>
                     </div>
                     <div class="content">
                         <div class="product-name-status">
                             <!-- 상품 이름 -->
-                            <p
-                                    class="subtitle is-3 is-family-monospace"
-                                    id="titleTag"
-                            ></p>
+                            <p class="subtitle is-3 is-family-monospace" th:text="${product.name}"></p>
                             <div class="status-wrapper">
                                 <!-- 상품 상태를 나타내는 아이콘 -->
-                                <span class="material-symbols-outlined">
-                      fiber_manual_record
-                    </span>
+                                <span class="material-symbols-outlined" th:class="${product.status ? 'icon-active' : 'icon-inactive'}">
+                                        fiber_manual_record
+                                </span>
                                 <!-- 상품 상태 -->
-                                <p class="proudct-status" id="statusTag"></p>
+                                <p class="product-status" th:text="${product.status ? '판매 중' : '일시 품절'}"></p>
                             </div>
                         </div>
 
                         <!-- 상품 가격 -->
-                        <h1 id="priceTag"></h1>
+                        <h1 th:text="${'가격: ' + product.price + '원'}"></h1>
                         <!-- 상품 판매자 -->
                         <div class="seller-wrapper">
                             <p>판매자:</p>
-                            <p class="seller-name" id="sellerName"></p>
+                            <p class="seller-name" th:text="${product.seller.name}"></p>
                         </div>
                         <!-- 상품 설명 -->
-                        <p class="detail-description" id="detailDescriptionTag"></p>
+                        <p class="detail-description" th:text="${product.description}"></p>
                         <div class="stock-wrapper">
                             <!-- 남은 수량 -->
                             <p class="remain-stock-word">남은 수량:</p>
-                            <p class="remain-stock" id="remainStock"></p>
+                            <p class="remain-stock" th:text="${product.current_stock}"></p>
                         </div>
                     </div>
                 </div>
