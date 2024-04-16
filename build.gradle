@@ -53,6 +53,8 @@ dependencies {
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
     testAnnotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
 
+    //mysql
+    runtimeOnly("com.mysql:mysql-connector-j")
 }
 
 tasks.named('test') {
