@@ -7,8 +7,8 @@
 <body>
 <h1>전체 카테고리</h1>
 <ul>
-    <li th:each="category : ${categories}">
-        <a th:href="@{/categories/{id}(id=${category.id})}" th:text="${category.name}"></a>
+    <li th:each="category : ${parentCategories}">
+        <a th:href="@{/categories/{id}(id=${category.categoryId})}" th:text="${category.name}"></a>
     </li>
 </ul>
 </body>

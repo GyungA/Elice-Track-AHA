@@ -1,4 +1,4 @@
-import { randomId } from "./useful-functions.js";
+import { randomId } from "./useful-functions";
 
 // aws-s3 사이트에서의 설정값들
 const s3BucketName = "elice-shoppingmall";

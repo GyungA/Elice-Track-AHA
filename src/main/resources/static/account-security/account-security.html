@@ -9,20 +9,15 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
-    <!-- 폰트 어썸: 아이콘 -->
-    <script
-      defer
-      src="https://kit.fontawesome.com/9daa42bcef.js"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Daum 주소 API 사용하기 위한 파일 -->
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="/account-security/account-security.css" />
-    <link rel="stylesheet" href="/css/header.css" />
-    <link rel="stylesheet" href="/css/footer.css" />
-    <script src="/account-security/account-security.js"></script>
-    <script src="/js/api.js"></script>
+    <link rel="stylesheet" href="./account-security.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/navigation.css" />
+    <script defer type="module" src="../../static/account-security/account-security.js"></script>
+    <script defer type="module" src="../../static/js/api.js" type="module"></script>
+
   </head>
   <body>
     <!-- 헤더 -->
@@ -56,6 +51,31 @@
         </div>
       </div>
     </header>
+    <div class="custom-navbar">
+      <div class="custom-dropdown">
+        <button class="dropbtn">전체 카테고리</button>
+        <div class="custom-dropdown-content">
+          <a href="#electronics">식품</a>
+          <a href="#jewelry&fashion">주얼리/패션</a>
+          <a href="#home&living">홈리빙</a>
+          <a href="#case&stationery">케이스/문구</a>
+          <a href="#beauty">뷰티</a>
+          <a href="#animal">반려동물</a>
+          <a href="#crafts">공예</a>
+          <a href="#infants&toddlers">영유아동</a>
+        </div>
+      </div>
+      <a href="#home">홈</a>
+      <a href="#new-arrivals">최신작품</a>
+      <a href="#Realtime-purchase">실시간구매</a>
+      <a href="#Realtime-review">실시간후기</a>
+      <a href="#bestproduct">인기작품</a>
+      <a href="#authorfeed">작가피드</a>
+      <a href="#authorfeed">매거진</a>
+      <a href="#authorfeed">최신 작품</a>
+      <a href="#authorfeed">소담상회</a>
+
+    </div>
 
     <!-- 회원정보 박스 -->
     <section class="section">
@@ -74,6 +94,7 @@
                     id="fullNameInput"
                     type="text"
                     autocomplete="off"
+                    disabled="true"
                   />
                   <!-- 토클 스위치 -->
                   <label class="switch">
@@ -91,6 +112,7 @@
                     id="passwordInput"
                     type="password"
                     autocomplete="off"
+                    disabled="true"
                   />
                   <!-- 토클 스위치 -->
                   <label class="switch">
@@ -113,36 +135,27 @@
                     id="passwordConfirmInput"
                     type="password"
                     autocomplete="off"
+                    disabled="true"
                   />
                 </div>
               </div>
               <div class="field">
                 <label class="label">생년월일</label>
                 <div class="control">
-                  <input
-                    class="input"
-                    id="birthInput"
-                    type="date"
-                    autocomplete="off"
-                    disabled
-
-                  />
+                  <input class="input" id="birthInput" type="date" autocomplete="off" disabled="true"/>
                 </div>
               </div>
+
               <div class="field">
                 <label class="label">이메일</label>
                 <div class="control">
-                  <input
-                        class="input"
-                        id="emailInput"
-                        type="email"
-                        autocomplete="off"
-                  />
+                  <input class="input" id="emailInput" type="email" autocomplete="off" disabled="true"/>
                   <label class="switch">
                     <input type="checkbox" id="emailToggle" />
                     <span class="slider round"></span>
                   </label>
                 </div>
+              </div>
               <div class="field">
                 <div class="field-label is-normal">
                   <label class="label label-address" for="address2Input">주소</label>

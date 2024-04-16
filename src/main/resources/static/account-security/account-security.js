@@ -1,5 +1,5 @@
-import { checkLogin, createNavbar } from "static/js/useful-functions";
-import * as Api from "/static/js/api";
+import { createNavbar } from "../js/useful-functions.js";
+import * as Api from "../js/api.js";
 
 // 요소(element), input 혹은 상수
 const securityTitle = document.querySelector("#securityTitle");
@@ -24,7 +24,29 @@ const modalCloseButton = document.querySelector("#modalCloseButton");
 const currentPasswordInput = document.querySelector("#currentPasswordInput");
 const saveCompleteButton = document.querySelector("#saveCompleteButton");
 
-checkLogin();
+// document.getElementById("fullNameToggle").addEventListener("change", (e) => {
+//   console.log("e", e);
+//   if (e.target.checked) {
+//     document.getElementById("fullNameInput").disabled = false;
+//   } else {
+//     document.getElementById("fullNameInput").disabled = true;
+//   }
+// });
+
+document.addEventListener('DOMContentLoaded', function() {
+  var toggle = document.getElementById("fullNameToggle");
+  if (toggle) {
+    toggle.addEventListener("change", (e) => {
+      console.log("Event", e);
+      var input = document.getElementById("fullNameInput");
+      if (input) {
+        input.disabled = !e.target.checked;
+      }
+    });
+  }
+});
+
+// checkLogin();
 addAllElements();
 addAllEvents();
 
@@ -48,6 +70,7 @@ function addAllEvents() {
   document.addEventListener("keydown", keyDownCloseModal);
   saveCompleteButton.addEventListener("click", saveUserData);
 }
+
 
 // input 및 주소찾기 버튼의 disabled <-> abled 상태를 토글함.
 function toggleTargets(e) {

@@ -147,4 +147,4 @@ export const randomPick = (items) => {
 };
 
 // 주변 다른 파일 것도 여기서 일괄 export 함
-export { createNavbar } from "static/js/navbar.js";
+export { createNavbar } from "./navbar.js";
