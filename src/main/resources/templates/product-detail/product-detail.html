@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,7 +24,7 @@
     <!-- Daum 주소 API 사용하기 위한 파일 -->
     <!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="/templates/css/header.css" />
+    <link rel="stylesheet" href="../css//header.css" />
     <link rel="stylesheet" href="product-detail.css" />
     <script src="product-detail.js" type="module" defer></script>
 </head>
@@ -32,11 +32,11 @@
 <header id="header-component">
     <div class="header-container">
         <div class="header-logo">
-            <a href="/home">
+            <a href="#">
                 <img
                         class="header-title-image"
-                        src="https://i.ibb.co/N20ZLds/logo.jpg"
-                        alt=""
+                        src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png"
+                        alt="아하"
                 />
             </a>
         </div>
@@ -58,25 +58,24 @@
             </div>
 
             <div class="header-nav-login-button">
-                <span class="header-nav-login-button-text" onclick="window.location.href='/signIn'"> 로그인 </span>
+                <span class="header-nav-login-button-text"> 로그인 </span>
             </div>
             <div class="header-nav-signup-button">
-                <span class="header-nav-login-button-text" onclick="window.location.href='/signUp'"> 회원가입 </span>
+                <span class="header-nav-signup-button-text"> 회원가입 </span>
             </div>
         </div>
     </div>
 </header>
 
-
 <!-- 제품 상세 설명 카드 -->
 <section class="section">
     <div class="container">
-        <div th:object="${product}">
         <div class="tile is-ancestor product-detail-card">
             <div class="tile is-6 is-parent">
                 <div class="tile is-child box product-image">
                     <figure class="image is-sqaure">
-                        <img th:src="${product.image}" alt="Product Image"/>
+                        <!-- 상품 이미지 -->
+                        <img id="productImageTag" src="" />
                     </figure>
                 </div>
             </div>
@@ -85,7 +84,7 @@
                     <div class="tabs">
                         <ul>
                             <!-- 카테고리 -->
-                            <li id="manufacturerTag" th:text="${product.category.name}"></li>
+                            <li id="manufacturerTag"></li>
                         </ul>
                     </div>
                     <div class="content">
@@ -94,39 +93,38 @@
                             <p
                                     class="subtitle is-3 is-family-monospace"
                                     id="titleTag"
-                                    th:text="${product.name}"
                             ></p>
                             <div class="status-wrapper">
                                 <!-- 상품 상태를 나타내는 아이콘 -->
-                                <span class="material-symbols-outlined" th:text="${product.status ? 'fiber_manual_record' : ''}">
+                                <span class="material-symbols-outlined">
                       fiber_manual_record
                     </span>
                                 <!-- 상품 상태 -->
-                                <p class="proudct-status" id="statusTag" th:text="${product.status ? '판매 중' : '품절'}"></p>
+                                <p class="proudct-status" id="statusTag"></p>
                             </div>
                         </div>
 
                         <!-- 상품 가격 -->
-                        <h1 id="priceTag" th:text="${product.price}"></h1>
+                        <h1 id="priceTag"></h1>
                         <!-- 상품 판매자 -->
                         <div class="seller-wrapper">
                             <p>판매자:</p>
-                            <p class="seller-name" id="sellerName" th:text="${product.seller.name}"></p>
+                            <p class="seller-name" id="sellerName"></p>
                         </div>
                         <!-- 상품 설명 -->
-                        <p class="detail-description" id="detailDescriptionTag" th:text="${product.description}"></p>
+                        <p class="detail-description" id="detailDescriptionTag"></p>
                         <div class="stock-wrapper">
                             <!-- 남은 수량 -->
                             <p class="remain-stock-word">남은 수량:</p>
-                            <p class="remain-stock" id="remainStock" th:text="${product.current_stock}"></p>
+                            <p class="remain-stock" id="remainStock"></p>
                         </div>
                     </div>
                 </div>
                 <div class="add-quentity">
               <span class="count">
-                <a href="" class="minus">-</a>
+                <a href="#" class="minus">-</a>
                 <span id="result">1</span>
-                <a href="" class="plus">+</a>
+                <a href="#" class="plus">+</a>
               </span>
                     <p class="total-cost"></p>
                 </div>
@@ -139,7 +137,7 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 </section>
 </body>
 </html>

@@ -43,4 +43,7 @@ public class SignInService {
         return user;
     }
 
+    public User get_User(String email){
+        return userRepository.findByEmail(email);
+    }
 }

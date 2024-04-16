@@ -29,7 +29,7 @@
                 </label>
             </div>
             <div th:if="${session.user}" class="header-nav-user-info">
-                <span class="header-nav-username" th:text="${session.user.username} + ' 님'"></span>
+                <span class="header-nav-username" th:text="${session.user.name} + ' 님'"></span>
                 <a href="/logout">로그아웃</a>
                 <a href="/mypage">마이페이지</a>
             </div>

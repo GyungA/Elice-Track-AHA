@@ -8,6 +8,8 @@ import com.secondproject.shoppingproject.user.exception.InvalidEmailException;
 import com.secondproject.shoppingproject.user.exception.InvalidPasswordException;
 import com.secondproject.shoppingproject.user.service.SignInService;
 import com.secondproject.shoppingproject.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,12 +46,15 @@ public class SignInController {
     }
 
     @PostMapping("/signIn")
-    public String signIn(@RequestBody SignInRequest signInRequest, Model model) {
+    public String signIn(@RequestBody SignInRequest signInRequest, Model model, HttpServletRequest request) {
         try {
             ResponseEntity<? super SignInResponse> responseEntity = signInService.signIn(signInRequest);
             SignInResponse signInResponse = (SignInResponse) responseEntity.getBody();
             model.addAttribute("message", "로그인 성공");
             model.addAttribute("token", signInResponse.getToken()); // 로그인 성공시 토큰을 받아서 저장하는 예시
+            HttpSession session = request.getSession();
+            User user = signInService.get_User(signInRequest.getEmail());
+            session.setAttribute("user", user);
             return "redirect:/";  // 로그인 성공 후 홈페이지로 이동
            // return "login/login";
         } catch (InvalidEmailException | InvalidPasswordException e) {
