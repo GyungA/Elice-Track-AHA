@@ -1,5 +1,5 @@
 import * as Api from "../js/api.js";
-import { setCookie, getCookie } from "../js/useful-functions.js";
+import { setCookie, getCookie, redirect } from "../js/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 const section = document.querySelector(".one-product-container");
@@ -20,7 +20,7 @@ function addAllEvents() {}
 async function redirectOrders(userId) {
   try {
     //buyer id로 필터링 가능?
-    const endpoint = `/admin/orders/user/${userId}`;
+    const endpoint = `admin/orders/user/${userId}`;
     const response = await Api.get("http://localhost:8080", endpoint);
 
     const responseData = response.content;
@@ -64,7 +64,14 @@ async function redirectOrders(userId) {
         // document.cookie = `userId=${userId}; orderId=${orderId}; path=/`;
         setCookie("userId", userId);
         setCookie("orderId", orderId);
-        window.location.href = `/static/mypage-order-detail/mypage-order-detail.html`;
+
+        // const hostName = window.location.hostname;
+        // let additionalAddr = "";
+        // if (hostName === "localhost") {
+        //   additionalAddr = "/ShoppingProject/src/main/resources";
+        // }
+        // window.location.href = `${additionalAddr}/static/seller-order-detail/seller-order-detail.html`;
+        redirect("/seller-order-detail/seller-order-detail.html");
       });
       purchaseCancelButton[i].addEventListener("click", () => {
         redirectOrderCancel(userId, orderId);
@@ -85,7 +92,8 @@ async function redirectOrderCancel(userId, orderId, orderDetailId) {
     };
     await Api.patch("http://localhost:8080/admin/orders/cancel", "", data);
     alert("주문 취소가 완료되었습니다.");
-    window.location.href = `/static/mypage-order-management/mypage-order-management.html`;
+    redirect("/mypage-order-management/mypage-order-management.html");
+    // window.location.href = `/static/mypage-order-management/mypage-order-management.html`;
     setCookie("userId", userId);
     setCookie("orderId", orderId);
     setCookie("orderDetailId", orderDetailId);

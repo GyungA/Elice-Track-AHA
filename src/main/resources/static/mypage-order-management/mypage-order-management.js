@@ -1,5 +1,5 @@
 import * as Api from "../js/api.js";
-import { setCookie, getCookie } from "../js/useful-functions.js";
+import { setCookie, getCookie, redirect } from "../js/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 const section = document.querySelector(".one-product-container");
@@ -18,27 +18,6 @@ function addAllElements() {
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {}
-
-// function getCookieValue(cookieName) {
-//   // 현재 쿠키 문자열 가져오기
-//   console.log(document.cookie);
-//   const cookies = document.cookie.split(";");
-//   console.log("cookies: " + cookies);
-
-//   // 주어진 쿠키 이름과 일치하는 쿠키 찾기
-//   for (let cookie of cookies) {
-//     console.log("cookie: " + cookie);
-//     const [name, value] = cookie.trim().split("=");
-//     console.log(name + "," + value);
-//     if (name === cookieName) {
-//       // 해당 쿠키의 값 반환
-//       return decodeURIComponent(value);
-//     }
-//   }
-
-//   // 주어진 이름의 쿠키를 찾지 못한 경우 null 반환
-//   return null;
-// }
 
 async function redirectOrders(userId) {
   try {
@@ -82,11 +61,9 @@ async function redirectOrders(userId) {
       ].innerText = `${totalProductCount}개 주문, 총 ${totalPayment}원`;
 
       detailButton[i].addEventListener("click", () => {
-        // redirectDetail(userId, orderId);
-        // document.cookie = `userId=${userId}; orderId=${orderId}; path=/`;
         setCookie("userId", userId);
         setCookie("orderId", orderId);
-        window.location.href = `/static/mypage-order-detail/mypage-order-detail.html`;
+        redirect("/mypage-order-detail/mypage-order-detail.html");
       });
       purchaseCancelButton[i].addEventListener("click", () => {
         redirectOrderCancel(userId, orderId);
@@ -106,9 +83,9 @@ async function redirectOrderCancel(userId, orderId) {
     };
     await Api.patch("http://localhost:8080/orders/cancel", "", data);
     alert("주문 취소가 완료되었습니다.");
-    window.location.href = `/static/mypage-order-management/mypage-order-management.html`;
-    // document.cookie = `userId=${userId}; path=/`;
+
     setCookie("userId", userId);
+    redirect("/mypage-order-management/mypage-order-management.html");
   } catch (err) {
     console.log(err);
     alert(`페이지 로드 중 문제가 발생하였습니다: ${err.message}`);
@@ -147,13 +124,10 @@ function addOrder(productNumber) {
     upperDiv.classList.add("upper");
     const payTimeP = document.createElement("p");
     payTimeP.classList.add("pay-time");
-    // payTimeP.textContent = "2024.08.28 주문"; // 주문 시간 설정
     const statusP = document.createElement("p");
-    // statusP.textContent = "|";
     const statusTagP = document.createElement("p");
     statusTagP.classList.add("proudct-status");
     statusTagP.setAttribute("id", "statusTag");
-    // statusTagP.textContent = "주문 완료"; // 주문 상태 설정
     upperDiv.appendChild(payTimeP);
     upperDiv.appendChild(statusP);
     upperDiv.appendChild(statusTagP);
@@ -171,11 +145,9 @@ function addOrder(productNumber) {
       "title-tag"
     );
     // titleP.setAttribute("id", "titleTag");
-    // titleP.textContent = "삼각대및셀카봉"; // 상품 이름 설정
     const remainStockP = document.createElement("p");
     remainStockP.classList.add("remain-stock");
     remainStockP.setAttribute("id", "remainStock");
-    // remainStockP.textContent = "2개 주문, 총 20,000원"; // 재고 설정
     productNameDiv.appendChild(titleP);
     productNameDiv.appendChild(remainStockP);
     const buttonsDiv = document.createElement("div");

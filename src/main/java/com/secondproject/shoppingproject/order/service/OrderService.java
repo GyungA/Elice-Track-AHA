@@ -54,7 +54,9 @@ public class OrderService {
 
     public OrderDetailHistoryResponseDto getDetailOrder(Long userId, Long orderId, boolean isSeller) {
         //user가 가지고 있는 order들 중, 해당 orderId를 가진 객체 가져오기
+        System.out.println("isSeller: "+isSeller);
         if(isSeller){
+            System.out.println("여기로 들어옴");
             Order order = orderRepository.findById(orderId)
                     .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
         return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailListBySeller(order, userId));
