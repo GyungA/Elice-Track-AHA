@@ -30,10 +30,8 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
-
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.data:spring-data-rest-hal-explorer'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' //임의 추가
@@ -55,6 +53,9 @@ dependencies {
     implementation("org.projectlombok:lombok-mapstruct-binding:0.2.0")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
     testAnnotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
+
+    //mysql
+    runtimeOnly("com.mysql:mysql-connector-j")
 }
 
 tasks.named('test') {
