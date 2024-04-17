@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  application:
+    image: gyunga/shopping_project
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/shopping_project
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+    restart: always
+    container_name: shopping_project
+    networks:
+      - server
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    networks:
+      - server
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: shopping_project
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+networks:
+  server:
+    driver: bridge
+volumes:
+  mysql_data:
+    external: true
+    name: mysql_data
