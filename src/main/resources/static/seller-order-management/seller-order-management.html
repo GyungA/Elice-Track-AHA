@@ -18,136 +18,19 @@
     ></script>
     <!-- Daum 주소 API 사용하기 위한 파일 -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- google icon -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="../css//header.css" />
     <link rel="stylesheet" href="../css//footer.css" />
-    <link rel="stylesheet" href="mypage-order-detail.css" />
-    <script src="mypage-order-detail.js" type="module" defer></script>
+    <link rel="stylesheet" href="seller-order-management.css" />
+    <script src="seller-order-management.js" type="module" defer></script>
   </head>
   <body>
-    <div class="modal-nomal modal">
-      <div class="modal_body">
-        <div class="modal-inner">
-          <h2>배송 정보 수정</h2>
-          <!-- 주소 수정 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label" for="address2">주소</label>
-            </div>
-            <div class="field-body search">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="postalCode"
-                    type="text"
-                    placeholder="주소찾기를 클릭해 주세요."
-                    readonly
-                  />
-                </p>
-              </div>
-              <div>
-                <button
-                  class="button is-light is-hovered"
-                  id="searchAddressButton"
-                >
-                  주소찾기
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 자세한 주소 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal no-label"></div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="address1"
-                    type="text"
-                    placeholder=""
-                    autocomplete="on"
-                    readonly
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="field is-horizontal">
-            <div class="field-label is-normal no-label"></div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="address2"
-                    type="text"
-                    placeholder=""
-                    autocomplete="on"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 수령인 이름 수정 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label" for="receiverName">이름</label>
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="receiverNameInput"
-                    type="text"
-                    placeholder="받는 분 이름을 입력해 주세요."
-                    autocomplete="on"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 수령인 연락처 수정 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label" for="receiverPhoneNumber">연락처</label>
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="receiverPhoneNumber"
-                    type="number"
-                    placeholder="- 없이 입력해 주세요."
-                    autocomplete="on"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="buttons">
-            <button type="submit" class="modify-btn">수정</button>
-            <button type="button" class="cancel-btn">취소</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="modal-seller modal">
-      <div class="modal_body">
-        <h2>모달창 제목</h2>
-        <p>모달창 내용</p>
-
-        <button type="submit" class="modify-btn">수정</button>
-        <button type="button" class="cancel-btn">취소</button>
-      </div>
-    </div> -->
     <header id="header-component">
       <div class="header-container">
         <div class="header-logo">
@@ -186,55 +69,62 @@
       </div>
     </header>
 
-    <!-- 주문 상세 내용 -->
+    <!-- 구매내역-->
     <section class="section">
       <div class="page-title">
-        <p class="title-name">주문 상세</p>
+        <p class="title-name">구매 내역</p>
       </div>
       <div class="order-wrapper">
         <div class="product-list">
-          <p class="pay-time" id="payTime"></p>
+          <!-- <p class="pay-time" id="payTime"></p> -->
           <div class="one-product-outer" id="oneProductOuter">
-            <!-- <div class="one-product-inner">
-                <div class="image-url"></div>
-                <div class="other-product-info">
-                  <p class="product-name"></p>
-                  <p class="product-amount-payment"></p>
-                  <p class="product-order-status"></p>
+            <section class="section one-product-container">
+              <!-- api 요청 후 만들어진 제품들 카드 요소가 삽입되는 곳 -->
+              <!-- 상품이 n개면 <dic class="one-product">가 n번 반복되게 -->
+              <!-- <dic class="one-product">
+                <div class="is-child box product-image">
+                  <figure class="image is-sqaure">
+                    <img id="productImageTag" src="" />
+                  </figure>
                 </div>
-              </div> -->
-          </div>
-        </div>
-        <div class="right">
-          <div class="right-inner">
-            <div class="delivery-info">
-              <p class="delivery-title">배송지 정보</p>
-              <div class="delivery-info-list">
-                <!-- <p class="receiver-name"></p>
-                  <p class="receiver-phone"></p>
-                  <p class="receiver-address"></p> -->
 
-                <div class="info">
-                  <p>받는 사람:</p>
-                  <p class="receiver" id="receiverName"></p>
+                <div class="tile is-parent is-vertical product-content-wrapper">
+                  <div class="tile is-child box product-detail">
+                    <div class="upper">
+                      <p class="pay-time">2024.08.28 주문</p>
+                      <p>|</p>
+                      <p class="proudct-status" id="statusTag">주문 완료</p>
+                    </div>
+
+                    <div class="content">
+                      <div class="product-name-status">
+                        <p
+                          class="subtitle is-4 is-family-monospace"
+                          id="titleTag"
+                        >
+                          삼각대및셀카봉
+                        </p>
+                        <p class="remain-stock" id="remainStock">
+                          2개 주문, 총 20,000원
+                        </p>
+                      </div>
+
+                      <div class="buttons-container">
+                        <button class="button" id="detailButton">
+                          상세보기
+                        </button>
+                        <button
+                          class="button product-modify-btn"
+                          id="purchaseCancelButton"
+                        >
+                          주문 취소
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="info">
-                  <p>연락처:</p>
-                  <p class="receiver" id="receiverPhone"></p>
-                </div>
-                <div class="info">
-                  <p>받는 주소:</p>
-                  <p class="receiver" id="receiverAddress"></p>
-                </div>
-              </div>
-            </div>
-            <div class="total-payment-section">
-              <div class="info">
-                <p>총 결제 금액:</p>
-                <p class="total-payment" id="totalPayment"></p>
-              </div>
-            </div>
-            <button type="button" class="order-modify-button">주문 수정</button>
+              </dic> -->
+            </section>
           </div>
         </div>
       </div>

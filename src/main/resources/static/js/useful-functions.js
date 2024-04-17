@@ -146,5 +146,17 @@ export const randomPick = (items) => {
   return items[randomKey];
 };
 
+export let setCookie = function (name, value) {
+  // var date = new Date();
+  // date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+  document.cookie = name + "=" + value + ";path=/";
+};
+
+export let getCookie = function (name) {
+  console.log(document.cookie);
+  let value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+  return value ? value[2] : null;
+};
+
 // 주변 다른 파일 것도 여기서 일괄 export 함
-export { createNavbar } from "static/js/navbar.js";
+// export { createNavbar } from "navbar.js";

@@ -19,6 +19,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -63,7 +67,9 @@ public class OrderControllerTest {
                         5, "총 계산금액2", OrderStatus.ORDER_COMPLETE, "주문 날짜2")
         );
 
-        when(orderService.getMyOrder(userId)).thenReturn(orderHistoryList);
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<OrderHistoryResponseDto> page = new PageImpl<>(orderHistoryList, pageable, orderHistoryList.size());
+        when(orderService.getMyOrder(userId, pageable)).thenReturn(page);
 
         // when
         ResultActions actions = mockMvc.perform(
