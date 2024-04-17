@@ -39,4 +39,4 @@ out/
 # application.properties
 src/main/resources/application.properties
 
-./db/
+db/
