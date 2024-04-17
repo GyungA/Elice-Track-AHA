@@ -9,7 +9,6 @@ import com.secondproject.shoppingproject.order.dto.orderDetail.OrderDetailInfoDt
 import com.secondproject.shoppingproject.order.entity.Order;
 import com.secondproject.shoppingproject.order.entity.OrderDetail;
 import com.secondproject.shoppingproject.order.exception.AccessDeniedException;
-import com.secondproject.shoppingproject.order.exception.AlreadyOrderedException;
 import com.secondproject.shoppingproject.order.exception.EntityNotFoundException;
 import com.secondproject.shoppingproject.order.exception.OrderModificationDeniedException;
 import com.secondproject.shoppingproject.order.repository.OrderRepository;
@@ -18,7 +17,6 @@ import com.secondproject.shoppingproject.user.constant.Grade;
 import com.secondproject.shoppingproject.user.constant.Role;
 import com.secondproject.shoppingproject.user.entity.User;
 import com.secondproject.shoppingproject.user.repository.UserRepository;
-import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,8 +24,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,23 +77,31 @@ public class OrderServiceTest {
                 .count(2)
                 .build();
 
+        int pageNumber = 0; // 페이지 번호 (0부터 시작)
+        int pageSize = 10; // 페이지 크기
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        List<Order> orders = List.of(order);
+        Page<Order> page = new PageImpl<>(orders, pageable, orders.size());
+
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(orderRepository.findByUserOrderByCreatedAtDesc(user)).thenReturn(List.of(order));
+        when(orderRepository.findByUserOrderByCreatedAtDesc(user, pageable)).thenReturn(page);
         when(orderDetailService.getOrderDetailCountAndProductNames(order)).thenReturn(dto);
 
         // when
-        List<OrderHistoryResponseDto> orderHistory = orderService.getMyOrder(1L);
+        Page<OrderHistoryResponseDto> orderHistory = orderService.getMyOrder(1L, pageable);
 
+        List<OrderHistoryResponseDto> orderHistoryResponseDtos = orderHistory.getContent();
         // then
-        assertEquals(1, orderHistory.size());
-        assertEquals(order.getId(), orderHistory.get(0).getOrderId());
+        assertEquals(1, orderHistoryResponseDtos.size());
+        assertEquals(order.getId(), orderHistoryResponseDtos.get(0).getOrderId());
 
-        assertEquals(dto.getName(), orderHistory.get(0).getProductName());
-        assertEquals(dto.getImage(), orderHistory.get(0).getProductImage());
-        assertEquals(dto.getCount(), orderHistory.get(0).getTotalProductCount());
+        assertEquals(dto.getName(), orderHistoryResponseDtos.get(0).getProductName());
+        assertEquals(dto.getImage(), orderHistoryResponseDtos.get(0).getProductImage());
+        assertEquals(dto.getCount(), orderHistoryResponseDtos.get(0).getTotalProductCount());
 
         verify(userRepository, times(1)).findById(1L);
-        verify(orderRepository, times(1)).findByUserOrderByCreatedAtDesc(user);
+        verify(orderRepository, times(1)).findByUserOrderByCreatedAtDesc(user, pageable);
         verify(orderDetailService, times(1)).getOrderDetailCountAndProductNames(order);
     }
 
@@ -101,8 +111,13 @@ public class OrderServiceTest {
         // given
         when(userRepository.findById(2L)).thenReturn(Optional.empty());
 
+        int pageNumber = 0; // 페이지 번호 (0부터 시작)
+        int pageSize = 10; // 페이지 크기
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
         // when //then
-        assertThrows(EntityNotFoundException.class, () -> orderService.getMyOrder(2L));
+        assertThrows(EntityNotFoundException.class, () -> orderService.getMyOrder(2L, pageable));
     }
 
     @DisplayName("자신의 상세 주문 내역을 가져온다.")
@@ -204,7 +219,10 @@ public class OrderServiceTest {
     @Transactional
     void can_cancel_order_before_delivery() {
         // given
-        OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L);
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setId(1L);
+
+        OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L, 1L);
 
         OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000, OrderStatus.ORDER_COMPLETE);
         List<OrderDetailInfoDto> orderDetailInfoDtos = new ArrayList<>();

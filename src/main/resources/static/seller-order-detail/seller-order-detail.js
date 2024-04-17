@@ -24,6 +24,9 @@ const btnOpenModal = document.querySelector(".order-modify-button");
 const btnModify = document.querySelector(".modal_body .modify-btn");
 const btnCloseModal = document.querySelector(".cancel-btn");
 
+//드롭다운 값 가져오기?
+const statusDropdown = document.querySelector("#productStatusDropdown");
+
 //주문 수정
 const searchAddressButton = document.querySelector("#searchAddressButton");
 const postalCodeInput = document.querySelector("#postalCode");
@@ -78,7 +81,8 @@ function addAllEvents() {
 // 페이지 로드 시 실행되며, 주문 내역 상세 정보 로드.
 async function insertOrderDetail(userId, orderId) {
   try {
-    const endpoint = `orders/user/${userId}/order/${orderId}`;
+    //여기서 user id값은 판매자
+    const endpoint = `orders/user/${userId}/order/${orderId}?isSeller=true`;
     const response = await Api.get("http://localhost:8080", endpoint);
     const {
       id,
@@ -189,7 +193,7 @@ function addElements(numberOfElementsToAdd) {
 }
 
 // 수정 버튼 클릭시 실행되며, 주문 배송지 수정
-async function modifyDelivery(userId, orderId) {
+async function modifyDelivery(userId, orderId, orderDetailId) {
   const receiverName = receiverNameInput.value;
   const receiverPhoneNumber = receiverPhoneNumberInput.value;
   const postalCode = postalCodeInput.value;
@@ -200,11 +204,10 @@ async function modifyDelivery(userId, orderId) {
     const data = {
       userId: userId,
       orderId: orderId,
-      deliveryAddress: `${postalCode};${address1};${address2}`,
-      receiverName: receiverName,
-      receiverPhoneNumber: formatPhoneNumber(receiverPhoneNumber),
+      orderDetailId: orderDetailId,
+      orderStatus: "DELIVERY_OVER",
     };
-    await Api.patch("http://localhost:8080/orders", "", data);
+    await Api.patch("http://localhost:8080/orders/modify-status", "", data);
     alert("주문 수정이 완료되었습니다.");
   } catch (err) {
     console.log(err);

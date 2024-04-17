@@ -21,16 +21,16 @@
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="../css//header.css" />
     <link rel="stylesheet" href="../css//footer.css" />
-    <link rel="stylesheet" href="mypage-order-detail.css" />
-    <script src="mypage-order-detail.js" type="module" defer></script>
+    <link rel="stylesheet" href="seller-order-detail.css" />
+    <script src="seller-order-detail.js" type="module" defer></script>
   </head>
   <body>
     <div class="modal-nomal modal">
       <div class="modal_body">
         <div class="modal-inner">
-          <h2>배송 정보 수정</h2>
+          <h2>배송 상태 수정</h2>
           <!-- 주소 수정 -->
-          <div class="field is-horizontal">
+          <!-- <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label" for="address2">주소</label>
             </div>
@@ -57,7 +57,7 @@
             </div>
           </div>
 
-          <!-- 자세한 주소 -->
+         
           <div class="field is-horizontal">
             <div class="field-label is-normal no-label"></div>
             <div class="field-body">
@@ -91,10 +91,10 @@
                 </p>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- 수령인 이름 수정 -->
-          <div class="field is-horizontal">
+          <!-- <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label" for="receiverName">이름</label>
             </div>
@@ -111,10 +111,10 @@
                 </p>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <!-- 수령인 연락처 수정 -->
-          <div class="field is-horizontal">
+          <!-- 배송 상태 수정 -->
+          <!-- <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label" for="receiverPhoneNumber">연락처</label>
             </div>
@@ -129,6 +129,22 @@
                     autocomplete="on"
                   />
                 </p>
+              </div>
+            </div>
+          </div> -->
+          <!-- 상태-->
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">상태</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <select id="productStatusDropdown">
+                  <option value="1" selected>주문완료</option>
+                  <option value="2">배송중</option>
+                  <option value="3">배송완료</option>
+                  <option value="4">취소완료</option>
+                </select>
               </div>
             </div>
           </div>
@@ -234,7 +250,9 @@
                 <p class="total-payment" id="totalPayment"></p>
               </div>
             </div>
-            <button type="button" class="order-modify-button">주문 수정</button>
+            <button type="button" class="order-modify-button">
+              배송 상태 수정
+            </button>
           </div>
         </div>
       </div>
