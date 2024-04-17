@@ -10,70 +10,20 @@
           href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
   />
   <!-- 폰트 어썸: 아이콘 -->
-    <script
-            defer
-            src="https://kit.fontawesome.com/9daa42bcef.js"
-            crossorigin="anonymous"
-    ></script>
+  <script
+          defer
+          src="https://kit.fontawesome.com/9daa42bcef.js"
+          crossorigin="anonymous"
+  ></script>
   <!-- AWS S3 사용하기 위한 파일 -->
-<!--  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>-->
+  <!--  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>-->
   <!-- 커스텀 css, js -->
-  <link rel="stylesheet" type="text/css" href="/static/category/category-add.css" />
-  <link rel="stylesheet" type="text/css" href="/static/css/header.css" />
-  <link rel="stylesheet" type="text/css" href="/static/css/footer.css" />
-  <script src="/static/category/category-add.js" type="module" defer></script>
-
-  <script>
-    // 페이지 로드 시 상위 카테고리를 서버에서 가져옵니다.
-    document.addEventListener('DOMContentLoaded', function() {
-      fetch('/api/categories') // REST API 엔드포인트를 가리킵니다.
-              .then(response => response.json())
-              .then(categories => {
-                const themeSelectBox = document.getElementById('themeSelectBox');
-                categories.forEach(category => {
-                  const option = new Option(category.name, category.id);
-                  themeSelectBox.appendChild(option);
-                });
-              })
-              .catch(error => console.error('Error loading categories:', error));
-    });
-
-    // 카테고리 추가 폼의 제출을 처리합니다.
-    document.getElementById('registerCategoryForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // 기본 폼 제출을 막습니다.
-
-      const categoryNameInput = document.getElementById('categoryNameInput').value;
-      const themeSelectBox = document.getElementById('themeSelectBox').value;
-      const categoryData = {
-        name: categoryNameInput,
-        parentId: themeSelectBox ? parseInt(themeSelectBox, 10) : null // 상위 카테고리가 선택되지 않으면 null
-      };
-
-      fetch('/api/categories', { // 카테고리 추가 API 엔드포인트
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(categoryData)
-      })
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-                return response.json();
-              })
-              .then(addedCategory => {
-                console.log('Category added:', addedCategory);
-                // 카테고리 추가 후 처리할 로직을 여기에 추가합니다.
-                // 예를 들어, 사용자에게 성공 메시지를 표시하거나 페이지를 새로 고칠 수 있습니다.
-              })
-              .catch(error => {
-                console.error('Error adding category:', error);
-                // 사용자에게 오류 메시지를 표시하는 등의 에러 핸들링을 수행합니다.
-              });
-    });
-  </script>
-
+  <link rel="stylesheet" type="text/css" href="./category-add.css" />
+  <link rel="stylesheet" type="text/css" href="../css/header.css" />
+  <link rel="stylesheet" type="text/css" href="../css/footer.css" />
+  <link rel="stylesheet" type="text/css" href="../css/navigation.css" />
+  <script src="../js/navbar-category.js" type="module" defer></script>
+  <script src="./category-add.js" type="module" defer></script>
 </head>
 
 <body>
@@ -107,6 +57,33 @@
     </div>
   </div>
 </header>
+<div class="custom-navbar">
+  <div class="custom-dropdown">
+    <button class="dropbtn">전체 카테고리</button>
+    <div class="custom-dropdown-content" id="navbar-category-dropdown">
+      <option id="l"></option>
+      <!--a 태그 대신 DB에서 상위 카테고리 불러오기-->
+<!--      <a href="#electronics">식품</a>-->
+<!--      <a href="#jewelry&fashion">주얼리/패션</a>-->
+<!--      <a href="#home&living">홈리빙</a>-->
+<!--      <a href="#case&stationery">케이스/문구</a>-->
+<!--      <a href="#beauty">뷰티</a>-->
+<!--      <a href="#animal">반려동물</a>-->
+<!--      <a href="#crafts">공예</a>-->
+<!--      <a href="#infants&toddlers">영유아동</a>-->
+    </div>
+  </div>
+  <a href="#home">홈</a>
+  <a href="#new-arrivals">최신작품</a>
+  <a href="#Realtime-purchase">실시간구매</a>
+  <a href="#Realtime-review">실시간후기</a>
+  <a href="#bestproduct">인기작품</a>
+  <a href="#authorfeed">작가피드</a>
+  <a href="#authorfeed">매거진</a>
+  <a href="#authorfeed">최신 작품</a>
+  <a href="#authorfeed">소담상회</a>
+
+</div>
 <!-- 카테고리 추가 폼(Form) -->
 <section class="section">
   <div class="container">
@@ -120,11 +97,11 @@
       >
         <p class="title is-5 has-text-custom" style="color: #5D5A88;">카테고리 추가하기</p>
         <div class="field">
-          <label class="label" for="categoryNameInput">카테고리 이름</label>
+          <label class="label" for="titleInput">카테고리 이름</label>
           <div class="control">
             <input
                     class="input"
-                    id="categoryNameInput"
+                    id="titleInput"
                     type="text"
                     placeholder="패션잡화"
                     autocomplete="on"
@@ -132,10 +109,10 @@
           </div>
         </div>
         <div class="field">
-          <label class="label" for="themeSelectBox">상위 카테고리</label>
+          <label class="label" for="TopCategoryBox">상위 카테고리</label>
           <div class="control">
             <div class="select is-fullwidth">
-              <select id="themeSelectBox" name="parent">
+              <select id="TopCategoryBox" name="parent">
                 <option value="">상위 카테고리를 선택해주세요.</option>
               </select>
             </div>
