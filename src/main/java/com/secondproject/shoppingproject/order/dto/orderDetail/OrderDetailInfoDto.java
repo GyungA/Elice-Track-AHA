@@ -10,18 +10,20 @@ import java.text.DecimalFormat;
 @Getter
 @AllArgsConstructor
 public class OrderDetailInfoDto {
+    private Long orderDetailId;
     private String name;
     private String payment;
     private int amount;
-    private OrderStatus orderStatus;
+    private String orderStatus;
 
     public OrderDetailInfoDto(OrderDetail orderDetail) {
         DecimalFormat decimalFormat = new DecimalFormat("#,##0");
         String formattedPayment = decimalFormat.format(orderDetail.getPayment());
 
+        this.orderDetailId = orderDetail.getId();
         this.name = orderDetail.getProduct().getName();
         this.payment = formattedPayment;
         this.amount = orderDetail.getAmount();
-        this.orderStatus = orderDetail.getOrderStatus();
+        this.orderStatus = orderDetail.getOrderStatus().getName();
     }
 }

@@ -22,7 +22,7 @@ public class OrderHistoryResponseDto {
     private String productImage;
     private int totalProductCount;
     private String totalPayment;
-    private OrderStatus orderStatus;
+    private String orderStatus;
     private String orderDate;
 
     public OrderHistoryResponseDto(Order order, OrderDetailCountAndProductNamesDto orderDetailCountAndProductNamesDto){
@@ -32,7 +32,7 @@ public class OrderHistoryResponseDto {
         this.productImage = orderDetailCountAndProductNamesDto.getImage();
         this.totalProductCount = orderDetailCountAndProductNamesDto.getCount();
         this.totalPayment = new DecimalFormat("#,##0").format(order.getTotalPayment());
-        this.orderStatus = orderDetailCountAndProductNamesDto.getOrderStatus();
+        this.orderStatus = orderDetailCountAndProductNamesDto.getOrderStatus().getName();
         this.orderDate = order.getCreatedAt().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 }

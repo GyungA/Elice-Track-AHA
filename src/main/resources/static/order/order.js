@@ -1,5 +1,10 @@
 import * as Api from "../js/api.js";
-import { setCookie, getCookie } from "../js/useful-functions.js";
+import {
+  setCookie,
+  getCookie,
+  redirect,
+  formatPhoneNumber,
+} from "../js/useful-functions.js";
 /*import {
   checkLogin,
   addCommas,
@@ -180,30 +185,30 @@ async function doCheckout(userId, orderId) {
     alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
     setCookie("userId", userId);
     setCookie("orderId", orderId);
-    window.location.href = `/static/mypage-order-detail/mypage-order-detail.html`;
+    redirect("/mypage-order-detail/mypage-order-detail.html");
   } catch (err) {
     console.log(err);
     alert(`결제 중 문제가 발생하였습니다: ${err.message}`);
   }
 }
 
-function formatPhoneNumber(phoneNumber) {
-  // 전화번호에서 "-"를 제외한 숫자만 추출
-  const cleaned = phoneNumber.replace(/\D/g, "");
+// function formatPhoneNumber(phoneNumber) {
+//   // 전화번호에서 "-"를 제외한 숫자만 추출
+//   const cleaned = phoneNumber.replace(/\D/g, "");
 
-  // 전화번호 길이에 따라 적절한 형식으로 변환
-  let formatted;
-  if (cleaned.length === 11) {
-    formatted = cleaned.replace(/^(\d{3})(\d{4})(\d{4})$/, "$1-$2-$3");
-  } else if (cleaned.length === 10) {
-    formatted = cleaned.replace(/^(\d{3})(\d{3})(\d{4})$/, "$1-$2-$3");
-  } else {
-    // 예외 처리: 전화번호 길이가 10자 또는 11자가 아닌 경우
-    console.error("Invalid phone number length");
-    return phoneNumber; // 변환하지 않고 그대로 반환
-  }
+//   // 전화번호 길이에 따라 적절한 형식으로 변환
+//   let formatted;
+//   if (cleaned.length === 11) {
+//     formatted = cleaned.replace(/^(\d{3})(\d{4})(\d{4})$/, "$1-$2-$3");
+//   } else if (cleaned.length === 10) {
+//     formatted = cleaned.replace(/^(\d{3})(\d{3})(\d{4})$/, "$1-$2-$3");
+//   } else {
+//     // 예외 처리: 전화번호 길이가 10자 또는 11자가 아닌 경우
+//     console.error("Invalid phone number length");
+//     return phoneNumber; // 변환하지 않고 그대로 반환
+//   }
 
-  return formatted;
-}
+//   return formatted;
+// }
 
 // export { formatPhoneNumber, searchAddress };

@@ -158,5 +158,33 @@ export let getCookie = function (name) {
   return value ? value[2] : null;
 };
 
+export let redirect = function (address) {
+  const hostName = window.location.hostname;
+  let additionalAddr = "";
+  if (hostName === "localhost") {
+    additionalAddr = "/ShoppingProject/src/main/resources";
+  }
+  window.location.href = `${additionalAddr}/static${address}`;
+};
+
+export let formatPhoneNumber = function (phoneNumber) {
+  // 전화번호에서 "-"를 제외한 숫자만 추출
+  const cleaned = phoneNumber.replace(/\D/g, "");
+
+  // 전화번호 길이에 따라 적절한 형식으로 변환
+  let formatted;
+  if (cleaned.length === 11) {
+    formatted = cleaned.replace(/^(\d{3})(\d{4})(\d{4})$/, "$1-$2-$3");
+  } else if (cleaned.length === 10) {
+    formatted = cleaned.replace(/^(\d{3})(\d{3})(\d{4})$/, "$1-$2-$3");
+  } else {
+    // 예외 처리: 전화번호 길이가 10자 또는 11자가 아닌 경우
+    console.error("Invalid phone number length");
+    return phoneNumber; // 변환하지 않고 그대로 반환
+  }
+
+  return formatted;
+};
+
 // 주변 다른 파일 것도 여기서 일괄 export 함
 // export { createNavbar } from "navbar.js";
