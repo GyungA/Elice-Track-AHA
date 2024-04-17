@@ -5,15 +5,6 @@ import {
   redirect,
   formatPhoneNumber,
 } from "../js/useful-functions.js";
-/*import {
-  checkLogin,
-  addCommas,
-  convertToNumber,
-  navigate,
-  randomPick,
-  createNavbar,
-} from "../useful-functions.js";*/
-//import { deleteFromDb, getFromDb, putToDb } from "../indexed-db.js";
 
 // 요소(element), input 혹은 상수
 const subtitleCart = document.querySelector("#subtitleCart");
