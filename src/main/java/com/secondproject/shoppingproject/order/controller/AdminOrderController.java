@@ -16,8 +16,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -52,11 +56,12 @@ public class AdminOrderController {
             @ApiResponse(responseCode = "404", description = "해당 유저 ID 또는 Order Id가 존재하지 않습니다."),
     })
     @GetMapping("/user/{user_id}")
-    public ResponseEntity<List<OrderHistoryResponseDto>> getOrderHistory(
+    public ResponseEntity<Page<OrderHistoryResponseDto>> getOrderHistory(
             @PathVariable("user_id") Long userId,
-            @RequestParam(value = "buyer_id", required = false) Long buyerId) {
+            @RequestParam(value = "buyer_id", required = false) Long buyerId,
+            @PageableDefault(page = 0, size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        return ResponseEntity.ok(adminOrderService.getOrderHistory(userId, buyerId));
+        return ResponseEntity.ok(adminOrderService.getOrderHistory(userId, buyerId, pageable));
     }
 
 
