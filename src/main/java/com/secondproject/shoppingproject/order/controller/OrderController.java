@@ -13,6 +13,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +45,9 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "해당 ID의 유저가 존재하지 않습니다."),
     })
     @GetMapping("/user/{user_id}")
-    public ResponseEntity<List<OrderHistoryResponseDto>> getMyOrder(@PathVariable("user_id") Long userId) {
-        return ResponseEntity.ok(orderService.getMyOrder(userId));
+    public ResponseEntity<Page<OrderHistoryResponseDto>> getMyOrder(@PathVariable("user_id") Long userId,
+                                                                    @PageableDefault(page = 0, size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(orderService.getMyOrder(userId, pageable));
     }
 
     /**
