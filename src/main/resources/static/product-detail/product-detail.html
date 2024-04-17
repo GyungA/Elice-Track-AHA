@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopping Mall</title>
+
+    <!-- bulma css 관련 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- google icon -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- Daum 주소 API 사용하기 위한 파일 -->
+    <!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="../css//header.css" />
+    <link rel="stylesheet" href="product-detail.css" />
+    <script src="product-detail.js" type="module" defer></script>
+  </head>
+  <body>
+    <header id="header-component">
+      <div class="header-container">
+        <div class="header-logo">
+          <a href="#">
+            <img
+              class="header-title-image"
+              src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png"
+              alt="아하"
+            />
+          </a>
+        </div>
+        <div class="header-nav-list">
+          <div class="header-search">
+            <div class="header-search-light">
+              <img
+                class="icon search-light"
+                src="https://i.ibb.co/yf6Xpw4/search-light.png"
+                alt=""
+              />
+            </div>
+            <label>
+              <input
+                class="header-search-input-placeholder"
+                placeholder="search"
+              />
+            </label>
+          </div>
+
+          <div class="header-nav-login-button">
+            <span class="header-nav-login-button-text"> 로그인 </span>
+          </div>
+          <div class="header-nav-signup-button">
+            <span class="header-nav-signup-button-text"> 회원가입 </span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 제품 상세 설명 카드 -->
+    <section class="section">
+      <div class="container">
+        <div class="tile is-ancestor product-detail-card">
+          <div class="tile is-6 is-parent">
+            <div class="tile is-child box product-image">
+              <figure class="image is-sqaure">
+                <!-- 상품 이미지 -->
+                <img id="productImageTag" src="" />
+              </figure>
+            </div>
+          </div>
+          <div class="tile is-parent is-vertical">
+            <div class="tile is-child box product-detail">
+              <div class="tabs">
+                <ul>
+                  <!-- 카테고리 -->
+                  <li id="manufacturerTag"></li>
+                </ul>
+              </div>
+              <div class="content">
+                <div class="product-name-status">
+                  <!-- 상품 이름 -->
+                  <p
+                    class="subtitle is-3 is-family-monospace"
+                    id="titleTag"
+                  ></p>
+                  <div class="status-wrapper">
+                    <!-- 상품 상태를 나타내는 아이콘 -->
+                    <span class="material-symbols-outlined">
+                      fiber_manual_record
+                    </span>
+                    <!-- 상품 상태 -->
+                    <p class="proudct-status" id="statusTag"></p>
+                  </div>
+                </div>
+
+                <!-- 상품 가격 -->
+                <h1 id="priceTag"></h1>
+                <!-- 상품 판매자 -->
+                <div class="seller-wrapper">
+                  <p>판매자:</p>
+                  <p class="seller-name" id="sellerName"></p>
+                </div>
+                <!-- 상품 설명 -->
+                <p class="detail-description" id="detailDescriptionTag"></p>
+                <div class="stock-wrapper">
+                  <!-- 남은 수량 -->
+                  <p class="remain-stock-word">남은 수량:</p>
+                  <p class="remain-stock" id="remainStock"></p>
+                </div>
+              </div>
+            </div>
+            <div class="add-quentity">
+              <span class="count">
+                <a href="#" class="minus">-</a>
+                <span id="result">1</span>
+                <a href="#" class="plus">+</a>
+              </span>
+              <p class="total-cost"></p>
+            </div>
+            <!-- <div class="tile is-child box buttons-container"> -->
+            <div class="box buttons-container">
+              <button class="button" id="addToCartButton">
+                <span class="material-symbols-outlined"> shopping_cart </span>
+              </button>
+              <button class="button" id="purchaseButton">바로 구매하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

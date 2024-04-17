@@ -24,25 +24,12 @@ const modalCloseButton = document.querySelector("#modalCloseButton");
 const currentPasswordInput = document.querySelector("#currentPasswordInput");
 const saveCompleteButton = document.querySelector("#saveCompleteButton");
 
-// document.getElementById("fullNameToggle").addEventListener("change", (e) => {
-//   console.log("e", e);
-//   if (e.target.checked) {
-//     document.getElementById("fullNameInput").disabled = false;
-//   } else {
-//     document.getElementById("fullNameInput").disabled = true;
-//   }
-// });
-
-document.addEventListener('DOMContentLoaded', function() {
-  var toggle = document.getElementById("fullNameToggle");
-  if (toggle) {
-    toggle.addEventListener("change", (e) => {
-      console.log("Event", e);
-      var input = document.getElementById("fullNameInput");
-      if (input) {
-        input.disabled = !e.target.checked;
-      }
-    });
+document.getElementById("fullNameToggle").addEventListener("change", (e) => {
+  console.log("e", e);
+  if (e.target.checked) {
+    document.getElementById("fullNameInput").disabled = false;
+  } else {
+    document.getElementById("fullNameInput").disabled = true;
   }
 });
 
@@ -203,7 +190,7 @@ function searchAddress(e) {
         }
         if (data.buildingName !== "" && data.apartment === "Y") {
           extraAddr +=
-            extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+              extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
         }
         if (extraAddr !== "") {
           extraAddr = " (" + extraAddr + ")";
@@ -235,7 +222,7 @@ async function saveUserData(e) {
   const isPasswordLong = password.length >= 4;
   const isPasswordSame = password === passwordConfirm;
   const isPostalCodeChanged =
-    postalCode !== (userData.address?.postalCode || "");
+      postalCode !== (userData.address?.postalCode || "");
   const isAddress2Changed = address2 !== (userData.address?.address2 || "");
   const isAddressChanged = isPostalCodeChanged || isAddress2Changed;
 
