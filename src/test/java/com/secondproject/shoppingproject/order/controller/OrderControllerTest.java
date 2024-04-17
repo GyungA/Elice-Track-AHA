@@ -168,10 +168,11 @@ public class OrderControllerTest {
         order.setUser(user);
 
         OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setId(1L);
         orderDetail.setOrder(order);
         orderDetail.setOrderStatus(OrderStatus.ORDER_COMPLETE);
 
-        OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L);
+        OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L, 1L);
 
         OrderDetailHistoryResponseDto responseDto = new OrderDetailHistoryResponseDto();
         responseDto.setId(requestDto.getUserId());
