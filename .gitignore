@@ -39,4 +39,9 @@ out/
 # application.properties
 src/main/resources/application.properties
 
+# docker-compose
 db/
+docker-compose.yml
+
+#generated
+src/main/generated
