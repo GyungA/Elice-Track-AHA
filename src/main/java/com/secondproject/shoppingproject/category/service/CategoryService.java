@@ -40,18 +40,7 @@ public class CategoryService {
         return new CategoryDTO(category.getCategoryId(), category.getName(), category.getParentId());
     }
 
-//    public CategoryDTO addCategory(CategoryDTO categoryDTO) {
-//        if(StringUtils.isBlank(categoryDTO.getName())) {
-//            throw new IllegalArgumentException("Category name cannot be empty");
-//        }
-//
-//        Category category = new Category();
-//        category.setName(categoryDTO.getName());
-//        category.setParentId(categoryDTO.getParentId());
-//        category = categoryRepository.save(category);
-//
-//        return convertToDTO(category);
-//    }
+
     @Transactional
     public void deleteCategory(Long categoryId) {
         // 삭제하기 전에 존재하는지 확인
@@ -72,7 +61,7 @@ public class CategoryService {
     // 카테고리 추가
 
     public CategoryDTO addCategory(CategoryDTO categoryDTO) {
-        Category category = new Category(categoryDTO.getName(), categoryDTO.getParentId());
+        Category category = new Category(categoryDTO.getName(), categoryDTO.getCategoryId(), categoryDTO.getParentId());
         Category savedCategory = categoryRepository.save(category);
 
         return new CategoryDTO(savedCategory.getCategoryId(), savedCategory.getName(), savedCategory.getParentId());

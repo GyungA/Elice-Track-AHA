@@ -17,17 +17,17 @@ public class CategoryController {
     private final CategoryService categoryService;
 
 
-//    @GetMapping("/parentCategories")
-//    public ResponseEntity<?> showParentCategories(Model model) {
-////        model.addAttribute("parentCategories", categoryService.getParentCategories());
-//        return ResponseEntity.ok(categoryService.getParentCategories());
-//    }
-//
-//    @GetMapping("/{parentId}")
-//    public ResponseEntity<?> showSubCategories(@PathVariable("parentId") Long parentId, Model model) {
-////        model.addAttribute("subCategories", categoryService.getAllByParentId(parentId));
-//        return ResponseEntity.ok(categoryService.getAllByParentId(parentId));
-//    }
+    @GetMapping("/parentCategories")
+    public ResponseEntity<?> showParentCategories(Model model) {
+//        model.addAttribute("parentCategories", categoryService.getParentCategories());
+        return ResponseEntity.ok(categoryService.getParentCategories());
+    }
+
+    @GetMapping("/{parentId}")
+    public ResponseEntity<?> showSubCategories(@PathVariable("parentId") Long parentId, Model model) {
+//        model.addAttribute("subCategories", categoryService.getAllByParentId(parentId));
+        return ResponseEntity.ok(categoryService.getAllByParentId(parentId));
+    }
 //
 //    @GetMapping("/add")
 //    public String showAddCategoryForm() {
