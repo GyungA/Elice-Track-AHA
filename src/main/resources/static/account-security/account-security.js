@@ -8,6 +8,10 @@ const fullNameToggle = document.querySelector("#fullNameToggle");
 const passwordInput = document.querySelector("#passwordInput");
 const passwordToggle = document.querySelector("#passwordToggle");
 const passwordConfirmInput = document.querySelector("#passwordConfirmInput");
+//추가부분
+const birthdateInput = document.querySelector("#birthdateInput");
+const birthdateToggle = document.querySelector("#birthdateToggle");
+//
 const emailInput = document.querySelector("#emailInput");
 const emailToggle = document.querySelector("#emailToggle");
 const postalCodeInput = document.querySelector("#postalCodeInput");
@@ -60,6 +64,7 @@ function addAllElements() {
 function addAllEvents() {
   fullNameToggle.addEventListener("change", toggleTargets);
   passwordToggle.addEventListener("change", toggleTargets);
+  birthdateToggle.addEventListener("change", toggleTargets);
   emailToggle.addEventListener("change", toggleTargets);
   addressToggle.addEventListener("change", toggleTargets);
   phoneNumberToggle.addEventListener("change", toggleTargets);
@@ -90,7 +95,11 @@ function toggleTargets(e) {
   if (toggleId.includes("email")) {
     targets = [emailInput];
   }
-
+    //추가부분
+    if (toggleId.includes("birthdate")) {
+      targets = [birthdateInput];
+    }
+//
   if (toggleId.includes("address")) {
     targets = [
       postalCodeInput,
@@ -172,6 +181,10 @@ function disableForm() {
   fullNameToggle.checked = false;
   passwordInput.setAttribute("disabled", "");
   passwordToggle.checked = false;
+  //추가 부분
+  birthdateInput.setAttribute("disabled", "");
+  birthdateToggle.checked = false;
+  //
   passwordConfirmInput.setAttribute("disabled", "");
   postalCodeInput.setAttribute("disabled", "");
   addressToggle.checked = false;

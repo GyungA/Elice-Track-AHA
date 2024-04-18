@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
@@ -65,9 +65,9 @@ public class User extends BaseEntity {
 //    @JsonIgnore
 //    List<Cart> carts = new ArrayList<>();
 //
-//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnore
-//    List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    List<Product> products = new ArrayList<>();
 
 	@Builder
 	public User(String email, String password, String name, String birthdate, boolean status,

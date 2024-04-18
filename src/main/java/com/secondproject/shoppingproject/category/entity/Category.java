@@ -3,6 +3,7 @@ package com.secondproject.shoppingproject.category.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -32,8 +33,9 @@ public class Category {
 //    @OneToMany(mappedBy = "parentCategory")
 //    private List<Category> subCategory = new ArrayList<>();
 
-    public Category(String name, Long parentId) {
+    public Category(String name, Long categoryId,Long parentId) {
         this.name = name;
+        this.categoryId = categoryId;
         this.parentId = parentId;
     }
 }

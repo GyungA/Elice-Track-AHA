@@ -15,6 +15,7 @@ public class DataInit {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final PasswordEncoder passwordEncoder;
+    String[] name = new String[] {"Apple", "Banana", "Cherry", "Donut", "EarRing", "SoccerBall", "Bat", "Chocolate", "Skirt", "Coat", "Pant", "Book", "Paper", "Stapler", "Eraser", "Skin","Lotto"};
     @PostConstruct
     public void init() {
 
@@ -57,5 +58,8 @@ public class DataInit {
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
+        for(int i=0; i<name.length; i++){
+
+        }
     }
 }

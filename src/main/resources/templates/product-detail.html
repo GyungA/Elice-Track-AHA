@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -76,7 +76,8 @@
                 <div class="tile is-child box product-image">
                     <figure class="image is-sqaure">
                         <!-- 상품 이미지 -->
-                        <img id="productImageTag" src="" />
+                        <!--<img id="productImageTag" src="" />-->
+                        <img th:src="${product.image}" alt="Product Image"/>
                     </figure>
                 </div>
             </div>
@@ -85,7 +86,8 @@
                     <div class="tabs">
                         <ul>
                             <!-- 카테고리 -->
-                            <li id="manufacturerTag"></li>
+                            <!--<li id="manufacturerTag"></li>-->
+                            <li id="manufacturerTag" th:text="${product.category.name}"></li>
                         </ul>
                     </div>
                     <div class="content">
@@ -94,30 +96,40 @@
                             <p
                                     class="subtitle is-3 is-family-monospace"
                                     id="titleTag"
+                                    th:text="${product.name}"
                             ></p>
                             <div class="status-wrapper">
                                 <!-- 상품 상태를 나타내는 아이콘 -->
+                                <!--
                                 <span class="material-symbols-outlined">
+                      fiber_manual_record
+                    </span>-->
+                                <span class="material-symbols-outlined" th:text="${product.status ? 'fiber_manual_record' : ''}">
                       fiber_manual_record
                     </span>
                                 <!-- 상품 상태 -->
+                                <!--
                                 <p class="proudct-status" id="statusTag"></p>
+                                -->
+                                <p class="proudct-status" id="statusTag" th:text="${product.status ? '판매 중' : '품절'}"></p>
                             </div>
                         </div>
 
                         <!-- 상품 가격 -->
-                        <h1 id="priceTag"></h1>
+                        <!--
+                        <h1 id="priceTag"></h1>-->
+                        <h1 id="priceTag" th:text="${product.price}"></h1>
                         <!-- 상품 판매자 -->
                         <div class="seller-wrapper">
                             <p>판매자:</p>
-                            <p class="seller-name" id="sellerName"></p>
+                            <p class="seller-name" id="sellerName" th:text="${product.seller.name}"></p>
                         </div>
                         <!-- 상품 설명 -->
-                        <p class="detail-description" id="detailDescriptionTag"></p>
+                        <p class="detail-description" id="detailDescriptionTag" th:text="${product.description}"></p>
                         <div class="stock-wrapper">
                             <!-- 남은 수량 -->
                             <p class="remain-stock-word">남은 수량:</p>
-                            <p class="remain-stock" id="remainStock"></p>
+                            <p class="remain-stock" id="remainStock" th:text="${product.current_stock}"></p>
                         </div>
                     </div>
                 </div>

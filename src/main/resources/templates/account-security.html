@@ -155,7 +155,12 @@
                     <div class="field">
                         <label class="label">생년월일</label>
                         <div class="control">
-                            <input class="input" id="birthInput" type="date" autocomplete="off" disabled="true" th:value="${session.user.birthdate}"/>
+<!--                            <input class="input" id="birthInput" type="date" autocomplete="off" disabled="true"/> -->
+                            <input class="input" id="birthInput" type="text" autocomplete="off" disabled="true" th:value="${session.user.birthdate}"/>
+                            <label class="switch">
+                                <input type="checkbox" id="birthdateToggle" />
+                                <span class="slider round"></span>
+                            </label>
                         </div>
                     </div>
 
@@ -171,9 +176,10 @@
                     </div>
                     <div class="field">
                         <div class="field-label is-normal">
-                            <label class="label label-address" for="address2Input">주소</label>
+                            <label class="label label-address" for="addressInput">주소</label>
                         </div>
                         <div class="field-body search">
+                            <!--
                             <div class="field">
                                 <p class="control">
                                     <input
@@ -185,6 +191,7 @@
                                     />
                                 </p>
                             </div>
+
                             <div>
                                 <button
                                         class="button is-light is-hovered"
@@ -192,6 +199,21 @@
                                 >
                                     주소찾기
                                 </button>
+                            </div>
+                            -->
+                            <div class="field-body">
+                                <div class="field">
+                                    <p class="control">
+                                        <input
+                                                class="input"
+                                                id="addressInput"
+                                                type="text"
+                                                placeholder=""
+                                                autocomplete="on"
+                                                th:value="${session.user.address}"
+                                        />
+                                    </p>
+                                </div>
                             </div>
                             <!-- 토클 스위치 -->
                             <label class="switch switch-address">
@@ -201,6 +223,7 @@
                         </div>
                     </div>
 
+                    <!--
                     <div class="field">
                         <div class="field-label is-normal no-label"></div>
                         <div class="field-body">
@@ -218,7 +241,8 @@
                             </div>
                         </div>
                     </div>
-
+                    -->
+                    <!--
                     <div class="field">
                         <div class="field-label is-normal no-label"></div>
                         <div class="field-body">
@@ -235,7 +259,7 @@
                             </div>
                         </div>
                     </div>
-
+                    -->
                     <div class="field">
                         <label class="label" for="phoneNumberInput">전화번호</label>
                         <div class="control">
