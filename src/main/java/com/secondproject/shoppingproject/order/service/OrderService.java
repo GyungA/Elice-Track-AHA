@@ -40,12 +40,18 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    public OrderDetailHistoryResponseDto getDetailOrder(Long userId, Long orderId) {
+    public OrderDetailHistoryResponseDto getDetailOrder(Long userId, Long orderId, boolean isSeller) {
         //user가 가지고 있는 order들 중, 해당 orderId를 가진 객체 가져오기
-        Order order = orderRepository.findByUserIdAndOrderId(userId, orderId)
-                .orElseThrow(() -> new EntityNotFoundException("해당하는 user id 또는 order id를 찾을 수 없습니다."));
+        if(isSeller){
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
+        return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailListBySeller(order, userId));
+        } else{
+            Order order = orderRepository.findByUserIdAndOrderId(userId, orderId)
+                    .orElseThrow(() -> new EntityNotFoundException("해당하는 user id 또는 order id를 찾을 수 없습니다."));
 
-        return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
+            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
+        }
     }
 
     public OrderPayResponseDto getPayInfo(Long userId, Long orderId) {
@@ -78,9 +84,9 @@ public class OrderService {
         Order order = orderRepository.findById(requestDto.getOrderId())
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
         boolean isSamePerson = requestDto.getUserId() == order.getUser().getUser_id();
-        boolean isOrderPendingStatus = order.getOrderStatus() == OrderStatus.ORDER_PENDING;
+        boolean isOrderPendingStatus = orderDetailService.isAllStatus(order, OrderStatus.ORDER_PENDING);
         if (isSamePerson && isOrderPendingStatus) {
-            order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
+            orderDetailService.setAllOrderStatus(order, OrderStatus.ORDER_COMPLETE);
             order.setDeliveryAddress(requestDto.getDeliveryAddress());
             order.setReceiverName(requestDto.getReceiverName());
             order.setReceiverPhoneNumber(requestDto.getReceiverPhoneNumber());
@@ -104,8 +110,8 @@ public class OrderService {
 
         Order order = Order.builder()
                 .user(user)
-                .orderStatus(OrderStatus.ORDER_PENDING)
-                .totalPayment(calculateTotalPayment(orderDetailService.getProductPrice(productIds), amounts))
+//                .totalPayment(calculateTotalPayment(orderDetailService.getProductPrice(productIds), amounts))
+                .totalPayment(orderDetailService.calculateTotalPayment(productIds, amounts))
                 .build();
 
         order = orderRepository.save(order);
@@ -115,12 +121,12 @@ public class OrderService {
             Long productId = productIds.get(i);
             Integer amount = amounts.get(i);
 
-            orderDetails.add(orderDetailService.save(productId, amount, order));
+            orderDetails.add(orderDetailService.save(productId, amount, order)); //모든 상품 상태는 pending
         }
         return order.getId();
     }
 
-    private int calculateTotalPayment(List<Integer> productPayments, List<Integer> amounts) {
+   /* private int calculateTotalPayment(List<Integer> productPayments, List<Integer> amounts) {
         if (productPayments.size() == amounts.size()) {
             int sum = 0;
             for (int i = 0; i < productPayments.size(); i++) {
@@ -129,7 +135,7 @@ public class OrderService {
             return sum;
         }
         throw new InvalidRequestDataException("상품 id와 상품 수량의 개수가 맞지 않습니다.");
-    }
+    }*/
 
     @Transactional
     public OrderDetailHistoryResponseDto update(OrderUpdateRequestDto requestDto) {
@@ -137,18 +143,18 @@ public class OrderService {
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
 
         if ((order.getUser().getUser_id() == requestDto.getUserId())) {
-            if (order.getOrderStatus() == OrderStatus.ORDER_COMPLETE) {
+            if (orderDetailService.isAllStatus(order, OrderStatus.ORDER_COMPLETE)) {
                 String address = requestDto.getDeliveryAddress();
                 String name = requestDto.getReceiverName();
                 String phone = requestDto.getReceiverPhoneNumber();
 
-                if (address != null && !address.isBlank()) {
+                if(!address.equals(order.getDeliveryAddress())){
                     order.setDeliveryAddress(requestDto.getDeliveryAddress());
                 }
-                if (name != null && !name.isBlank()) {
+                if (!name.equals(order.getReceiverName())) {
                     order.setReceiverName(requestDto.getReceiverName());
                 }
-                if (phone != null && !phone.isBlank()) {
+                if (!phone.equals(order.getReceiverPhoneNumber())) {
                     order.setReceiverPhoneNumber(requestDto.getReceiverPhoneNumber());
                 }
 
@@ -156,7 +162,7 @@ public class OrderService {
                 return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
             } else {
                 log.warn("이미 상품이 배송 중이거나 도착하였기 때문에 정보 수정 불가");
-                throw new OrderModificationDeniedException();
+                throw new OrderModificationDeniedException("정보 수정");
             }
         } else {
             String message = requestDto.getOrderId() + "번 주문을 수정할 권한이 없습니다.";
@@ -170,14 +176,20 @@ public class OrderService {
         Order order = orderRepository.findById(requestDto.getOrderId())
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
 
-        if (order.getUser().getUser_id() == requestDto.getUserId() && (order.getOrderStatus() == OrderStatus.ORDER_COMPLETE)) {
-            order.setOrderStatus(OrderStatus.CANCELLATION_COMPLETE);
-            order = orderRepository.save(order);
-            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
-        } else {
-            String message = requestDto.getOrderId() + "번 주문을 취소할 권한이 없습니다.";
-            log.warn(message);
-            throw new AccessDeniedException(message);
+        if (order.getUser().getUser_id() == requestDto.getUserId()) {
+            if (orderDetailService.isAllStatus(order, OrderStatus.ORDER_COMPLETE)) {
+                orderDetailService.setAllOrderStatus(order, OrderStatus.CANCELLATION_COMPLETE);
+//                order.setOrderStatus(OrderStatus.CANCELLATION_COMPLETE);
+                order = orderRepository.save(order);
+                return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailList(order));
+            }
+
+            log.warn("이미 상품이 배송 중이거나 도착하였기 때문에 취소 불가");
+            throw new OrderModificationDeniedException("취소");
         }
+
+        String message = requestDto.getOrderId() + "번 주문을 취소할 권한이 없습니다.";
+        log.warn(message);
+        throw new AccessDeniedException(message);
     }
 }

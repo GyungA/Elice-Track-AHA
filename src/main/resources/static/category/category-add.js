@@ -28,8 +28,8 @@ async function loadTopCategories() {
     const categories = await Api.get("http://localhost:8080/categories/top-level");
     const TopCategoryBox = document.getElementById('TopCategoryBox');
     categories.forEach(category => {
-      const option = new Option(category.name, category.id);
-      TopCategoryBox.appendChild(option);
+      const a = new a(category.name, category.id);
+      TopCategoryBox.appendChild(a);
     });
   } catch (error) {
     console.error('Error loading top categories:', error);

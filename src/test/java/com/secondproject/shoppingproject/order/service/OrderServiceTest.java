@@ -1,5 +1,6 @@
 package com.secondproject.shoppingproject.order.service;
 
+import com.secondproject.shoppingproject.order.dto.order.user.OrderCancelRequestDto;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderDetailHistoryResponseDto;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderHistoryResponseDto;
 import com.secondproject.shoppingproject.order.dto.order.user.OrderUpdateRequestDto;
@@ -108,7 +109,7 @@ public class OrderServiceTest {
     @Test
     void get_My_Order_Detail() {
         // given
-        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000);
+        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000, OrderStatus.ORDER_COMPLETE);
         List<OrderDetailInfoDto> orderDetailInfoDtos = new ArrayList<>();
         orderDetailInfoDtos.add(orderDetailInfoDto);
 
@@ -116,7 +117,7 @@ public class OrderServiceTest {
         when(orderDetailService.getOrderDetailList(order)).thenReturn(orderDetailInfoDtos);
 
         // when
-        OrderDetailHistoryResponseDto resultDto = orderService.getDetailOrder(1L, 1L);
+        OrderDetailHistoryResponseDto resultDto = orderService.getDetailOrder(1L, 1L, false);
 
         //then
         assertEquals(orderDetailInfoDtos, resultDto.getOrderDetailInfoDtos());
@@ -132,7 +133,7 @@ public class OrderServiceTest {
         when(orderRepository.findByUserIdAndOrderId(1L, 1L)).thenReturn(Optional.empty());
 
         // when //then
-        assertThrows(EntityNotFoundException.class, () -> orderService.getDetailOrder(1L, 1L));
+        assertThrows(EntityNotFoundException.class, () -> orderService.getDetailOrder(1L, 1L, false));
     }
 
     @DisplayName("배송 전까지 배송지, 수령인 이름, 수령인 연락처를 수정할 수 있다.")
@@ -140,12 +141,14 @@ public class OrderServiceTest {
     @Transactional
     void can_modify_shipping_info_before_delivery() {
         // given
-        order.setOrderStatus(OrderStatus.ORDER_COMPLETE);
+        OrderDetail orderDetail = new  OrderDetail();
+        orderDetail.setOrder(order);
+        orderDetailService.setAllOrderStatus(order, OrderStatus.ORDER_COMPLETE);
 
         OrderUpdateRequestDto requestDto = new OrderUpdateRequestDto(1L, 1L, "New Address",
                 "New Receiver", "010-1234-1234");
 
-        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000);
+        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000, OrderStatus.ORDER_COMPLETE);
         List<OrderDetailInfoDto> orderDetailInfoDtos = new ArrayList<>();
         orderDetailInfoDtos.add(orderDetailInfoDto);
 
@@ -183,7 +186,10 @@ public class OrderServiceTest {
     @Transactional
     void can_modify_shipping_info_before_delivery_OrderAlreadyCompleted() {
         // given
-        order.setOrderStatus(OrderStatus.ON_DELIVERY);
+        OrderDetail orderDetail = new  OrderDetail();
+        orderDetail.setOrder(order);
+        orderDetailService.setAllOrderStatus(order, OrderStatus.ON_DELIVERY);
+
         OrderUpdateRequestDto requestDto = new OrderUpdateRequestDto(1L, 1L, "New Address",
                 "New Receiver", "010-1234-1234");
 
@@ -191,5 +197,31 @@ public class OrderServiceTest {
 
         // when //then
         assertThrows(OrderModificationDeniedException.class, () -> orderService.update(requestDto));
+    }
+
+    @DisplayName("배송 전까지 주문을 취소할 수 있다.")
+    @Test
+    @Transactional
+    void can_cancel_order_before_delivery() {
+        // given
+        OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L, 1L);
+
+        OrderDetailInfoDto orderDetailInfoDto = new OrderDetailInfoDto("name", "payment", 1000, OrderStatus.ORDER_COMPLETE);
+        List<OrderDetailInfoDto> orderDetailInfoDtos = new ArrayList<>();
+        orderDetailInfoDtos.add(orderDetailInfoDto);
+
+        when(orderRepository.save(order)).thenReturn(order);
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+        when(orderDetailService.getOrderDetailList(order)).thenReturn(orderDetailInfoDtos);
+
+        // when
+        OrderDetailHistoryResponseDto resultDto = orderService.cancel(requestDto);
+
+        // then
+        assertEquals(order.getUser().getUser_id(), resultDto.getId());
+        assertEquals(orderDetailInfoDtos, resultDto.getOrderDetailInfoDtos());
+
+        verify(orderRepository, times(1)).findById(1L);
+        verify(orderDetailService, times(1)).getOrderDetailList(order);
     }
 }

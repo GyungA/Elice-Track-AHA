@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,10 +18,11 @@
     <!-- Daum 주소 API 사용하기 위한 파일 -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="../css//header.css">
-    <link rel="stylesheet" href="../css//footer.css" />
-    <link rel="stylesheet" href="order.css" />
-    <script src="order.js" type="module" defer></script>
+    <link rel="stylesheet" href="../static/css/header.css" />
+    <link rel="stylesheet" href="../static/css/navigation.css" />
+    <link rel="stylesheet" href="../static/css/footer.css" />
+    <link rel="stylesheet" href="../static/order/order.css" />
+    <script src="../static/order/order.js" type="module" defer></script>
 </head>
 
 <header id="header-component">
@@ -54,6 +55,33 @@
         </div>
     </div>
 </header>
+<div class="custom-navbar">
+    <div class="custom-dropdown">
+        <button class="dropbtn">전체 카테고리</button>
+        <div class="custom-dropdown-content" id="navbar-category">
+            <a href="#food">식품</a>
+            <a href="#jewelry&fashion">주얼리/패션</a>
+            <a href="#home&living">홈리빙</a>
+            <a href="#case&stationery">케이스/문구</a>
+            <a href="#beauty">뷰티</a>
+            <a href="#animal">반려동물</a>
+            <a href="#crafts">공예</a>
+            <a href="#infants&toddlers">영유아동</a>
+        </div>
+    </div>
+    <div class="menu" id="navbar-menu">
+        <a href="#home">홈</a>
+        <a href="#new-arrivals">최신작품</a>
+        <a href="#Realtime-purchase">실시간구매</a>
+        <a href="#Realtime-review">실시간후기</a>
+        <a href="#bestproduct">인기작품</a>
+        <a href="#authorfeed">작가피드</a>
+        <a href="#authorfeed">매거진</a>
+        <a href="#authorfeed">최신 작품</a>
+        <a href="#authorfeed">소담상회</a>
+    </div>
+
+</div>
 
 
 <!-- 배송지 정보 입력 박스 -->

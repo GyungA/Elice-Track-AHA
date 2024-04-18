@@ -33,11 +33,16 @@ public class OrderDetail {
     @Column(nullable = false)
     private int payment;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private OrderStatus orderStatus;
+
     @Builder
-    public OrderDetail(Order order, Product product, int quantity, int payment) {
+    public OrderDetail(Order order, Product product, int amount, int payment, OrderStatus orderStatus) {
         this.order = order;
         this.product = product;
-        this.amount = quantity;
+        this.amount = amount;
         this.payment = payment;
+        this.orderStatus = orderStatus;
     }
 }

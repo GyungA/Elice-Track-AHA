@@ -15,8 +15,6 @@ public class CategoryDTO {
     private String name;
     private Long parentId;
 
-    private List<CategoryDTO> subCategories;
-
     public CategoryDTO(Long categoryId, String name, Long parentId) {
         this.categoryId = categoryId;
         this.name = name;

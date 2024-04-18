@@ -14,9 +14,9 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 //    List<Order> findByUserOrderByCreatedAtDesc(User user);
     @Query("SELECT o FROM Order o " +
-            "WHERE o.user = :user AND o.orderStatus != 'DELETE' " +
+            "WHERE o.user = :user " +
             "ORDER BY o.createdAt DESC")
-    List<Order> findByUserOrderByCreatedAtDesc(@Param("user") User user);
+    List<Order> findByUserOrderByCreatedAtDesc(@Param("user") User user); //TODO: "주문 중" 상태 제외
 
 //    Optional<Order> findByIdAndUserid(Long orderId, Long userId);
     @Query("SELECT o FROM Order o " +
