@@ -23,6 +23,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     private int price; //가격
     private String name; //상품명
     private String description; // 상품설명
