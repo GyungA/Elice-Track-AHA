@@ -38,7 +38,8 @@ public class SignUpService {
 //                .phone(signUpRequest.getPhone()).build();
 		User user = User.builder()
 				.email(signUpRequest.getEmail())
-				.password(passwordEncoder.encode(signUpRequest.getPassword()))
+				//.password(passwordEncoder.encode(signUpRequest.getPassword()))
+				.password(signUpRequest.getPassword())
 				.name(signUpRequest.getName())
 				.birthdate(signUpRequest.getBirthdate())
 				.address(signUpRequest.getAddress())

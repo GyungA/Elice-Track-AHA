@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,9 +22,10 @@
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="/static/css/header.css" />
-    <link rel="stylesheet" href="/static/css/footer.css" />
-    <link rel="stylesheet" href="/static/product-management/product-management.css" />
+    <link rel="stylesheet" href="../static/css/header.css" />
+    <link rel="stylesheet" href="../static/css/navigation.css" />
+    <link rel="stylesheet" href="../static/css/footer.css" />
+    <link rel="stylesheet" href="../static/product-management/product-management.css" />
     <!-- AWS S3 사용하기 위한 파일 -->
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
     <script src="../static/product-management/product-management.js" type="module" defer></script>
@@ -186,6 +187,33 @@
         </div>
     </div>
 </header>
+<div class="custom-navbar">
+    <div class="custom-dropdown">
+        <button class="dropbtn">전체 카테고리</button>
+        <div class="custom-dropdown-content" id="navbar-category">
+            <a href="#food">식품</a>
+            <a href="#jewelry&fashion">주얼리/패션</a>
+            <a href="#home&living">홈리빙</a>
+            <a href="#case&stationery">케이스/문구</a>
+            <a href="#beauty">뷰티</a>
+            <a href="#animal">반려동물</a>
+            <a href="#crafts">공예</a>
+            <a href="#infants&toddlers">영유아동</a>
+        </div>
+    </div>
+    <div class="menu" id="navbar-menu">
+        <a href="#home">홈</a>
+        <a href="#new-arrivals">최신작품</a>
+        <a href="#Realtime-purchase">실시간구매</a>
+        <a href="#Realtime-review">실시간후기</a>
+        <a href="#bestproduct">인기작품</a>
+        <a href="#authorfeed">작가피드</a>
+        <a href="#authorfeed">매거진</a>
+        <a href="#authorfeed">최신 작품</a>
+        <a href="#authorfeed">소담상회</a>
+    </div>
+
+</div>
 
 <!-- 제품 목록 -->
 <section class="section">
@@ -275,43 +303,23 @@
         <div class="full">
             <div class="body3-regular-medium text-left">
                 <div class="float-left">
-                    <img
-                            class="baseLogo"
-                            src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png"
-                            style="height: 42px; width: 100px"
-                    />
+                    <img class="baseLogo" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" style="height: 42px; width: 100px;"/>
                 </div>
-                <div class="float-left" style="width: 450px">
+                <div class="float-left" style="width: 450px;">
                     <div class="mb-[8px] body3-bold-medium">(주) 아이디어하우스</div>
                     <div data-v-f1827758="">대표이사 : 빌게이츠</div>
-                    <div data-v-f1827758="">
-                        서울특별시 성동구 아차산로17길 48 성수낙낙 C동 2층 엘리스Lab
-                        성수점
-                    </div>
+                    <div data-v-f1827758="">서울특별시 성동구 아차산로17길 48 성수낙낙 C동 2층 엘리스Lab 성수점</div>
                     <div data-v-f1827758="">사업자 등록번호 : 123-45-67890</div>
-                    <div data-v-f1827758="">
-                        통신판매업신고 : 2024-서울성수-1234호
-                    </div>
-                    <div data-v-f1827758="">
-                        호스팅서비스 제공자 : AWS WEB Service, Inc
-                    </div>
-                    <div class="caption2-regular-medium mt-[8px] tracking-tight">
-                        아이디어하우스는 통신판매중개자이며 통신판매의 당사자가
-                        아닙니다. <br data-v-f1827758="" />
-                        따라서 아이디어하우스는 상품 거래정보 및 거래에 대하여 책임을
-                        지지 않습니다.
-                    </div>
-                    <div class="mt-[8px] caption2-regular-medium" data-v-f1827758="">
-                        Copyright ©Ideahouse Inc. all rights reserved.
-                    </div>
+                    <div data-v-f1827758="">통신판매업신고 : 2024-서울성수-1234호</div>
+                    <div data-v-f1827758="">호스팅서비스 제공자 : AWS WEB Service, Inc</div>
+                    <div class="caption2-regular-medium mt-[8px] tracking-tight">아이디어하우스는 통신판매중개자이며 통신판매의 당사자가 아닙니다. <br data-v-f1827758=""> 따라서 아이디어하우스는 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.</div>
+                    <div class="mt-[8px] caption2-regular-medium" data-v-f1827758="">Copyright ©Ideahouse Inc. all rights reserved.</div>
                 </div>
-                <div class="float-middle" style="width: 240px">
+                <div class="float-middle" style="width: 240px;">
                     <div>
                         <div class>
                             <span class="body3-bold-medium">고객센터</span>
-                            <span class="caption2-regular-medium">
-                    (평일 오전 10시 ~ 오후 6시)
-                  </span>
+                            <span class="caption2-regular-medium"> (평일 오전 10시 ~ 오후 6시) </span>
                         </div>
                         <div class>
                             <a href="https://bit.ly/3IDiamS"></a>
@@ -340,54 +348,28 @@
                     <div class="float-right">
                         <div class="right-title">Follow Us</div>
                         <div class="TheFooter__snsLink">
-                            <a
-                                    href="https://www.facebook.com"
-                                    class="TheFooter__snsLink_facebook"
-                            >
-                                <img
-                                        src="https://i.ibb.co/Q6q1JL6/image.png"
-                                        alt="Facebook"
-                                />
+                            <a href="https://www.facebook.com" class="TheFooter__snsLink_facebook">
+                                <img src="https://i.ibb.co/Q6q1JL6/image.png" alt="Facebook">
                             </a>
-                            <a
-                                    href="https://www.instagram.com"
-                                    class="TheFooter__snsLink_instagram"
-                            >
-                                <img src="https://i.ibb.co/KzPgnvr/1.png" alt="1" />
+                            <a href="https://www.instagram.com" class="TheFooter__snsLink_instagram">
+                                <img src="https://i.ibb.co/KzPgnvr/1.png" alt="1">
                             </a>
-                            <a
-                                    href="https://blog.naver.com"
-                                    class="TheFooter__snsLink_naverBlog"
-                            >
-                                <img src="https://i.ibb.co/98r3RVb/2.png" alt="2" />
+                            <a href="https://blog.naver.com" class="TheFooter__snsLink_naverBlog">
+                                <img src="https://i.ibb.co/98r3RVb/2.png" alt="2">
                             </a>
-                            <a
-                                    href="https://post.naver.com"
-                                    class="TheFooter__snsLink_naverPost"
-                            >
-                                <img src="https://i.ibb.co/vLXD634/3.png" alt="3" />
+                            <a href="https://post.naver.com" class="TheFooter__snsLink_naverPost">
+                                <img src="https://i.ibb.co/vLXD634/3.png" alt="3">
                             </a>
-                            <a
-                                    href="https://twitter.com"
-                                    class="TheFooter__snsLink_twitter"
-                            >
-                                <img src="https://i.ibb.co/Wts8MrJ/4.png" alt="4" />
+                            <a href="https://twitter.com" class="TheFooter__snsLink_twitter">
+                                <img src="https://i.ibb.co/Wts8MrJ/4.png" alt="4">
                             </a>
                         </div>
-                        <div class="TheFooter__award" style="width: 76px">
+                        <div class="TheFooter__award" style="width: 76px;">
                             <div class="TheFooter__award1">
-                                <img
-                                        src="https://i.ibb.co/fFHCHkq/1-removebg-preview.png"
-                                        alt="5"
-                                        style="width: 106px; height: 60px"
-                                />
+                                <img src="https://i.ibb.co/fFHCHkq/1-removebg-preview.png" alt="5" style="width: 106px; height: 60px;">
                             </div>
                             <div class="TheFooter__award2">
-                                <img
-                                        src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png"
-                                        alt="6"
-                                        style="width: 76px; height: 60px"
-                                />
+                                <img src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png"  alt="6" style="width: 76px; height: 60px;">
                             </div>
                         </div>
                     </div>

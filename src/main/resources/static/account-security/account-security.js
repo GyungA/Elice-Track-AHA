@@ -1,5 +1,5 @@
-import { createNavbar } from "../js/useful-functions.js";
-import * as Api from "../js/api.js";
+import { checkLogin, createNavbar } from "static/js/useful-functions";
+import * as Api from "/static/js/api";
 
 // 요소(element), input 혹은 상수
 const securityTitle = document.querySelector("#securityTitle");
@@ -8,10 +8,6 @@ const fullNameToggle = document.querySelector("#fullNameToggle");
 const passwordInput = document.querySelector("#passwordInput");
 const passwordToggle = document.querySelector("#passwordToggle");
 const passwordConfirmInput = document.querySelector("#passwordConfirmInput");
-//추가부분
-const birthdateInput = document.querySelector("#birthdateInput");
-const birthdateToggle = document.querySelector("#birthdateToggle");
-//
 const emailInput = document.querySelector("#emailInput");
 const emailToggle = document.querySelector("#emailToggle");
 const postalCodeInput = document.querySelector("#postalCodeInput");
@@ -28,29 +24,7 @@ const modalCloseButton = document.querySelector("#modalCloseButton");
 const currentPasswordInput = document.querySelector("#currentPasswordInput");
 const saveCompleteButton = document.querySelector("#saveCompleteButton");
 
-// document.getElementById("fullNameToggle").addEventListener("change", (e) => {
-//   console.log("e", e);
-//   if (e.target.checked) {
-//     document.getElementById("fullNameInput").disabled = false;
-//   } else {
-//     document.getElementById("fullNameInput").disabled = true;
-//   }
-// });
-
-document.addEventListener('DOMContentLoaded', function() {
-  var toggle = document.getElementById("fullNameToggle");
-  if (toggle) {
-    toggle.addEventListener("change", (e) => {
-      console.log("Event", e);
-      var input = document.getElementById("fullNameInput");
-      if (input) {
-        input.disabled = !e.target.checked;
-      }
-    });
-  }
-});
-
-// checkLogin();
+checkLogin();
 addAllElements();
 addAllEvents();
 
@@ -64,7 +38,6 @@ function addAllElements() {
 function addAllEvents() {
   fullNameToggle.addEventListener("change", toggleTargets);
   passwordToggle.addEventListener("change", toggleTargets);
-  birthdateToggle.addEventListener("change", toggleTargets);
   emailToggle.addEventListener("change", toggleTargets);
   addressToggle.addEventListener("change", toggleTargets);
   phoneNumberToggle.addEventListener("change", toggleTargets);
@@ -75,7 +48,6 @@ function addAllEvents() {
   document.addEventListener("keydown", keyDownCloseModal);
   saveCompleteButton.addEventListener("click", saveUserData);
 }
-
 
 // input 및 주소찾기 버튼의 disabled <-> abled 상태를 토글함.
 function toggleTargets(e) {
@@ -95,11 +67,7 @@ function toggleTargets(e) {
   if (toggleId.includes("email")) {
     targets = [emailInput];
   }
-    //추가부분
-    if (toggleId.includes("birthdate")) {
-      targets = [birthdateInput];
-    }
-//
+
   if (toggleId.includes("address")) {
     targets = [
       postalCodeInput,
@@ -181,10 +149,6 @@ function disableForm() {
   fullNameToggle.checked = false;
   passwordInput.setAttribute("disabled", "");
   passwordToggle.checked = false;
-  //추가 부분
-  birthdateInput.setAttribute("disabled", "");
-  birthdateToggle.checked = false;
-  //
   passwordConfirmInput.setAttribute("disabled", "");
   postalCodeInput.setAttribute("disabled", "");
   addressToggle.checked = false;
@@ -216,7 +180,7 @@ function searchAddress(e) {
         }
         if (data.buildingName !== "" && data.apartment === "Y") {
           extraAddr +=
-            extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+              extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
         }
         if (extraAddr !== "") {
           extraAddr = " (" + extraAddr + ")";
@@ -248,7 +212,7 @@ async function saveUserData(e) {
   const isPasswordLong = password.length >= 4;
   const isPasswordSame = password === passwordConfirm;
   const isPostalCodeChanged =
-    postalCode !== (userData.address?.postalCode || "");
+      postalCode !== (userData.address?.postalCode || "");
   const isAddress2Changed = address2 !== (userData.address?.address2 || "");
   const isAddressChanged = isPostalCodeChanged || isAddress2Changed;
 

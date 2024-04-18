@@ -38,7 +38,7 @@
                 </form>
             </div>
             <div th:if="${session.user}" class="header-nav-user-info">
-<!--                <button type="button" class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</button> -->
+                <!--                <button type="button" class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</button> -->
                 <span class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</span>
             </div>
             <div th:unless="${session.user}" class="header-nav-login-button">

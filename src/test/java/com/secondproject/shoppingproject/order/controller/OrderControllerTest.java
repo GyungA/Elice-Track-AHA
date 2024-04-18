@@ -19,10 +19,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -67,9 +63,7 @@ public class OrderControllerTest {
                         5, "총 계산금액2", OrderStatus.ORDER_COMPLETE, "주문 날짜2")
         );
 
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<OrderHistoryResponseDto> page = new PageImpl<>(orderHistoryList, pageable, orderHistoryList.size());
-        when(orderService.getMyOrder(userId, pageable)).thenReturn(page);
+        when(orderService.getMyOrder(userId)).thenReturn(orderHistoryList);
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -123,7 +117,7 @@ public class OrderControllerTest {
     @Test
     public void testUpdate() throws Exception {
         // Given
-        User user = new User(1L, "email", "password", "name", "0209244",
+        User user = new User("email", "password", "name", "0209244",
                 true, "address", "phone", Grade.BRONZE, Role.USER);
 
         Order order = new Order();
@@ -160,7 +154,7 @@ public class OrderControllerTest {
     @Test
     public void testCancel() throws Exception {
         // Given
-        User user = new User(1L, "email", "password", "name", "0209244",
+        User user = new User("email", "password", "name", "0209244",
                 true, "address", "phone", Grade.BRONZE, Role.USER);
 
         Order order = new Order();
@@ -168,11 +162,11 @@ public class OrderControllerTest {
         order.setUser(user);
 
         OrderDetail orderDetail = new OrderDetail();
-        orderDetail.setId(1L);
         orderDetail.setOrder(order);
         orderDetail.setOrderStatus(OrderStatus.ORDER_COMPLETE);
 
         OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L, 1L);
+
 
         OrderDetailHistoryResponseDto responseDto = new OrderDetailHistoryResponseDto();
         responseDto.setId(requestDto.getUserId());

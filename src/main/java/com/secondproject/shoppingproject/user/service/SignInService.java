@@ -37,7 +37,10 @@ public class SignInService {
             throw new InvalidEmailException();
         }
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+//        if (!passwordEncoder.matches(password, user.getPassword())) {
+//            throw new InvalidPasswordException();
+//        }
+        if (!password.equals(user.getPassword())) {
             throw new InvalidPasswordException();
         }
         return user;

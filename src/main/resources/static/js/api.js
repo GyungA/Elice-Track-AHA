@@ -1,3 +1,4 @@
+
 async function get(endpoint, params = "") {
   const apiUrl = params ? `${endpoint}/${params}` : endpoint;
   console.log(`%cGET 요청: ${apiUrl} `, "color: #a25cd1;");

@@ -12,9 +12,6 @@ import com.secondproject.shoppingproject.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
@@ -30,26 +27,17 @@ public class OrderService {
     private final UserRepository userRepository;
     private final OrderDetailService orderDetailService;
 
-    public Page<OrderHistoryResponseDto> getMyOrder(Long userId, Pageable pageable) {
+    public List<OrderHistoryResponseDto> getMyOrder(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 user id를 찾을 수 없습니다."));
-//        List<Order> orders = orderRepository.findByUserOrderByCreatedAtDesc(user);
-        Page<Order> orderPage = orderRepository.findByUserOrderByCreatedAtDesc(user, pageable);
+        List<Order> orders = orderRepository.findByUserOrderByCreatedAtDesc(user);
 
-//        return orders.stream()
-//                .map(order -> {
-//                    OrderDetailCountAndProductNamesDto dto = orderDetailService.getOrderDetailCountAndProductNames(order);
-//                    return new OrderHistoryResponseDto(order, dto);
-//                })
-//                .collect(Collectors.toList());
-
-        List<OrderHistoryResponseDto> orderHistoryResponseDtos = orderPage.getContent().stream()
+        return orders.stream()
                 .map(order -> {
                     OrderDetailCountAndProductNamesDto dto = orderDetailService.getOrderDetailCountAndProductNames(order);
                     return new OrderHistoryResponseDto(order, dto);
                 })
                 .collect(Collectors.toList());
-        return new PageImpl<>(orderHistoryResponseDtos, pageable, orderPage.getTotalElements());
     }
 
     public OrderDetailHistoryResponseDto getDetailOrder(Long userId, Long orderId, boolean isSeller) {

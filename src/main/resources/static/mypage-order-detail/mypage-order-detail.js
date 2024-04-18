@@ -1,5 +1,4 @@
 import * as Api from "../js/api.js";
-import { setCookie, getCookie } from "../js/useful-functions.js";
 // import * as Order from "../order/order.js";
 // import { formatPhoneNumber, searchAddress } from "../order/order.js";
 
@@ -32,21 +31,19 @@ const address2Input = document.querySelector("#address2");
 const receiverNameInput = document.querySelector("#receiverNameInput");
 const receiverPhoneNumberInput = document.querySelector("#receiverPhoneNumber");
 
-// // // 현재 URL 가져오기
+// // 현재 URL 가져오기
 // const currentUrl = window.location.href;
 
-// // // URL에서 쿼리 문자열 파싱
+// // URL에서 쿼리 문자열 파싱
 // const urlParams = new URLSearchParams(currentUrl);
 
 // // 파라미터 값 가져오기
-const userId = getCookie("userId");
-const orderId = getCookie("orderId");
 // const userId = urlParams.get("userId");
 // const orderId = urlParams.get("orderId");
-// const userId = 1;
-// const orderId = 5;
-// console.log("user id: " + userId);
-// console.log("order id: " + orderId);
+const userId = 1;
+const orderId = 6;
+console.log("user id: " + userId);
+console.log("order id: " + orderId);
 
 // checkLogin();
 addAllElements();
@@ -89,7 +86,6 @@ async function insertOrderDetail(userId, orderId) {
       totalPayment,
       orderDate,
     } = response;
-    console.log(response);
 
     const numOfOrderDetails = orderDetailInfoDtos.length;
     await addElements(numOfOrderDetails);
@@ -151,27 +147,27 @@ async function insertOrderDetail(userId, orderId) {
 
 //결제한 상품 개수만큼 추가
 function addElements(numberOfElementsToAdd) {
-  for (let i = 0; i < numberOfElementsToAdd; i++) {
+  for (var i = 0; i < numberOfElementsToAdd; i++) {
     // one-product-inner 요소 생성
-    let newInnerProduct = document.createElement("div");
+    var newInnerProduct = document.createElement("div");
     newInnerProduct.classList.add("one-product-inner");
 
     // image-url 요소 생성
-    let newImageUrl = document.createElement("div");
+    var newImageUrl = document.createElement("div");
     newImageUrl.classList.add("image-url");
 
     // other-product-info 요소 생성
-    let newOtherProductInfo = document.createElement("div");
+    var newOtherProductInfo = document.createElement("div");
     newOtherProductInfo.classList.add("other-product-info");
 
     // product-name, product-amount-payment, product-order-status 요소 생성
-    let newProductName = document.createElement("p");
+    var newProductName = document.createElement("p");
     newProductName.classList.add("product-name");
 
-    let newProductAmountPayment = document.createElement("p");
+    var newProductAmountPayment = document.createElement("p");
     newProductAmountPayment.classList.add("product-amount-payment");
 
-    let newProductOrderStatus = document.createElement("p");
+    var newProductOrderStatus = document.createElement("p");
     newProductOrderStatus.classList.add("product-order-status");
 
     // other-product-info에 각각의 요소 추가
