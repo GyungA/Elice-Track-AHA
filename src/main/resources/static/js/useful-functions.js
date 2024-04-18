@@ -186,5 +186,65 @@ export let formatPhoneNumber = function (phoneNumber) {
   return formatted;
 };
 
+// 페이지네이션
+export let activePageButtons = function (endPageNumber) {
+  //페이지 번호 클릭시
+  const pageButtons = document.querySelectorAll(".page-number-button");
+  for (let i = 0; i < endPageNumber; i++) {
+    pageButtons[i].addEventListener("click", () => {
+      // redirectOrders(userId, i);
+      setCookie("page", i);
+      redirect("/seller-order-management/seller-order-management.html");
+    });
+  }
+
+  //왼오 클릭시.
+  const leftPage = document.querySelector(".page-before");
+  const rightPage = document.querySelector(".page-after");
+  leftPage.addEventListener("click", () => {
+    let currentPage = getCookie("page");
+    if (currentPage > 0) {
+      setCookie("page", currentPage - 1);
+      redirect("/seller-order-management/seller-order-management.html");
+    } else {
+      alert("첫 페이지입니다.");
+    }
+  });
+  rightPage.addEventListener("click", () => {
+    let currentPage = getCookie("page");
+    if (currentPage < endPageNumber - 1) {
+      setCookie("page", currentPage + 1);
+      redirect("/seller-order-management/seller-order-management.html");
+    } else {
+      alert("마지막 페이지입니다.");
+    }
+  });
+};
+
+// 페이지 번호를 생성하는 함수를 정의합니다.
+export let createPageNumber = function createPageNumber(
+  endPageNumber,
+  pageWrapper
+) {
+  for (let i = endPageNumber; i >= 1; i--) {
+    // 새 페이지 번호를 생성합니다.
+    let newPageNumber = document.createElement("button");
+    newPageNumber.setAttribute("class", "page-number-button");
+    // newPageButton.classList.add(`${i}`);
+
+    // 페이지 번호를 생성하여 페이지 번호 요소에 추가합니다.
+    let pageNumberSpan = document.createElement("span");
+    pageNumberSpan.setAttribute("class", "page-number");
+    pageNumberSpan.textContent = i;
+
+    // 페이지 번호 요소에 페이지 번호를 추가합니다.
+    newPageNumber.appendChild(pageNumberSpan);
+
+    // 생성된 페이지 번호를 적절한 위치에 추가합니다.
+    let pageBeforeLink = pageWrapper.querySelector(".page-before");
+    pageWrapper.insertBefore(newPageNumber, pageBeforeLink.nextSibling);
+  }
+};
+
 // 주변 다른 파일 것도 여기서 일괄 export 함
 // export { createNavbar } from "navbar.js";

@@ -36,8 +36,8 @@ const receiverNameInput = document.querySelector("#receiverNameInput");
 const receiverPhoneNumberInput = document.querySelector("#receiverPhoneNumber");
 
 //임시
-setCookie("userId", 1);
-setCookie("orderId", 8);
+// setCookie("userId", 1);
+// setCookie("orderId", 8);
 
 // // 파라미터 값 가져오기
 const userId = getCookie("userId");
