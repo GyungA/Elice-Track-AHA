@@ -6,11 +6,13 @@ navbarMenu();
 
 async function navbarTopCategories() {
     try {
+
         const categories = await Api.get('http://localhost:8080/categories/top-level'); // 상위 카테고리 데이터 가져오기
         const navCategory = document.getElementById('navbar-category');
         categories.forEach(category => {
             const anchor = document.createElement('a'); // <a> 요소 생성
-            anchor.href = `#${category.name.toLowerCase()}`; // href 속성 설정, 예: #food, #jewelry&fashion
+            // anchor.href = `#${category.name.toLowerCase()}`; // href 속성 설정, 예: #food, #jewelry&fashion
+            anchor.href = `/categories/$/{parentId}`;
             anchor.textContent = category.name; // 카테고리 이름으로 링크 텍스트 설정
             navCategory.appendChild(anchor); // 드롭다운 메뉴에 <a> 요소 추가
         });

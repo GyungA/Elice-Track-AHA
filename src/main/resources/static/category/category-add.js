@@ -3,7 +3,7 @@ import { createNavbar } from "../js/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 const titleInput = document.querySelector("#titleInput");
-const TopCategoryBox = document.querySelector("#TopCategoryBox");
+const topCategoryBox = document.querySelector("#TopCategoryBox");
 const submitButton = document.querySelector("#addCategoryButton");
 const registerCategoryForm = document.querySelector("#registerCategoryForm");
 
@@ -19,24 +19,28 @@ async function addAllElements() {
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   submitButton.addEventListener("click", handleSubmit);
-  TopCategoryBox.addEventListener("change", handleColorChange);
+  // topCategoryBox.addEventListener("click", selectTopCategories);
+
 }
 
 // 상위 카테고리 조회
-async function loadTopCategories() {
-  try {
-    const categories = await Api.get("http://localhost:8080/categories/top-level");
-    const TopCategoryBox = document.getElementById('TopCategoryBox');
-    categories.forEach(category => {
-      const a = new a(category.name, category.id);
-      TopCategoryBox.appendChild(a);
-    });
-  } catch (error) {
-    console.error('Error loading top categories:', error);
-  }
+async function selectTopCategories() {
+    try {
+        const categories = await Api.get('http://localhost:8080/categories/top-level'); // Api.get 사용하여 상위 카테고리 데이터 가져오기
+        const topCategoryBox = document.getElementById('TopCategoryBox');
+        categories.forEach(category => {
+            const option = new Option(category.name, category.categoryId);
+            topCategoryBox.appendChild(option); // 옵션 요소로 추가
+        });
+    } catch (error) {
+        console.error('Error loading categories:', error);
+    }
 }
 
-loadTopCategories();
+// addAllEvents() 에 포함시키면 중복으로 여러번 데이터를 불러와서 따로 불러오도록 설정
+selectTopCategories();
+
+
 
 
 // 카테고리 추가하기 - 카테고리 정보를 백엔드 db에 저장.
@@ -44,7 +48,7 @@ async function handleSubmit(e) {
   e.preventDefault();
 
   const title = titleInput.value;
-  const topCategory = TopCategoryBox.value;
+  const parentId = TopCategoryBox.value;
 
   if (!title.trim()) {
     return alert("카테고리 제목을 입력해 주세요.");
@@ -55,7 +59,7 @@ async function handleSubmit(e) {
   }
 
   try {
-    const categoryData = { title, topCategory};
+    const categoryData = { title, parentId};
 
     await Api.post("http://localhost:8080/categories/api/add", categoryData);
 
