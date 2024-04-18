@@ -13,6 +13,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +45,9 @@ public class OrderController {
             @ApiResponse(responseCode = "404", description = "해당 ID의 유저가 존재하지 않습니다."),
     })
     @GetMapping("/user/{user_id}")
-    public ResponseEntity<List<OrderHistoryResponseDto>> getMyOrder(@PathVariable("user_id") Long userId) {
-        return ResponseEntity.ok(orderService.getMyOrder(userId));
+    public ResponseEntity<Page<OrderHistoryResponseDto>> getMyOrder(@PathVariable("user_id") Long userId,
+                                                                    @PageableDefault(page = 0, size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(orderService.getMyOrder(userId, pageable));
     }
 
     /**
@@ -114,9 +119,6 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getPayInfo(userId, orderId));
     }
 
-    // 장바구니에서 주문시, 같은 seller별로 묶어서 주문 따로 생성??
-    // 근데 결제창 넘어가서 결제는 또 같이 해야하는데...
-    // 그냥 배송 상태를 orderDetail에 넣어버릴까
     /**
      * 상품을 구매하기 위해 주문 만들기
      * @param requestDto 주문을 만드는 유저 id, 상품 id 리스트, 각 상품 수량 리스트
@@ -154,8 +156,6 @@ public class OrderController {
     })
     @PatchMapping
     public ResponseEntity<OrderDetailHistoryResponseDto> update(@Valid @RequestBody OrderUpdateRequestDto requestDto) {
-        //전과 달라진 게 없는 값의 경우, null값을 보내는지 or 원래 값 그대로 보내는지?
-        //일단 null 값 보내는 걸로 구현
         return ResponseEntity.ok(orderService.update(requestDto));
     }
 

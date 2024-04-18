@@ -22,6 +22,8 @@ public class QProduct extends EntityPathBase<Product> {
 
     public static final QProduct product = new QProduct("product");
 
+    public final com.secondproject.shoppingproject.category.entity.QCategory category;
+
     public final DatePath<java.time.LocalDate> createAt = createDate("createAt", java.time.LocalDate.class);
 
     public final NumberPath<Integer> current_stock = createNumber("current_stock", Integer.class);
@@ -58,6 +60,7 @@ public class QProduct extends EntityPathBase<Product> {
 
     public QProduct(Class<? extends Product> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.category = inits.isInitialized("category") ? new com.secondproject.shoppingproject.category.entity.QCategory(forProperty("category"), inits.get("category")) : null;
         this.seller = inits.isInitialized("seller") ? new com.secondproject.shoppingproject.user.entity.QUser(forProperty("seller")) : null;
     }
 

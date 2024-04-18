@@ -154,32 +154,6 @@
     box-sizing: border-box;
     }
 
-.footer-navigation {
-    border-bottom: 1px solid #d9d9d9;
-    border-top: 3px solid #ef7014;
-    display: flex;
-    font-size: 14px;
-}
-.text-center {
-    text-align: center;
-}
-
-.body3-regular-medium {
-    line-height: 1.5;
-}
-
-.body3-regular-medium {
-    font-family: -apple-system, BlinkMacSystemFont, Malgun Gothic, 맑은 고딕, helvetica, Apple SD Gothic Neo, sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: normal;
-    word-spacing: normal;
-}
-
-.text-left {
-    text-align: left;
-}
-
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
