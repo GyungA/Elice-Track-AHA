@@ -84,78 +84,84 @@
 <div class="banner">
     아이디어 하우스에 오신 것을 환영합니다.
 </div>
-<!--
+
 <div class="product-grid">
     <div th:each="product : ${products}" class="product">
-        <img th:src="${product.image}" th:alt="${product.name}" alt="Product Image">
-        <div class="product-name" th:text="${product.name}">Product Name</div>
-        <div class="product-price" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA')} + '원'">0원</div>
-    </div>
-</div>
--->
-<div class="product-grid">
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
-    </div>
-    <div class="product">
-        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
-        <div class="product-name">Product 1</div>
-        <div class="product-price">40,000원</div>
+        <a th:href="@{/product/{id}(id=${product.id})}" style="text-decoration: none;">
+            <div class="product-name" th:text="${product.name}">Product Name</div>
+            <div class="product-price" th:text="${product.price} + '원'">0원</div>
+            <div class="product-description" th:text="${product.description}">Product Description</div>
+            <div class="product-stock" th:text="'잔고 : ' + ${product.current_stock}">Stock</div>
+            <!-- Add more product details as needed -->
+        </a>
     </div>
 </div>
 
+
+<!--
+<div class="product-grid">
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+</div>
+-->
 <div class="footer-line">
     Idea House © 2024
 </div>

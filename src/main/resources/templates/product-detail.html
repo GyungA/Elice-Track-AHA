@@ -34,7 +34,7 @@
 <header id="header-component">
     <div class="header-container">
         <div class="header-logo">
-            <a href="#">
+            <a href="/home">
                 <img
                         class="header-title-image"
                         src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png"
@@ -59,11 +59,27 @@
                 </label>
             </div>
 
-            <div class="header-nav-login-button">
-                <span class="header-nav-login-button-text"> 로그인 </span>
+            <div th:if="${session.user}">
+                <span class="header-nav-username" th:text="${session.user.name} + ' 님'"></span>
             </div>
-            <div class="header-nav-signup-button">
-                <span class="header-nav-signup-button-text"> 회원가입 </span>
+            <div th:if="${session.user}" class="header-nav-logout-button">
+                <form action="/signOut" method="post">
+                    <button type="submit" class="header-nav-logout-button-text">로그아웃</button>
+                </form>
+            </div>
+            <div th:if="${session.user}" class="header-nav-user-info">
+                <!--                <button type="button" class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</button> -->
+                <span class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</span>
+            </div>
+            <div th:unless="${session.user}" class="header-nav-login-button">
+                <span class="header-nav-login-button-text" onclick="window.location.href='/signIn'">
+                    로그인
+                </span>
+            </div>
+            <div th:unless="${session.user}" class="header-nav-signup-button">
+                <span class="header-nav-signup-button-text" onclick="window.location.href='/signUp'">
+                    회원가입
+                </span>
             </div>
         </div>
     </div>
@@ -83,7 +99,7 @@
         </div>
     </div>
     <div class="menu" id="navbar-menu">
-        <a href="#home">홈</a>
+        <a href="/home">홈</a>
         <a href="#new-arrivals">최신작품</a>
         <a href="#Realtime-purchase">실시간구매</a>
         <a href="#Realtime-review">실시간후기</a>
@@ -104,7 +120,7 @@
                 <div class="tile is-child box product-image">
                     <figure class="image is-sqaure">
                         <!-- 상품 이미지 -->
-                        <img id="productImageTag" src="" />
+                        <img th:src="${product.image}" />
                     </figure>
                 </div>
             </div>
@@ -120,6 +136,7 @@
                         <div class="product-name-status">
                             <!-- 상품 이름 -->
                             <p
+                                    th:text="${product.name}"
                                     class="subtitle is-3 is-family-monospace"
                                     id="titleTag"
                             ></p>
@@ -129,22 +146,22 @@
                       fiber_manual_record
                     </span>
                                 <!-- 상품 상태 -->
-                                <p class="proudct-status" id="statusTag"></p>
+                                <p th:text="${product.status ? '판매 중' : '일시 품절'}" class="proudct-status" id="statusTag"></p>
                             </div>
                         </div>
 
                         <!-- 상품 가격 -->
-                        <h1 id="priceTag"></h1>
+                        <h1 th:text="'가격: ' + ${product.price}" id="priceTag"></h1>
                         <!-- 상품 판매자 -->
                         <div class="seller-wrapper">
-                            <p>판매자:</p>
+                            <p th:text="'판매자: ' + ${product.seller.name}">판매자:</p>
                             <p class="seller-name" id="sellerName"></p>
                         </div>
                         <!-- 상품 설명 -->
-                        <p class="detail-description" id="detailDescriptionTag"></p>
+                        <p th:text="${product.description}" class="detail-description" id="detailDescriptionTag"></p>
                         <div class="stock-wrapper">
                             <!-- 남은 수량 -->
-                            <p class="remain-stock-word">남은 수량:</p>
+                            <p th:text="'남은 수량: ' + ${product.current_stock}" class="remain-stock-word"></p>
                             <p class="remain-stock" id="remainStock"></p>
                         </div>
                     </div>

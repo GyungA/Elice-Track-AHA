@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
+//@RequestMapping
 public class ProductController {
 
     private final ProductService productService;
