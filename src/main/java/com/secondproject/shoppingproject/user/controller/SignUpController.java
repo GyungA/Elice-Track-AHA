@@ -28,7 +28,7 @@ public class SignUpController {
     @GetMapping("/signUp")
     public String getSignUp(Model model){
         model.addAttribute("signUpRequest", new SignUpRequest());
-        return "member-join/memberJoin";
+        return "memberJoin";
     }
 
 //    @PostMapping
@@ -45,7 +45,7 @@ public class SignUpController {
     public String postNewSignUp(@RequestBody SignUpRequest signUpRequest,
                             BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
-            return "member-join/memberJoin"; // 유효성 검사 에러 발생 시 다시 회원가입 폼으로 이동
+            return "memberJoin"; // 유효성 검사 에러 발생 시 다시 회원가입 폼으로 이동
         }
 
         signUpService.signUp(signUpRequest);

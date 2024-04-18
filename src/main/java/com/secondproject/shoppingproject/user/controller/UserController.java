@@ -30,12 +30,12 @@ public class UserController {
 //    }
     @GetMapping("/account")
     public String get_Account(){
-        return "account/account";
+        return "account";
     }
 
     @GetMapping("/account/security")
     public String get_AccountSecurity(){
-        return "account-security/account-security";
+        return "account-security";
     }
 
     @GetMapping("/{userId}")

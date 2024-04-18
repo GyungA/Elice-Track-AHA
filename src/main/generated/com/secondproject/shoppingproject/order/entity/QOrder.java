@@ -31,8 +31,6 @@ public class QOrder extends EntityPathBase<Order> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final EnumPath<com.secondproject.shoppingproject.order.status.OrderStatus> orderStatus = createEnum("orderStatus", com.secondproject.shoppingproject.order.status.OrderStatus.class);
-
     public final StringPath receiverName = createString("receiverName");
 
     public final StringPath receiverPhoneNumber = createString("receiverPhoneNumber");

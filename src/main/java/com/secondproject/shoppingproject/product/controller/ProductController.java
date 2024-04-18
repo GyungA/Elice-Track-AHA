@@ -28,14 +28,14 @@ public class ProductController {
     public String get_Home(Model model) {
         List<Product> latestProducts = productService.getLatestProducts();
         model.addAttribute("products", latestProducts);
-        return "main/main";
+        return "main";
     }
 
     @GetMapping("/product/{id}")
     public String productDetail(Model model, @PathVariable("id") Long id) {
         Product product = productService.productView(id);
         model.addAttribute("product", product);
-        return "product-detail/product-detail"; // 상품 상세 페이지로 이동
+        return "product-detail"; // 상품 상세 페이지로 이동
     }
     // 상품 등록 페이지(GET)
     @GetMapping("/product/new")

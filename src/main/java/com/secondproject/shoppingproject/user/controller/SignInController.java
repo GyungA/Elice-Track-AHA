@@ -42,7 +42,7 @@ public class SignInController {
     @GetMapping("/signIn")
     public String getSignIn(Model model){
         model.addAttribute("signInRequest", new SignInRequest());
-        return "login/login";
+        return "login";
     }
 
     @PostMapping("/signIn")
@@ -59,7 +59,7 @@ public class SignInController {
            // return "login/login";
         } catch (InvalidEmailException | InvalidPasswordException e) {
             model.addAttribute("error", "이메일 또는 비밀번호가 올바르지 않습니다.");
-            return "login/login";
+            return "login";
         }
 //        signInService.signIn(signInRequest);
 //        return "redirect:/";

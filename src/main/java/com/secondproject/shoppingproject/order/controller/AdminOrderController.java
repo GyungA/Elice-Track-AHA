@@ -16,8 +16,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -52,20 +56,23 @@ public class AdminOrderController {
             @ApiResponse(responseCode = "404", description = "해당 유저 ID 또는 Order Id가 존재하지 않습니다."),
     })
     @GetMapping("/user/{user_id}")
-    public ResponseEntity<List<OrderHistoryResponseDto>> getOrderHistory(
+    public ResponseEntity<Page<OrderHistoryResponseDto>> getOrderHistory(
             @PathVariable("user_id") Long userId,
-            @RequestParam(value = "buyer_id", required = false) Long buyerId) {
+            @RequestParam(value = "buyer_id", required = false) Long buyerId,
+            @PageableDefault(page = 0, size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        return ResponseEntity.ok(adminOrderService.getOrderHistory(userId, buyerId));
+        return ResponseEntity.ok(adminOrderService.getOrderHistory(userId, buyerId, pageable));
     }
 
 
-    //TODO: 판매자가 자신의 상품에 대해서만 배송 상태를 수정 가능
-    //TODO: 하나의 주문에 판매자가 여러 명인 경우는 어떡하지??
+    /*
+    현재 판매자 주문 내역 관리 페이지 - 상세보기에서 자신의 상품 주문에 대해서만 조회 가능
+    따라서 다른 판매자의 상품에는 접근 불가하므로 일단 여기까지
+     */
+
     //TODO: 현재 admin을 판매자라고 하고 코드 수정. 추후 판매자 role 업데이트되면 수정하기
     /**
-     * 관리자 페이지 -> 주문 상세보기에서 배송 상태를 수정 가능
-     *
+     * 관리자 페이지 -> 주문 상세보기에서 배송 상태를 수정 가능(각 상품에 대해서)
      * @param requestDto 관리자 id, 상태 수정할 order id, 주문 상태
      * @return 상태 수정한 주문의 상세 조회
      */
@@ -85,10 +92,9 @@ public class AdminOrderController {
     }
 
 
-    //TODO: 판매자가 자신의 상품을 구매한 주문에 대해 최소 가능
     //TODO: 현재 admin을 판매자라고 하고 코드 수정. 추후 판매자 role 업데이트되면 수정하기
     /**
-     * 관리자 페이지에서 회원들의 주문 최소 가능
+     * 관리자 페이지에서 회원들의 주문 최소 가능(각 상품에 대해서)
      * @param requestDto 관리자 id, 주문 취소할 order id
      * @return 취소한 주문 상세 조회
      */

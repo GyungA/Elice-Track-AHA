@@ -28,6 +28,8 @@ public class QOrderDetail extends EntityPathBase<OrderDetail> {
 
     public final QOrder order;
 
+    public final EnumPath<com.secondproject.shoppingproject.order.status.OrderStatus> orderStatus = createEnum("orderStatus", com.secondproject.shoppingproject.order.status.OrderStatus.class);
+
     public final NumberPath<Integer> payment = createNumber("payment", Integer.class);
 
     public final com.secondproject.shoppingproject.product.entity.QProduct product;

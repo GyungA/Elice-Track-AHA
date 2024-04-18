@@ -29,5 +29,8 @@ public class WebConfig implements WebMvcConfigurer {
         // 정적 리소스 핸들러를 추가한다
         registry.addResourceHandler("/templates/**")
                 .addResourceLocations("classpath:/templates/");
+
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
     }
 }

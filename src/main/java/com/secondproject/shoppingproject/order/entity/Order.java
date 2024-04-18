@@ -30,9 +30,9 @@ public class Order extends BaseEntity {
     @Column(nullable = true)
     private String deliveryAddress;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private OrderStatus orderStatus;
+//    @Enumerated(EnumType.STRING)
+//    @Column(nullable = false)
+//    private OrderStatus orderStatus;
 
     @Column(nullable = true)
     private String receiverName;
@@ -41,11 +41,11 @@ public class Order extends BaseEntity {
     private String receiverPhoneNumber;
 
     @Builder
-    public Order(User user, /*String deliveryAddress, */OrderStatus orderStatus,
+    public Order(User user, /*String deliveryAddress, OrderStatus orderStatus,*/
             /*String receiverName, String receiverPhoneNumber, */int totalPayment) {
         this.user = user;
 //        this.deliveryAddress = deliveryAddress;
-        this.orderStatus = orderStatus;
+//        this.orderStatus = orderStatus;
 //        this.receiverName = receiverName;
         this.totalPayment = totalPayment;
         this.receiverPhoneNumber = receiverPhoneNumber;

@@ -3,8 +3,10 @@ package com.secondproject.shoppingproject.order.dto.order.user;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor //test용
 public class OrderUpdateRequestDto {
     private Long userId;
