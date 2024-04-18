@@ -1,32 +1,58 @@
 import * as Api from "../js/api.js";
-import { setCookie, getCookie, redirect } from "../js/useful-functions.js";
+import {
+  setCookie,
+  getCookie,
+  redirect,
+  activePageButtons,
+  createPageNumber,
+} from "../js/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 const section = document.querySelector(".one-product-container");
+let pageWrapper = document.querySelector(".page-wrapper");
 
 setCookie("userId", 2);
 const userId = getCookie("userId");
+let page = getCookie("page");
+
 addAllElements();
 addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
-  redirectOrders(userId);
+  redirectOrders(userId, page);
 }
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {}
 
-async function redirectOrders(userId) {
+async function redirectOrders(userId, page) {
   try {
     //buyer id로 필터링 가능?
-    const endpoint = `admin/orders/user/${userId}`;
+    const endpoint = `admin/orders/user/${userId}?page=${page}`;
     const response = await Api.get("http://localhost:8080", endpoint);
 
+    console.log(response);
+    const responsePageable = response.pageable;
+    const {
+      offset, //시작하는 페이지
+      pageNumber, //요청한 페이지 번호
+      pageSize, //한 페이지의 크기
+      paged, //페이지네이션 사용 여부
+    } = responsePageable;
     const responseData = response.content;
-    const productNumber = responseData.length;
+    const productNumber = responseData.length; //주문 개수
 
+    let endPageNumber = Math.floor(productNumber / 20);
+    if (productNumber % 20 != 0) {
+      endPageNumber += 1;
+    }
     await addOrder(productNumber);
+
+    //페이지네이션
+    await createPageNumber(endPageNumber, pageWrapper);
+    activePageButtons(endPageNumber);
+
     const payTimeTag = document.querySelectorAll(".pay-time");
     const orderStatusTag = document.querySelectorAll(".proudct-status");
     const productNameTag = document.querySelectorAll(".title-tag");
@@ -60,17 +86,9 @@ async function redirectOrders(userId) {
       ].innerText = `${totalProductCount}개 주문, 총 ${totalPayment}원`;
 
       detailButton[i].addEventListener("click", () => {
-        // redirectDetail(userId, orderId);
-        // document.cookie = `userId=${userId}; orderId=${orderId}; path=/`;
         setCookie("userId", userId);
         setCookie("orderId", orderId);
 
-        // const hostName = window.location.hostname;
-        // let additionalAddr = "";
-        // if (hostName === "localhost") {
-        //   additionalAddr = "/ShoppingProject/src/main/resources";
-        // }
-        // window.location.href = `${additionalAddr}/static/seller-order-detail/seller-order-detail.html`;
         redirect("/seller-order-detail/seller-order-detail.html");
       });
       purchaseCancelButton[i].addEventListener("click", () => {
@@ -93,7 +111,6 @@ async function redirectOrderCancel(userId, orderId, orderDetailId) {
     await Api.patch("http://localhost:8080/admin/orders/cancel", "", data);
     alert("주문 취소가 완료되었습니다.");
     redirect("/mypage-order-management/mypage-order-management.html");
-    // window.location.href = `/static/mypage-order-management/mypage-order-management.html`;
     setCookie("userId", userId);
     setCookie("orderId", orderId);
     setCookie("orderDetailId", orderDetailId);

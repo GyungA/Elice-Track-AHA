@@ -1,8 +1,15 @@
 import * as Api from "../js/api.js";
-import { setCookie, getCookie, redirect } from "../js/useful-functions.js";
+import {
+  setCookie,
+  getCookie,
+  redirect,
+  activePageButtons,
+  createPageNumber,
+} from "../js/useful-functions.js";
 
 // 요소(element), input 혹은 상수
 const section = document.querySelector(".one-product-container");
+let pageWrapper = document.querySelector(".page-wrapper");
 
 setCookie("userId", 1);
 const userId = getCookie("userId");
@@ -27,7 +34,14 @@ async function redirectOrders(userId) {
     const responseData = response.content;
     const productNumber = responseData.length;
 
+    let endPageNumber = Math.floor(productNumber / 20);
+    if (productNumber % 20 != 0) {
+      endPageNumber += 1;
+    }
     await addOrder(productNumber);
+    //페이지네이션
+    await createPageNumber(endPageNumber, pageWrapper);
+    activePageButtons(endPageNumber);
     const payTimeTag = document.querySelectorAll(".pay-time");
     const orderStatusTag = document.querySelectorAll(".proudct-status");
     const productNameTag = document.querySelectorAll(".title-tag");
