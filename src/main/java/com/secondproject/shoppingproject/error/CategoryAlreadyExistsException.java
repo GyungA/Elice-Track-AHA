@@ -1,4 +1,4 @@
-package com.secondproject.shoppingproject.category.service;
+package com.secondproject.shoppingproject.error;
 
 public class CategoryAlreadyExistsException extends RuntimeException {
     public CategoryAlreadyExistsException(String message) {
