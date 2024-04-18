@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입</title>
-    <link rel="stylesheet" href="./memberJoin.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/navigation.css">
-    <script defer src="../js/navbar-category.js" ></script>
-    <script src="./memberJoin.js"></script>
+    <title>Shopping Mall Homepage</title>
+    <link rel="stylesheet" href="../static/css/header.css" />
+    <link rel="stylesheet" href="../static/css/navigation.css" />
+    <link rel="stylesheet" href="../static/css/footer.css" />
+    <link rel="stylesheet" href="../static/main/main.css"/>
+    <script src="../static/js/navbar-category.js" type="module" defer></script>
 </head>
 <body>
+<!--<div class="header">-->
+<!--    <div class="logo">Shopping Mall</div>-->
+<!--</div>-->
 <header id="header-component">
     <div class="header-container">
         <div class="header-logo">
             <a href="#">
-                <img class="header-title-image" src="https://i.ibb.co/N20ZLds/logo.jpg" alt="">
+                <img class="header-title-image" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" alt="아하">
             </a>
         </div>
         <div class="header-nav-list">
@@ -28,15 +30,16 @@
                     <input class="header-search-input-placeholder" placeholder="search">
                 </label>
             </div>
+
             <div class="header-nav-login-button">
-                <span class="header-nav-login-button-text">
-                    로그인
-                </span>
+            <span class="header-nav-login-button-text">
+                로그인
+            </span>
             </div>
             <div class="header-nav-signup-button">
-                <span class="header-nav-signup-button-text">
-                    회원가입
-                </span>
+            <span class="header-nav-signup-button-text">
+                회원가입
+            </span>
             </div>
         </div>
     </div>
@@ -44,9 +47,9 @@
 <div class="custom-navbar">
     <div class="custom-dropdown">
         <button class="dropbtn">전체 카테고리</button>
-        <div class="custom-dropdown-content">
+        <div class="custom-dropdown-content" id="navbar-category">
             <!--a 태그 대신 DB에서 상위 카테고리 불러오기-->
-<!--            <a href="#electronics">식품</a>-->
+<!--            <a href="#food">식품</a>-->
 <!--            <a href="#jewelry&fashion">주얼리/패션</a>-->
 <!--            <a href="#home&living">홈리빙</a>-->
 <!--            <a href="#case&stationery">케이스/문구</a>-->
@@ -56,66 +59,90 @@
 <!--            <a href="#infants&toddlers">영유아동</a>-->
         </div>
     </div>
-    <a href="#home">홈</a>
-    <a href="#new-arrivals">최신작품</a>
-    <a href="#Realtime-purchase">실시간구매</a>
-    <a href="#Realtime-review">실시간후기</a>
-    <a href="#bestproduct">인기작품</a>
-    <a href="#authorfeed">작가피드</a>
-    <a href="#authorfeed">매거진</a>
-    <a href="#authorfeed">최신 작품</a>
-    <a href="#authorfeed">소담상회</a>
+    <div class="menu" id="navbar-menu">
+        <a href="#home">홈</a>
+        <a href="#new-arrivals">최신작품</a>
+        <a href="#Realtime-purchase">실시간구매</a>
+        <a href="#Realtime-review">실시간후기</a>
+        <a href="#bestproduct">인기작품</a>
+        <a href="#authorfeed">작가피드</a>
+        <a href="#authorfeed">매거진</a>
+        <a href="#authorfeed">최신 작품</a>
+        <a href="#authorfeed">소담상회</a>
+    </div>
 
 </div>
-<form action="/register" method="post">
-    <div class="container">
-        <div class="label" id="email-label">
-            이메일*
-        </div>
-        <input class="frame" id="email-frame" type="text" id="email" placeholder="이메일" required>
-        <div class="label" id="password-label">
-            비밀번호*
-        </div>
-        <input class="frame" id="password-frame" type="password" id="password" placeholder="비밀번호 입력" required>
-        <input class="frame" id="password-check-frame" type="password" id="password-check" placeholder="비밀번호 확인" required>
-        <div class="label" id="information-label">
-            부가정보*
-        </div>
-        <input class="frame" id="name-frame" type="text" id="name" placeholder="이름" required>
-        <!--            <input class="frame" id="birth-frame" type="text" placeholder="생년월일" required>-->
-        <div class="field-birth">
-            <div class="birth-input-container">
-                <input class="birth-frame" type="number" placeholder="연도" oninput="handleInput(this, 4)" inputmode="numeric">
-                <select class="month-frame">
-                    <option value="">월</option>
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                    <option value="">4</option>
-                    <option value="">5</option>
-                    <option value="">6</option>
-                    <option value="">7</option>
-                    <option value="">8</option>
-                    <option value="">9</option>
-                    <option value="">10</option>
-                    <option value="">11</option>
-                    <option value="">12</option>
-                </select>
-                <input class="day-frame" type="number" min="1" max="31" placeholder="일" oninput="handleInput(this, 2)" inputmode="numeric">
-            </div>
-        </div>
-        <input class="frame" id="address-frame" type="text" id="address" placeholder="주소" required>
-        <input class="frame" id="number-frame" type="text" id="number" placeholder="전화번호" required>
-        <div class="button" onclick="register()">
-            <div class="master-primary-button">
-                <span class="button-text">
-                    회원가입
-                </span>
-            </div>
-        </div>
+
+<div class="banner">
+    아이디어 하우스에 오신 것을 환영합니다.
+</div>
+
+<div class="product-grid">
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
     </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
     </div>
-</form>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+    <div class="product">
+        <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">
+        <div class="product-name">Product 1</div>
+        <div class="product-price">40,000원</div>
+    </div>
+</div>
+
+<div class="footer-line">
+    Idea House © 2024
+</div>
 <footer class="footer">
     <div class="footer-navigation body3-regular-medium text-center">
         <div>이용약관</div>
@@ -138,7 +165,7 @@
         <div class="full">
             <div class="body3-regular-medium text-left">
                 <div class="float-left">
-                    <img class="baseLogo" src="https://i.ibb.co/N20ZLds/logo.jpg" style="height: 42px; width: 100px;"/>
+                    <img class="baseLogo" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" style="height: 42px; width: 100px;"/>
                 </div>
                 <div class="float-left" style="width: 450px;">
                     <div class="mb-[8px] body3-bold-medium">(주) 아이디어하우스</div>
@@ -201,10 +228,10 @@
                         </div>
                         <div class="TheFooter__award" style="width: 76px;">
                             <div class="TheFooter__award1">
-                                <img src="https://i.ibb.co/3stzBxs/5.png" alt="5" style="width: 106px; height: 60px;">
+                                <img src="https://i.ibb.co/fFHCHkq/1-removebg-preview.png" alt="5" style="width: 106px; height: 60px;">
                             </div>
                             <div class="TheFooter__award2">
-                                <img src="https://i.ibb.co/KNFZJTK/6.png" alt="6" style="width: 76px; height: 60px;">
+                                <img src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png"  alt="6" style="width: 76px; height: 60px;">
                             </div>
                         </div>
                     </div>
