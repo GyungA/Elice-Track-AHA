@@ -44,4 +44,4 @@ db/
 docker-compose.yml
 
 #generated
-src/main/generated
+src/main/generated/
