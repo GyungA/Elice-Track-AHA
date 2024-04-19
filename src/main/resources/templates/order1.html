@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,11 +18,12 @@
     <!-- Daum 주소 API 사용하기 위한 파일 -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="../static/css/header.css" />
-    <link rel="stylesheet" href="../static/css/navigation.css" />
-    <link rel="stylesheet" href="../static/css/footer.css" />
-    <link rel="stylesheet" href="../static/order/order.css" />
-    <script src="../static/order/order.js" type="module" defer></script>
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/navigation.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/order/order.css}" />
+    <!--    <script src="../static/order/order.js" type="module" defer></script>-->
+    <script th:src="@{/order/order.js}" src="../../static/order/order.js" type="module" defer></script>
 </head>
 
 <header id="header-component">

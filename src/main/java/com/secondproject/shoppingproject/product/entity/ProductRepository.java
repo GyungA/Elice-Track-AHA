@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
@@ -17,5 +19,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p.status FROM Product p WHERE p.id = :productId")
     boolean findStatusById(@Param("productId") Long productId);
+
+    // 카테고리별 상품 조회
+    List<Product> findByCategory_CategoryId(Long categoryId);
 
 }

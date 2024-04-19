@@ -1,22 +1,23 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입</title>
-    <link rel="stylesheet" href="../static/member-join/memberJoin.css">
-    <link rel="stylesheet" href="../static/css/header.css" />
-    <link rel="stylesheet" href="../static/css/navigation.css" />
-    <link rel="stylesheet" href="../static/css/footer.css" />
-    <script defer src="../static/js/navbar-category.js" ></script>
-    <script src="../static/member-join/memberJoin.js"></script>
+    <title>식품 카테고리</title>
+    <link rel="stylesheet" href="../../static/css/header.css" />
+    <link rel="stylesheet" href="../../static/css/footer.css" />
+    <link rel="stylesheet" href="../../static/css/navigation.css" />
+    <link rel="stylesheet" href="../../static/category-product/productByCategory.css" />
+    <script src="../../static/js/navbar-category.js" type="module" defer></script>
+    <!--    <script src="../../static/category-product/category-product.js" type="module" defer></script>-->
 </head>
 <body>
 <header id="header-component">
     <div class="header-container">
         <div class="header-logo">
             <a href="#">
-                <img class="header-title-image" src="https://i.ibb.co/N20ZLds/logo.jpg" alt="">
+                <img class="header-title-image" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" alt="아하">
             </a>
         </div>
         <div class="header-nav-list">
@@ -28,15 +29,16 @@
                     <input class="header-search-input-placeholder" placeholder="search">
                 </label>
             </div>
+
             <div class="header-nav-login-button">
-                <span class="header-nav-login-button-text">
-                    로그인
-                </span>
+            <span class="header-nav-login-button-text">
+                로그인
+            </span>
             </div>
             <div class="header-nav-signup-button">
-                <span class="header-nav-signup-button-text">
-                    회원가입
-                </span>
+            <span class="header-nav-signup-button-text">
+                회원가입
+            </span>
             </div>
         </div>
     </div>
@@ -61,55 +63,82 @@
     </div>
 
 </div>
-<form action="/register" method="post">
-    <div class="container">
-        <div class="label" id="email-label">
-            이메일*
-        </div>
-        <input class="frame" id="email-frame" type="text" id="email" placeholder="이메일" required>
-        <div class="label" id="password-label">
-            비밀번호*
-        </div>
-        <input class="frame" id="password-frame" type="password" id="password" placeholder="비밀번호 입력" required>
-        <input class="frame" id="password-check-frame" type="password" id="password-check" placeholder="비밀번호 확인" required>
-        <div class="label" id="information-label">
-            부가정보*
-        </div>
-        <input class="frame" id="name-frame" type="text" id="name" placeholder="이름" required>
-        <!--            <input class="frame" id="birth-frame" type="text" placeholder="생년월일" required>-->
-        <div class="field-birth">
-            <div class="birth-input-container">
-                <input class="birth-frame" type="number" placeholder="연도" oninput="handleInput(this, 4)" inputmode="numeric">
-                <select class="month-frame">
-                    <option value="">월</option>
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                    <option value="">4</option>
-                    <option value="">5</option>
-                    <option value="">6</option>
-                    <option value="">7</option>
-                    <option value="">8</option>
-                    <option value="">9</option>
-                    <option value="">10</option>
-                    <option value="">11</option>
-                    <option value="">12</option>
-                </select>
-                <input class="day-frame" type="number" min="1" max="31" placeholder="일" oninput="handleInput(this, 2)" inputmode="numeric">
+
+<section class="product-section">
+
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="sidebar-category">
+                <h2 id="top-category"></h2>
+                <ul id="category-list">
+                    <!--                    <li><a href="#디저트/음료">전체</a></li>-->
+                    <!--                    <li><a href="#디저트/음료">디저트/음료</a></li>-->
+                    <!--                    <li><a href="#수제먹거리">수제먹거리</a></li>-->
+                    <!--                    <li><a href="농축수산물">농축수산물</a></li>-->
+                    <!-- 기타 카테고리 -->
+                    <li th:each="category : ${subCategories}">
+                        <a th:text="${category.name}" th:href="@{/categories/${category.getParentId()}/{id}(id=${category.getCategoryId()})}"></a>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <input class="frame" id="address-frame" type="text" id="address" placeholder="주소" required>
-        <input class="frame" id="number-frame" type="text" id="number" placeholder="전화번호" required>
-        <div class="button" onclick="register()">
-            <div class="master-primary-button">
-                <span class="button-text">
-                    회원가입
-                </span>
+        </aside>
+
+        <main id="main-content">
+            <div class="list-title" style="padding-bottom: 25px;">
+                <h1>상품 목록</h1>
             </div>
-        </div>
+            <div class="products-container">
+                <div class="product-card">
+                    <img src="/templates/img/edd3a00a6167432f9ea4a36105b9bec1_400.png" alt="상품1">
+                    <h3>"생"딸기로 만드는 바른딸기청</h3>
+                    <p>가격: 12,000원</p>
+                </div>
+                <div class="product-card">
+                    <img src="/templates/img/e62715737a3a41fc8e9e6b5bd6a4f60d_400.jpg" alt="상품2">
+                    <h3>🍊5년숙성🍊익은 매실로 담은 달달한 매실청</h3>
+                    <p>가격: 10,900원</p>
+                </div>
+                <div class="product-card">
+                    <img src="/templates/img/6f0ce78686824d6aa63cb41e6818a6e6_400.jpg" alt="상품3">
+                    <h3>❤4월 22일출고❤ 달달지다 마카롱 A</h3>
+                    <p>가격: 1,500원</p>
+                </div>
+                <div class="product-card">
+                    <img src="/templates/img/8b47fca22a7c4d8990da0fb32575208a_400.jpg" alt="상품1">
+                    <h3>⭕4/25 목 출고⭕️윤카롱 마카롱 뚱카롱 무색소마카롱</h3>
+                    <p>가격: 2,300원</p>
+                </div>
+                <div class="product-card">
+                    <img src="/templates/img/7568efd78a2b401abad0e4b46a413601_400.jpg" alt="상품1">
+                    <h3>벌스데이투미 망고사고 망고시미로</h3>
+                    <p>가격: 8,000원</p>
+                </div>
+                <div class="product-card">
+                    <img src="/templates/img/c2c72d3d4c0f48fe99d6458802829546_400.jpg" alt="상품1">
+                    <h3>♥신메뉴추가♥초코샌드쿠키 외 수제쿠키19종</h3>
+                    <p>가격: 4,200원</p>
+                </div>
+                <div class="product-card">
+                    <img src="/templates/img/c95af02af2ed450cbb97c6d6dbf7381d_400.jpg" alt="상품1">
+                    <h3>[당일로스팅] 원두커피 500G+500G☕️ 신제품</h3>
+                    <p>가격: 10,000원</p>
+                </div>
+                <div class="product-card">
+                    <img src="/templates/img/fba2e38d5e954c8fab06678303b15c10_400.jpg" alt="상품1">
+                    <h3>문경을 담은 오미자진액 500ml -저온숙성</h3>
+                    <p>가격: 14,000원</p>
+                </div>
+                <div class="product-card">
+                    <img src="/templates/img/0ad385bac0f144daba6898253949be75_400.jpg" alt="상품1">
+                    <h3>재구매율1위에스프레소 커피원액,디카페인</h3>
+                    <p>가격: 16,800원</p>
+                </div>
+            </div>
+        </main>
     </div>
-    </div>
-</form>
+
+
+</section>
 <footer class="footer">
     <div class="footer-navigation body3-regular-medium text-center">
         <div>이용약관</div>
@@ -132,7 +161,7 @@
         <div class="full">
             <div class="body3-regular-medium text-left">
                 <div class="float-left">
-                    <img class="baseLogo" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" style="height: 42px; width: 100px;"/>
+                    <img class="baseLogo" src="https://i.ibb.co/N20ZLds/logo.jpg" style="height: 42px; width: 100px;"/>
                 </div>
                 <div class="float-left" style="width: 450px;">
                     <div class="mb-[8px] body3-bold-medium">(주) 아이디어하우스</div>
@@ -198,7 +227,7 @@
                                 <img src="https://i.ibb.co/fFHCHkq/1-removebg-preview.png" alt="5" style="width: 106px; height: 60px;">
                             </div>
                             <div class="TheFooter__award2">
-                                <img src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png"  alt="6" style="width: 76px; height: 60px;">
+                                <img src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png" alt="6" style="width: 76px; height: 60px;">
                             </div>
                         </div>
                     </div>

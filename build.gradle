@@ -34,7 +34,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.data:spring-data-rest-hal-explorer'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' //임의 추가
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'

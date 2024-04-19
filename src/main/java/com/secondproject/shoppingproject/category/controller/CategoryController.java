@@ -17,17 +17,17 @@ public class CategoryController {
     private final CategoryService categoryService;
 
 
-    @GetMapping("/parentCategories")
-    public ResponseEntity<?> showParentCategories(Model model) {
-//        model.addAttribute("parentCategories", categoryService.getParentCategories());
-        return ResponseEntity.ok(categoryService.getParentCategories());
-    }
+//    @GetMapping("/parentCategories")
+//    public ResponseEntity<?> showParentCategories(Model model) {
+////        model.addAttribute("parentCategories", categoryService.getParentCategories());
+//        return ResponseEntity.ok(categoryService.getParentCategories());
+//    }
 
-    @GetMapping("/{parentId}")
-    public ResponseEntity<?> showSubCategories(@PathVariable("parentId") Long parentId, Model model) {
+//    @GetMapping("/{parentId}")
+//    public ResponseEntity<?> showSubCategories(@PathVariable("parentId") Long parentId, Model model) {
 //        model.addAttribute("subCategories", categoryService.getAllByParentId(parentId));
-        return ResponseEntity.ok(categoryService.getAllByParentId(parentId));
-    }
+//        return ResponseEntity.ok(categoryService.getAllByParentId(parentId));
+//    }
 //
 //    @GetMapping("/add")
 //    public String showAddCategoryForm() {
@@ -47,11 +47,19 @@ public class CategoryController {
         return ResponseEntity.ok(topLevelCategories);
     }
 
+    @GetMapping("/{parentId}/subcategories")
+    public ResponseEntity<List<CategoryDTO>> getSubCategories(@PathVariable("parentId") Long parentId) {
+        List<CategoryDTO> subCategories = categoryService.getAllByParentId(parentId);
+        return ResponseEntity.ok(subCategories);
+
+    }
+
     // 카테고리 추가
     @PostMapping("/api/add")
     public ResponseEntity<CategoryDTO> addCateogory(@RequestBody CategoryDTO categoryDTO) {
         CategoryDTO savedCategory = categoryService.addCategory(categoryDTO);
         return ResponseEntity.ok(savedCategory);
     }
+
 }
 
