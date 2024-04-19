@@ -54,7 +54,7 @@ async function redirectOrders(userId, page) {
 
     //페이지네이션
     await createPageNumber(endPageNumber, pageWrapper);
-    activePageButtons(endPageNumber);
+    activePageButtons(endPageNumber, "/seller/order/management");
 
     const payTimeTag = document.querySelectorAll(".pay-time");
     const orderStatusTag = document.querySelectorAll(".proudct-status");

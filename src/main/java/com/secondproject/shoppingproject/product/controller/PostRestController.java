@@ -22,6 +22,13 @@ public class PostRestController {
         return ResponseEntity.ok("");
     }
 
+    // 상품 삭제
+    @GetMapping("/product/delete/{id}")
+    public ResponseEntity<String> productDelete(@PathVariable("id") Long id){
+        productService.productDelete(id);
+        return ResponseEntity.ok("");
+    }
+
     // 상품 리스트 페이지
     @GetMapping("/product/list/{id}")
     public ResponseEntity<Page<Product>> productList(Model model, @PathVariable("id") Long id, Pageable pageable, @RequestParam(value = "searchKeyword", required = false) String searchKeyword){

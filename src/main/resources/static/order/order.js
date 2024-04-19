@@ -109,7 +109,7 @@ function searchAddress() {
 async function insertOrderSummary(userId, orderId) {
   try {
     const endpoint = `orders/pay/user/${userId}/order/${orderId}`;
-    const response = await Api.get(host, endpoint);
+    const response = await Api.get("http://localhost:8080", endpoint);
     const {
       name,
       phone,
