@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>개인정보</title>
+  <!-- bulma css -->
+  <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+  />
+
+  <!-- 커스텀 css, js -->
+  <link rel="stylesheet" href="../static/account-security/account-security.css" />
+  <link rel="stylesheet" href="../static/css/header.css" />
+  <link rel="stylesheet" href="../static/css/footer.css" />
+  <link rel="stylesheet" href="../static/css/navigation.css" />
+  <script defer type="module" src="../static/account-security/account-security.js"></script>
+  <script defer type="module" src="../static/js/api.js" type="module"></script>
+
+</head>
+<body>
+<!-- 헤더 -->
+<header id="header-component">
+  <div class="header-container">
+    <div class="header-logo">
+      <a href="#">
+        <img class="header-title-image" src="https://i.ibb.co/N20ZLds/logo.jpg" alt="아하">
+      </a>
+    </div>
+    <div class="header-nav-list">
+      <div class="header-search">
+        <div class="header-search-light">
+          <img class="icon search-light" src="https://i.ibb.co/yf6Xpw4/search-light.png" alt=""/>
+        </div>
+        <label>
+          <input class="header-search-input-placeholder" placeholder="search">
+        </label>
+      </div>
+
+      <div class="header-nav-login-button">
+            <span class="header-nav-login-button-text">
+                로그인
+            </span>
+      </div>
+      <div class="header-nav-signup-button">
+            <span class="header-nav-signup-button-text">
+                회원가입
+            </span>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="custom-navbar">
+  <div class="custom-dropdown">
+    <button class="dropbtn">전체 카테고리</button>
+    <div class="custom-dropdown-content" id="navbar-category">
+      <!--a 태그 대신 DB에서 상위 카테고리 불러오기-->
+    </div>
+  </div>
+  <div class="menu" id="navbar-menu">
+    <a href="#home">홈</a>
+    <a href="#new-arrivals">최신작품</a>
+    <a href="#Realtime-purchase">실시간구매</a>
+    <a href="#Realtime-review">실시간후기</a>
+    <a href="#bestproduct">인기작품</a>
+    <a href="#authorfeed">작가피드</a>
+    <a href="#authorfeed">매거진</a>
+    <a href="#authorfeed">최신 작품</a>
+    <a href="#authorfeed">소담상회</a>
+  </div>
+
+</div>
+
+<!-- 회원정보 박스 -->
+<section class="section">
+  <div class="container">
+    <div class="block account-header">
+      <h1 class="subtitle is-4" id="securityTitle">회원정보 관리</h1>
+    </div>
+    <div class="menu-container">
+      <div class="form-container">
+        <form class="box form-box" id="loginForm">
+          <div class="field">
+            <label class="label" for="fullNameInput">이름</label>
+            <div class="control">
+              <input
+                      class="input"
+                      id="fullNameInput"
+                      type="text"
+                      autocomplete="off"
+                      disabled="true"
+              />
+              <!-- 토클 스위치 -->
+              <label class="switch">
+                <input type="checkbox" id="fullNameToggle" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="passwordInput">비밀번호</label>
+            <div class="control">
+              <input
+                      class="input"
+                      id="passwordInput"
+                      type="password"
+                      autocomplete="off"
+                      disabled="true"
+              />
+              <!-- 토클 스위치 -->
+              <label class="switch">
+                <input type="checkbox" id="passwordToggle" />
+                <span class="slider round"></span>
+                <span class="info-text" style="opacity: 0">
+                      소셜 로그인의 경우는 비밀번호 설정이 불가합니다.
+                    </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="passwordConfirmInput"
+            >비밀번호 확인</label
+            >
+            <div class="control">
+              <input
+                      class="input"
+                      id="passwordConfirmInput"
+                      type="password"
+                      autocomplete="off"
+                      disabled="true"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">생년월일</label>
+            <div class="control">
+              <input class="input" id="birthInput" type="date" autocomplete="off" disabled="true"/>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">이메일</label>
+            <div class="control">
+              <input class="input" id="emailInput" type="email" autocomplete="off" disabled="true"/>
+              <label class="switch">
+                <input type="checkbox" id="emailToggle" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label is-normal">
+              <label class="label label-address" for="address2Input">주소</label>
+            </div>
+            <div class="field-body search">
+              <div class="field">
+                <p class="control">
+                  <input
+                          class="input"
+                          id="postalCodeInput"
+                          type="text"
+                          placeholder="주소찾기를 클릭해 주세요."
+                          readonly
+                  />
+                </p>
+              </div>
+              <div>
+                <button
+                        class="button is-light is-hovered"
+                        id="searchAddressButton"
+                >
+                  주소찾기
+                </button>
+              </div>
+              <!-- 토클 스위치 -->
+              <label class="switch switch-address">
+                <input type="checkbox" id="addressToggle" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label is-normal no-label"></div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input
+                          class="input"
+                          id="address1Input"
+                          type="text"
+                          placeholder=""
+                          autocomplete="on"
+                          readonly
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label is-normal no-label"></div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input
+                          class="input"
+                          id="address2Input"
+                          type="text"
+                          placeholder=""
+                          autocomplete="on"
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="phoneNumberInput">전화번호</label>
+            <div class="control">
+              <input
+                      class="input"
+                      id="phoneNumberInput"
+                      type="number"
+                      placeholder="- 없이 입력해 주세요."
+                      autocomplete="on"
+              />
+              <!-- 토클 스위치 -->
+              <label class="switch">
+                <input type="checkbox" id="phoneNumberToggle" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+          <button
+                  class="button button-submit is-custom is-fullwidth js-modal-trigger"
+                  id="saveButton"
+                  data-target="modal-js-example"
+                  style="background-color: #5D5A88; border-color: #5D5A88; color: white;"
+
+          >
+            저장하기
+          </button>
+
+          <!-- 정보 수정을 완료하기 위해, 현재 비밀번호를 입력할 Modal 창 -->
+          <div id="modal" class="modal">
+            <div class="modal-background" id="modalBackground"></div>
+            <div class="modal-content">
+              <button
+                      class="delete is-large"
+                      id="modalCloseButton"
+                      aria-label="close"
+              ></button>
+              <div class="box">
+                <p class="mb-3">현재 비밀번호를 입력해 주세요.</p>
+
+                <input
+                        class="input is-link mb-3"
+                        id="currentPasswordInput"
+                        type="password"
+                        placeholder=""
+                        autocomplete="on"
+                />
+                <button
+                        class="button is-link mt-5"
+                        id="saveCompleteButton"
+                        aria-label="close"
+                >
+                  저장 완료하기
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="footer-navigation body3-regular-medium text-center">
+    <div>이용약관</div>
+    <div class="bar">|</div>
+    <div class="body3-bold-medium" rel="nosublink">개인정보 처리방침</div>
+    <div class="bar">|</div>
+    <div>공지사항</div>
+    <div class="bar">|</div>
+    <div>자주묻는 질문</div>
+    <div class="bar">|</div>
+    <div>이벤트</div>
+    <div class="bar">|</div>
+    <div>입점문의</div>
+    <div class="bar">|</div>
+    <div>about idea house</div>
+    <div class="bar">|</div>
+    <div>인재영입</div>
+  </div>
+  <div class="footer-container">
+    <div class="full">
+      <div class="body3-regular-medium text-left">
+        <div class="float-left">
+          <img class="baseLogo" src="https://i.ibb.co/N20ZLds/logo.jpg" style="height: 42px; width: 100px;"/>
+        </div>
+        <div class="float-left" style="width: 450px;">
+          <div class="mb-[8px] body3-bold-medium">(주) 아이디어하우스</div>
+          <div data-v-f1827758="">대표이사 : 빌게이츠</div>
+          <div data-v-f1827758="">서울특별시 성동구 아차산로17길 48 성수낙낙 C동 2층 엘리스Lab 성수점</div>
+          <div data-v-f1827758="">사업자 등록번호 : 123-45-67890</div>
+          <div data-v-f1827758="">통신판매업신고 : 2024-서울성수-1234호</div>
+          <div data-v-f1827758="">호스팅서비스 제공자 : AWS WEB Service, Inc</div>
+          <div class="caption2-regular-medium mt-[8px] tracking-tight">아이디어하우스는 통신판매중개자이며 통신판매의 당사자가 아닙니다. <br data-v-f1827758=""> 따라서 아이디어하우스는 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.</div>
+          <div class="mt-[8px] caption2-regular-medium" data-v-f1827758="">Copyright ©Ideahouse Inc. all rights reserved.</div>
+        </div>
+        <div class="float-middle" style="width: 240px;">
+          <div>
+            <div class>
+              <span class="body3-bold-medium">고객센터</span>
+              <span class="caption2-regular-medium"> (평일 오전 10시 ~ 오후 6시) </span>
+            </div>
+            <div class>
+              <a href="https://bit.ly/3IDiamS"></a>
+            </div>
+            <div class="footer-button">
+              <button type="outline" class="CoreButton">
+                <span>단체선물 문의</span>
+              </button>
+              <button type="outline" class="CoreButton">
+                <span>아이디어하우스 채팅 상담</span>
+              </button>
+            </div>
+            <div class="grid-container">
+              <div class="grid-item">
+                <div>대표번호</div>
+                <div>1668-1234</div>
+              </div>
+              <div class="grid-item">
+                <div>제휴문의</div>
+                <div>aha@ideahouse.kr</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div clas="float-right">
+          <div class="float-right">
+            <div class="right-title">Follow Us</div>
+            <div class="TheFooter__snsLink">
+              <a href="https://www.facebook.com" class="TheFooter__snsLink_facebook">
+                <img src="https://i.ibb.co/Q6q1JL6/image.png" alt="Facebook">
+              </a>
+              <a href="https://www.instagram.com" class="TheFooter__snsLink_instagram">
+                <img src="https://i.ibb.co/KzPgnvr/1.png" alt="1">
+              </a>
+              <a href="https://blog.naver.com" class="TheFooter__snsLink_naverBlog">
+                <img src="https://i.ibb.co/98r3RVb/2.png" alt="2">
+              </a>
+              <a href="https://post.naver.com" class="TheFooter__snsLink_naverPost">
+                <img src="https://i.ibb.co/vLXD634/3.png" alt="3">
+              </a>
+              <a href="https://twitter.com" class="TheFooter__snsLink_twitter">
+                <img src="https://i.ibb.co/Wts8MrJ/4.png" alt="4">
+              </a>
+            </div>
+            <div class="TheFooter__award" style="width: 76px;">
+              <div class="TheFooter__award1">
+                <img src="https://i.ibb.co/3stzBxs/5.png" alt="5" style="width: 106px; height: 60px;">
+              </div>
+              <div class="TheFooter__award2">
+                <img src="https://i.ibb.co/KNFZJTK/6.png" alt="6" style="width: 76px; height: 60px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
