@@ -48,11 +48,11 @@ public class ProductController {
     }
 
     // 상품 삭제
-    @GetMapping("/product/delete/{id}")
-    public String productDelete(@PathVariable("id") Long id){
-        productService.productDelete(id);
-        return "/main";
-    }
+//    @GetMapping("/product/delete/{id}")
+//    public String productDelete(@PathVariable("id") Long id){
+//        productService.productDelete(id);
+//        return "/main";
+//    }
 
     // 상품 상세 페이지
     @GetMapping("/product/view/{id}")
