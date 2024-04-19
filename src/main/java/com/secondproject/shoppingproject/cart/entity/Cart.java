@@ -19,4 +19,8 @@ public class Cart {
     @OneToOne
     @JoinColumn(name = "user_id")
     User user;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

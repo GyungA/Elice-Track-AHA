@@ -31,11 +31,7 @@
     />
     <!-- AWS S3 사용하기 위한 파일 -->
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
-    <script
-      src="../static/product-management/product-management.js"
-      type="module"
-      defer
-    ></script>
+    <script src="product-management.js" type="module" defer></script>
   </head>
   <body>
     <div class="modal-modify modal">
@@ -74,7 +70,6 @@
         <div class="modal-inner">
           <h2>상품 추가</h2>
           <!-- 가격 수정 -->
-
           <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label" for="price">가격</label>
@@ -113,22 +108,6 @@
             </div>
           </div>
 
-          <!-- 카테고리-->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label category-name">카테고리</label>
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <select id="productCategoryDropdown">
-                  <option value="1" selected>카테고리1</option>
-                  <option value="2">카테고리2</option>
-                  <option value="3">카테고리3</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
           <!-- 상태-->
           <div class="field is-horizontal">
             <div class="field-label is-normal">
@@ -158,28 +137,6 @@
                     id="stock"
                     type="text"
                     placeholder="상품의 재고 입력"
-                    autocomplete="on"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 상품설명 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label product-info" for="productName"
-                >상품설명</label
-              >
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="productInfo"
-                    type="text"
-                    placeholder="상품 설명"
                     autocomplete="on"
                   />
                 </p>
@@ -256,89 +213,34 @@
               <div class="tabs">
                 <ul>
                   <!-- 카테고리 -->
-                  <li id="manufacturerTag">기타</li>
+                  <li id="manufacturerTag"></li>
                 </ul>
               </div>
               <div class="content">
                 <div class="product-name-status">
                   <!-- 상품 이름 -->
-                  <p class="subtitle is-4 is-family-monospace title-tag">
-                    삼각대 및 셀카봉
-                  </p>
+                  <p
+                    class="subtitle is-4 is-family-monospace"
+                    id="titleTag"
+                  ></p>
                   <div class="status-wrapper">
                     <!-- 상품 상태를 나타내는 아이콘 -->
                     <span class="material-symbols-outlined">
                       fiber_manual_record
                     </span>
                     <!-- 상품 상태 -->
-                    <p class="proudct-status" id="statusTag">판매중</p>
+                    <p class="proudct-status" id="statusTag"></p>
                   </div>
                 </div>
 
                 <div class="price-stock-wrapper">
                   <!-- 상품 가격 -->
-                  <h2 id="priceTag" class="price-tag">10,000원</h2>
+                  <h2 id="priceTag"></h2>
 
                   <div class="stock-wrapper">
                     <!-- 남은 수량 -->
                     <p class="remain-stock-word">남은 수량:</p>
-                    <p class="remain-stock" id="remainStock">12개</p>
-                  </div>
-                </div>
-                <div class="buttons-container">
-                  <button class="button" id="addToCartButton">
-                    <span class="material-symbols-outlined"> delete </span>
-                  </button>
-                  <button class="button product-modify-btn" id="purchaseButton">
-                    수정하기
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </dic>
-
-        <!-- 상품이 n개면 <dic class="one-product">가 n번 반복되게 -->
-        <dic class="one-product">
-          <div class="is-child box product-image">
-            <figure class="image is-sqaure">
-              <!-- 상품 이미지 -->
-              <img id="productImageTag" src="" />
-            </figure>
-          </div>
-
-          <div class="tile is-parent is-vertical product-content-wrapper">
-            <div class="tile is-child box product-detail">
-              <div class="tabs">
-                <ul>
-                  <!-- 카테고리 -->
-                  <li id="manufacturerTag">홈리빙</li>
-                </ul>
-              </div>
-              <div class="content">
-                <div class="product-name-status">
-                  <!-- 상품 이름 -->
-                  <p class="subtitle is-4 is-family-monospace title-tag">
-                    니토리 거실화 3종 세트
-                  </p>
-                  <div class="status-wrapper">
-                    <!-- 상품 상태를 나타내는 아이콘 -->
-                    <span class="material-symbols-outlined">
-                      fiber_manual_record
-                    </span>
-                    <!-- 상품 상태 -->
-                    <p class="proudct-status" id="statusTag">판매중</p>
-                  </div>
-                </div>
-
-                <div class="price-stock-wrapper">
-                  <!-- 상품 가격 -->
-                  <h2 id="priceTag" class="price-tag">13,990원</h2>
-
-                  <div class="stock-wrapper">
-                    <!-- 남은 수량 -->
-                    <p class="remain-stock-word">남은 수량:</p>
-                    <p class="remain-stock" id="remainStock">199개</p>
+                    <p class="remain-stock" id="remainStock"></p>
                   </div>
                 </div>
                 <div class="buttons-container">
@@ -377,43 +279,23 @@
         <div class="full">
           <div class="body3-regular-medium text-left">
             <div class="float-left">
-              <img
-                class="baseLogo"
-                src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png"
-                style="height: 42px; width: 100px"
-              />
+              <img class="baseLogo" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" style="height: 42px; width: 100px;"/>
             </div>
-            <div class="float-left" style="width: 450px">
+            <div class="float-left" style="width: 450px;">
               <div class="mb-[8px] body3-bold-medium">(주) 아이디어하우스</div>
               <div data-v-f1827758="">대표이사 : 빌게이츠</div>
-              <div data-v-f1827758="">
-                서울특별시 성동구 아차산로17길 48 성수낙낙 C동 2층 엘리스Lab
-                성수점
-              </div>
+              <div data-v-f1827758="">서울특별시 성동구 아차산로17길 48 성수낙낙 C동 2층 엘리스Lab 성수점</div>
               <div data-v-f1827758="">사업자 등록번호 : 123-45-67890</div>
-              <div data-v-f1827758="">
-                통신판매업신고 : 2024-서울성수-1234호
-              </div>
-              <div data-v-f1827758="">
-                호스팅서비스 제공자 : AWS WEB Service, Inc
-              </div>
-              <div class="caption2-regular-medium mt-[8px] tracking-tight">
-                아이디어하우스는 통신판매중개자이며 통신판매의 당사자가
-                아닙니다. <br data-v-f1827758="" />
-                따라서 아이디어하우스는 상품 거래정보 및 거래에 대하여 책임을
-                지지 않습니다.
-              </div>
-              <div class="mt-[8px] caption2-regular-medium" data-v-f1827758="">
-                Copyright ©Ideahouse Inc. all rights reserved.
-              </div>
+              <div data-v-f1827758="">통신판매업신고 : 2024-서울성수-1234호</div>
+              <div data-v-f1827758="">호스팅서비스 제공자 : AWS WEB Service, Inc</div>
+              <div class="caption2-regular-medium mt-[8px] tracking-tight">아이디어하우스는 통신판매중개자이며 통신판매의 당사자가 아닙니다. <br data-v-f1827758=""> 따라서 아이디어하우스는 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.</div>
+              <div class="mt-[8px] caption2-regular-medium" data-v-f1827758="">Copyright ©Ideahouse Inc. all rights reserved.</div>
             </div>
-            <div class="float-middle" style="width: 240px">
+            <div class="float-middle" style="width: 240px;">
               <div>
                 <div class>
                   <span class="body3-bold-medium">고객센터</span>
-                  <span class="caption2-regular-medium">
-                    (평일 오전 10시 ~ 오후 6시)
-                  </span>
+                  <span class="caption2-regular-medium"> (평일 오전 10시 ~ 오후 6시) </span>
                 </div>
                 <div class>
                   <a href="https://bit.ly/3IDiamS"></a>
@@ -442,54 +324,28 @@
               <div class="float-right">
                 <div class="right-title">Follow Us</div>
                 <div class="TheFooter__snsLink">
-                  <a
-                    href="https://www.facebook.com"
-                    class="TheFooter__snsLink_facebook"
-                  >
-                    <img
-                      src="https://i.ibb.co/Q6q1JL6/image.png"
-                      alt="Facebook"
-                    />
+                  <a href="https://www.facebook.com" class="TheFooter__snsLink_facebook">
+                    <img src="https://i.ibb.co/Q6q1JL6/image.png" alt="Facebook">
                   </a>
-                  <a
-                    href="https://www.instagram.com"
-                    class="TheFooter__snsLink_instagram"
-                  >
-                    <img src="https://i.ibb.co/KzPgnvr/1.png" alt="1" />
+                  <a href="https://www.instagram.com" class="TheFooter__snsLink_instagram">
+                    <img src="https://i.ibb.co/KzPgnvr/1.png" alt="1">
                   </a>
-                  <a
-                    href="https://blog.naver.com"
-                    class="TheFooter__snsLink_naverBlog"
-                  >
-                    <img src="https://i.ibb.co/98r3RVb/2.png" alt="2" />
+                  <a href="https://blog.naver.com" class="TheFooter__snsLink_naverBlog">
+                    <img src="https://i.ibb.co/98r3RVb/2.png" alt="2">
                   </a>
-                  <a
-                    href="https://post.naver.com"
-                    class="TheFooter__snsLink_naverPost"
-                  >
-                    <img src="https://i.ibb.co/vLXD634/3.png" alt="3" />
+                  <a href="https://post.naver.com" class="TheFooter__snsLink_naverPost">
+                    <img src="https://i.ibb.co/vLXD634/3.png" alt="3">
                   </a>
-                  <a
-                    href="https://twitter.com"
-                    class="TheFooter__snsLink_twitter"
-                  >
-                    <img src="https://i.ibb.co/Wts8MrJ/4.png" alt="4" />
+                  <a href="https://twitter.com" class="TheFooter__snsLink_twitter">
+                    <img src="https://i.ibb.co/Wts8MrJ/4.png" alt="4">
                   </a>
                 </div>
-                <div class="TheFooter__award" style="width: 76px">
+                <div class="TheFooter__award" style="width: 76px;">
                   <div class="TheFooter__award1">
-                    <img
-                      src="https://i.ibb.co/fFHCHkq/1-removebg-preview.png"
-                      alt="5"
-                      style="width: 106px; height: 60px"
-                    />
+                    <img src="https://i.ibb.co/fFHCHkq/1-removebg-preview.png" alt="5" style="width: 106px; height: 60px;">
                   </div>
                   <div class="TheFooter__award2">
-                    <img
-                      src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png"
-                      alt="6"
-                      style="width: 76px; height: 60px"
-                    />
+                    <img src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png"  alt="6" style="width: 76px; height: 60px;">
                   </div>
                 </div>
               </div>
