@@ -18,6 +18,9 @@ import com.secondproject.shoppingproject.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,25 +34,33 @@ public class AdminOrderService {
     private final OrderDetailService orderDetailService;
 
 
-    public List<OrderHistoryResponseDto> getOrderHistory(Long userId, Long buyerId) {
+    public Page<OrderHistoryResponseDto> getOrderHistory(Long userId, Long buyerId, Pageable pageable) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("해당하는 user id를 찾을 수 없습니다."));
         if (user.getRole() == Role.ADMIN) { //시큐리티 구현하면 없애기?
-            List<Order> orders = null;
+            Page<Order> orderPage = null;
             if (buyerId != null) {
                 //user id가 파는 상품 중, buyer id가 구매한 주문 내역
-                orders = orderRepository.findByBuyerIdAndSellerIdOrderByCreatedAtDesc(buyerId, userId);
+                orderPage = orderRepository.findByBuyerIdAndSellerIdOrderByCreatedAtDesc(buyerId, userId, pageable);
             } else {
                 //user id가 파는 상품의 모든 주문 내역
                 //결제일 최신순으로 정렬
-                orders = orderRepository.findAllBySellerIdOrderByCreatedAtDesc(userId);
+                orderPage = orderRepository.findAllBySellerIdOrderByCreatedAtDesc(userId, pageable);
             }
-            return orders.stream()
+//            return orders.stream()
+//                    .map(order -> {
+//                        OrderDetailCountAndProductNamesDto dto = orderDetailService.getOrderDetailCountAndProductNamesBySeller(order, userId);
+//                        return new OrderHistoryResponseDto(order, dto);
+//                    })
+//                    .collect(Collectors.toList());
+            List<OrderHistoryResponseDto> orderHistoryResponseDtos = orderPage.getContent().stream()
                     .map(order -> {
                         OrderDetailCountAndProductNamesDto dto = orderDetailService.getOrderDetailCountAndProductNamesBySeller(order, userId);
                         return new OrderHistoryResponseDto(order, dto);
                     })
                     .collect(Collectors.toList());
+
+            return new PageImpl<>(orderHistoryResponseDtos, pageable, orderPage.getTotalElements());
         }
 
         throw new AccessDeniedException("판매자 권한이 없으므로 조회 불가합니다.");

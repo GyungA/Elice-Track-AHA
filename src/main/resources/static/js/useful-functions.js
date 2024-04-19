@@ -146,5 +146,106 @@ export const randomPick = (items) => {
   return items[randomKey];
 };
 
+export let setCookie = function (name, value) {
+  // var date = new Date();
+  // date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+  document.cookie = name + "=" + value + ";path=/";
+};
+
+export let getCookie = function (name) {
+  console.log(document.cookie);
+  let value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+  return value ? value[2] : null;
+};
+
+export let redirect = function (address) {
+  // const hostName = window.location.hostname;
+  // let additionalAddr = "";
+  // if (hostName === "localhost") {
+  //   additionalAddr = "/ShoppingProject/src/main/resources";
+  // }
+  // window.location.href = `${additionalAddr}/static${address}`;
+  window.location.href = `${address}`;
+};
+
+export let formatPhoneNumber = function (phoneNumber) {
+  // 전화번호에서 "-"를 제외한 숫자만 추출
+  const cleaned = phoneNumber.replace(/\D/g, "");
+
+  // 전화번호 길이에 따라 적절한 형식으로 변환
+  let formatted;
+  if (cleaned.length === 11) {
+    formatted = cleaned.replace(/^(\d{3})(\d{4})(\d{4})$/, "$1-$2-$3");
+  } else if (cleaned.length === 10) {
+    formatted = cleaned.replace(/^(\d{3})(\d{3})(\d{4})$/, "$1-$2-$3");
+  } else {
+    // 예외 처리: 전화번호 길이가 10자 또는 11자가 아닌 경우
+    console.error("Invalid phone number length");
+    return phoneNumber; // 변환하지 않고 그대로 반환
+  }
+
+  return formatted;
+};
+
+// 페이지네이션
+export let activePageButtons = function (endPageNumber, url) {
+  //페이지 번호 클릭시
+  const pageButtons = document.querySelectorAll(".page-number-button");
+  for (let i = 0; i < endPageNumber; i++) {
+    pageButtons[i].addEventListener("click", () => {
+      // redirectOrders(userId, i);
+      setCookie("page", i);
+      redirect(url);
+    });
+  }
+
+  //왼오 클릭시.
+  const leftPage = document.querySelector(".page-before");
+  const rightPage = document.querySelector(".page-after");
+  leftPage.addEventListener("click", () => {
+    let currentPage = getCookie("page");
+    if (currentPage > 0) {
+      setCookie("page", currentPage - 1);
+      redirect(url);
+    } else {
+      alert("첫 페이지입니다.");
+    }
+  });
+  rightPage.addEventListener("click", () => {
+    let currentPage = getCookie("page");
+    if (currentPage < endPageNumber - 1) {
+      setCookie("page", currentPage + 1);
+      redirect(url);
+    } else {
+      alert("마지막 페이지입니다.");
+    }
+  });
+};
+
+// 페이지 번호를 생성하는 함수를 정의합니다.
+export let createPageNumber = function createPageNumber(
+  endPageNumber,
+  pageWrapper
+) {
+  for (let i = endPageNumber; i >= 1; i--) {
+    // 새 페이지 번호를 생성합니다.
+    let newPageNumber = document.createElement("button");
+    newPageNumber.setAttribute("class", "page-number-button");
+    // newPageButton.classList.add(`${i}`);
+
+    // 페이지 번호를 생성하여 페이지 번호 요소에 추가합니다.
+    let pageNumberSpan = document.createElement("span");
+    pageNumberSpan.setAttribute("class", "page-number");
+    pageNumberSpan.textContent = i;
+
+    // 페이지 번호 요소에 페이지 번호를 추가합니다.
+    newPageNumber.appendChild(pageNumberSpan);
+
+    // 생성된 페이지 번호를 적절한 위치에 추가합니다.
+    let pageBeforeLink = pageWrapper.querySelector(".page-before");
+    pageWrapper.insertBefore(newPageNumber, pageBeforeLink.nextSibling);
+  }
+};
+
 // 주변 다른 파일 것도 여기서 일괄 export 함
 export { createNavbar } from "./navbar.js";

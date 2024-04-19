@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopping Mall</title>
+
+    <!-- bulma css 관련 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- google icon -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="../css//header.css" />
+    <link rel="stylesheet" href="../css//footer.css" />
+    <link rel="stylesheet" href="cart.css" />
+    <!-- AWS S3 사용하기 위한 파일 -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
+    <script src="cart.js" type="module" defer></script>
+  </head>
+  <body>
+    <header id="header-component">
+      <div class="header-container">
+        <div class="header-logo">
+          <a href="#">
+            <img
+              class="header-title-image"
+              src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png"
+              alt="아하"
+            />
+          </a>
+        </div>
+        <div class="header-nav-list">
+          <div class="header-search">
+            <div class="header-search-light">
+              <img
+                class="icon search-light"
+                src="https://i.ibb.co/yf6Xpw4/search-light.png"
+                alt=""
+              />
+            </div>
+            <label>
+              <input
+                class="header-search-input-placeholder"
+                placeholder="search"
+              />
+            </label>
+          </div>
+
+          <div class="header-nav-login-button">
+            <span class="header-nav-login-button-text"> 로그인 </span>
+          </div>
+          <div class="header-nav-signup-button">
+            <span class="header-nav-signup-button-text"> 회원가입 </span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 장바구니 -->
+    <section class="section">
+      <div class="container">
+        <div class="cart-header">
+          <div class="title">
+            <p class="is-size-2">장바구니</p>
+          </div>
+          <div class="subtitle">
+            <p class="is-size-6">
+              &gt; &nbsp; 주문결제 &nbsp; &gt; &nbsp;주문완료
+            </p>
+          </div>
+        </div>
+
+        <div class="tile is-ancestor">
+          <div class="tile is-8 is-parent cart-products">
+            <!-- 장바구니에 담긴 상품 모음 -->
+            <div class="box cart-products-container" id="cartProductsContainer">
+              <div class="cart-products-header">
+                <label class="checkbox">
+                  <input type="checkbox" id="allSelectCheckbox" />
+                  <p class="help">전체선택</p>
+                </label>
+                <label class="seperator">
+                  <p class="help help-seperator">&nbsp;&nbsp;|&nbsp;&nbsp;</p>
+                </label>
+                <label class="delete-part" id="partialDeleteLabel">
+                  <p class="help">선택삭제</p>
+                </label>
+              </div>
+
+              <!-- 장바구니에 담긴 상품들의 html 요소(카드 형태)가 주입되는 곳 -->
+              <div class="one-product-outer" id="oneProductOuter">
+                <!-- 상품이 n개라면, <div class="one-product-inner"> 태그가 n개 -->
+                <div class="one-product-inner">
+                  <div class="product-content">
+                    <label class="checkbox" for="selectCheckbox">
+                      <input type="checkbox" id="selectCheckbox" />
+                    </label>
+                    <div class="image-url"></div>
+                    <div class="other-product-info">
+                      <p class="product-name"></p>
+                    </div>
+                    <div class="quentity-cost-wrapper">
+                      <div class="add-quentity">
+                        <span class="count">
+                          <a href="#" class="minus">-</a>
+                          <span id="result"></span>
+                          <a href="#" class="plus">+</a>
+                        </span>
+                      </div>
+                      <p class="product-amount-payment total-cost"></p>
+                    </div>
+                  </div>
+
+                  <button class="button delete-product">
+                    <span class="material-symbols-outlined"> close </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 선택한 상품 총 요약 -->
+          <div class="tile is-parent tile-order-summary">
+            <div class="box order-summary">
+              <div class="header">
+                <p>결제정보</p>
+              </div>
+              <div class="order-info">
+                <div class="info">
+                  <p>상품수</p>
+                  <p id="productsCount"></p>
+                </div>
+                <div class="info">
+                  <p>상품금액</p>
+                  <p id="productsTotal"></p>
+                </div>
+              </div>
+              <div class="total">
+                <p class="total-label">총 결제금액</p>
+                <p class="total-price" id="orderTotal"></p>
+              </div>
+              <div class="purchase">
+                <button class="button is-info" id="purchaseButton">
+                  구매하기
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="footer-navigation body3-regular-medium text-center">
+        <div>이용약관</div>
+        <div class="bar">|</div>
+        <div class="body3-bold-medium" rel="nosublink">개인정보 처리방침</div>
+        <div class="bar">|</div>
+        <div>공지사항</div>
+        <div class="bar">|</div>
+        <div>자주묻는 질문</div>
+        <div class="bar">|</div>
+        <div>이벤트</div>
+        <div class="bar">|</div>
+        <div>입점문의</div>
+        <div class="bar">|</div>
+        <div>about idea house</div>
+        <div class="bar">|</div>
+        <div>인재영입</div>
+      </div>
+      <div class="footer-container">
+        <div class="full">
+          <div class="body3-regular-medium text-left">
+            <div class="float-left">
+              <img
+                class="baseLogo"
+                src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png"
+                style="height: 42px; width: 100px"
+              />
+            </div>
+            <div class="float-left" style="width: 450px">
+              <div class="mb-[8px] body3-bold-medium">(주) 아이디어하우스</div>
+              <div data-v-f1827758="">대표이사 : 빌게이츠</div>
+              <div data-v-f1827758="">
+                서울특별시 성동구 아차산로17길 48 성수낙낙 C동 2층 엘리스Lab
+                성수점
+              </div>
+              <div data-v-f1827758="">사업자 등록번호 : 123-45-67890</div>
+              <div data-v-f1827758="">
+                통신판매업신고 : 2024-서울성수-1234호
+              </div>
+              <div data-v-f1827758="">
+                호스팅서비스 제공자 : AWS WEB Service, Inc
+              </div>
+              <div class="caption2-regular-medium mt-[8px] tracking-tight">
+                아이디어하우스는 통신판매중개자이며 통신판매의 당사자가
+                아닙니다. <br data-v-f1827758="" />
+                따라서 아이디어하우스는 상품 거래정보 및 거래에 대하여 책임을
+                지지 않습니다.
+              </div>
+              <div class="mt-[8px] caption2-regular-medium" data-v-f1827758="">
+                Copyright ©Ideahouse Inc. all rights reserved.
+              </div>
+            </div>
+            <div class="float-middle" style="width: 240px">
+              <div>
+                <div class>
+                  <span class="body3-bold-medium">고객센터</span>
+                  <span class="caption2-regular-medium">
+                    (평일 오전 10시 ~ 오후 6시)
+                  </span>
+                </div>
+                <div class>
+                  <a href="https://bit.ly/3IDiamS"></a>
+                </div>
+                <div class="footer-button">
+                  <button type="outline" class="CoreButton">
+                    <span>단체선물 문의</span>
+                  </button>
+                  <button type="outline" class="CoreButton">
+                    <span>아이디어하우스 채팅 상담</span>
+                  </button>
+                </div>
+                <div class="grid-container">
+                  <div class="grid-item">
+                    <div>대표번호</div>
+                    <div>1668-1234</div>
+                  </div>
+                  <div class="grid-item">
+                    <div>제휴문의</div>
+                    <div>aha@ideahouse.kr</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div clas="float-right">
+              <div class="float-right">
+                <div class="right-title">Follow Us</div>
+                <div class="TheFooter__snsLink">
+                  <a
+                    href="https://www.facebook.com"
+                    class="TheFooter__snsLink_facebook"
+                  >
+                    <img
+                      src="https://i.ibb.co/Q6q1JL6/image.png"
+                      alt="Facebook"
+                    />
+                  </a>
+                  <a
+                    href="https://www.instagram.com"
+                    class="TheFooter__snsLink_instagram"
+                  >
+                    <img src="https://i.ibb.co/KzPgnvr/1.png" alt="1" />
+                  </a>
+                  <a
+                    href="https://blog.naver.com"
+                    class="TheFooter__snsLink_naverBlog"
+                  >
+                    <img src="https://i.ibb.co/98r3RVb/2.png" alt="2" />
+                  </a>
+                  <a
+                    href="https://post.naver.com"
+                    class="TheFooter__snsLink_naverPost"
+                  >
+                    <img src="https://i.ibb.co/vLXD634/3.png" alt="3" />
+                  </a>
+                  <a
+                    href="https://twitter.com"
+                    class="TheFooter__snsLink_twitter"
+                  >
+                    <img src="https://i.ibb.co/Wts8MrJ/4.png" alt="4" />
+                  </a>
+                </div>
+                <div class="TheFooter__award" style="width: 76px">
+                  <div class="TheFooter__award1">
+                    <img
+                      src="https://i.ibb.co/fFHCHkq/1-removebg-preview.png"
+                      alt="5"
+                      style="width: 106px; height: 60px"
+                    />
+                  </div>
+                  <div class="TheFooter__award2">
+                    <img
+                      src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png"
+                      alt="6"
+                      style="width: 76px; height: 60px"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

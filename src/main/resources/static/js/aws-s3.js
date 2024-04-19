@@ -1,4 +1,4 @@
-import { randomId } from "./useful-functions.js";
+import { randomId } from "./useful-functions";
 
 // aws-s3 사이트에서의 설정값들
 const s3BucketName = "elice-shoppingmall";
@@ -52,15 +52,13 @@ async function addImageToS3(fileInputElement, album) {
     const fileKey = uploadedFile.Key;
     console.log(uploadedFile);
     console.log(
-      `AWS S3에 정상적으로 사진이 업로드되었습니다.\n파일 위치: ${fileKey}`
+        `AWS S3에 정상적으로 사진이 업로드되었습니다.\n파일 위치: ${fileKey}`
     );
 
     return fileKey;
   } catch (err) {
     throw new Error(
-
-      `S3에 업로드하는 과정에서 에러가 발생하였습니다.\n${err.message}`
-
+        `S3에 업로드하는 과정에서 에러가 발생하였습니다.\n${err.message}`
     );
   }
 }

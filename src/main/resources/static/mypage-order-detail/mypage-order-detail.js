@@ -1,6 +1,13 @@
 import * as Api from "../js/api.js";
-// import * as Order from "../order/order.js";
-// import { formatPhoneNumber, searchAddress } from "../order/order.js";
+import {
+  setCookie,
+  getCookie,
+  redirect,
+  formatPhoneNumber,
+} from "../js/useful-functions.js";
+
+//host
+const host = "http://34.22.75.198:8080";
 
 //결제일
 const payTimeElem = document.querySelector("#payTime");
@@ -31,19 +38,13 @@ const address2Input = document.querySelector("#address2");
 const receiverNameInput = document.querySelector("#receiverNameInput");
 const receiverPhoneNumberInput = document.querySelector("#receiverPhoneNumber");
 
-// // 현재 URL 가져오기
-// const currentUrl = window.location.href;
-
-// // URL에서 쿼리 문자열 파싱
-// const urlParams = new URLSearchParams(currentUrl);
+//임시
+// setCookie("userId", 1);
+// setCookie("orderId", 8);
 
 // // 파라미터 값 가져오기
-// const userId = urlParams.get("userId");
-// const orderId = urlParams.get("orderId");
-const userId = 1;
-const orderId = 6;
-console.log("user id: " + userId);
-console.log("order id: " + orderId);
+const userId = getCookie("userId");
+const orderId = getCookie("orderId");
 
 // checkLogin();
 addAllElements();
@@ -76,7 +77,7 @@ function addAllEvents() {
 async function insertOrderDetail(userId, orderId) {
   try {
     const endpoint = `orders/user/${userId}/order/${orderId}`;
-    const response = await Api.get("http://localhost:8080", endpoint);
+    const response = await Api.get(host, endpoint);
     const {
       id,
       orderDetailInfoDtos,
@@ -86,6 +87,7 @@ async function insertOrderDetail(userId, orderId) {
       totalPayment,
       orderDate,
     } = response;
+    console.log(response);
 
     const numOfOrderDetails = orderDetailInfoDtos.length;
     await addElements(numOfOrderDetails);
@@ -147,27 +149,27 @@ async function insertOrderDetail(userId, orderId) {
 
 //결제한 상품 개수만큼 추가
 function addElements(numberOfElementsToAdd) {
-  for (var i = 0; i < numberOfElementsToAdd; i++) {
+  for (let i = 0; i < numberOfElementsToAdd; i++) {
     // one-product-inner 요소 생성
-    var newInnerProduct = document.createElement("div");
+    let newInnerProduct = document.createElement("div");
     newInnerProduct.classList.add("one-product-inner");
 
     // image-url 요소 생성
-    var newImageUrl = document.createElement("div");
+    let newImageUrl = document.createElement("div");
     newImageUrl.classList.add("image-url");
 
     // other-product-info 요소 생성
-    var newOtherProductInfo = document.createElement("div");
+    let newOtherProductInfo = document.createElement("div");
     newOtherProductInfo.classList.add("other-product-info");
 
     // product-name, product-amount-payment, product-order-status 요소 생성
-    var newProductName = document.createElement("p");
+    let newProductName = document.createElement("p");
     newProductName.classList.add("product-name");
 
-    var newProductAmountPayment = document.createElement("p");
+    let newProductAmountPayment = document.createElement("p");
     newProductAmountPayment.classList.add("product-amount-payment");
 
-    var newProductOrderStatus = document.createElement("p");
+    let newProductOrderStatus = document.createElement("p");
     newProductOrderStatus.classList.add("product-order-status");
 
     // other-product-info에 각각의 요소 추가
@@ -200,8 +202,10 @@ async function modifyDelivery(userId, orderId) {
       receiverName: receiverName,
       receiverPhoneNumber: formatPhoneNumber(receiverPhoneNumber),
     };
-    await Api.patch("http://localhost:8080/orders", "", data);
+    await Api.patch(host + "/orders", "", data);
     alert("주문 수정이 완료되었습니다.");
+
+    redirect("/order/detail");
   } catch (err) {
     console.log(err);
     alert(`페이지 로드 중 문제가 발생하였습니다: ${err.message}`);
@@ -244,21 +248,21 @@ function searchAddress() {
   }).open();
 }
 
-function formatPhoneNumber(phoneNumber) {
-  // 전화번호에서 "-"를 제외한 숫자만 추출
-  const cleaned = phoneNumber.replace(/\D/g, "");
+// function formatPhoneNumber(phoneNumber) {
+//   // 전화번호에서 "-"를 제외한 숫자만 추출
+//   const cleaned = phoneNumber.replace(/\D/g, "");
 
-  // 전화번호 길이에 따라 적절한 형식으로 변환
-  let formatted;
-  if (cleaned.length === 11) {
-    formatted = cleaned.replace(/^(\d{3})(\d{4})(\d{4})$/, "$1-$2-$3");
-  } else if (cleaned.length === 10) {
-    formatted = cleaned.replace(/^(\d{3})(\d{3})(\d{4})$/, "$1-$2-$3");
-  } else {
-    // 예외 처리: 전화번호 길이가 10자 또는 11자가 아닌 경우
-    console.error("Invalid phone number length");
-    return phoneNumber; // 변환하지 않고 그대로 반환
-  }
+//   // 전화번호 길이에 따라 적절한 형식으로 변환
+//   let formatted;
+//   if (cleaned.length === 11) {
+//     formatted = cleaned.replace(/^(\d{3})(\d{4})(\d{4})$/, "$1-$2-$3");
+//   } else if (cleaned.length === 10) {
+//     formatted = cleaned.replace(/^(\d{3})(\d{3})(\d{4})$/, "$1-$2-$3");
+//   } else {
+//     // 예외 처리: 전화번호 길이가 10자 또는 11자가 아닌 경우
+//     console.error("Invalid phone number length");
+//     return phoneNumber; // 변환하지 않고 그대로 반환
+//   }
 
-  return formatted;
-}
+//   return formatted;
+// }
