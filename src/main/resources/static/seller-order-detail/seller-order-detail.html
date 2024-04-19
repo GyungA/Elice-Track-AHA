@@ -21,114 +21,28 @@
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="../css//header.css" />
     <link rel="stylesheet" href="../css//footer.css" />
-    <link rel="stylesheet" href="mypage-order-detail.css" />
-    <script src="mypage-order-detail.js" type="module" defer></script>
+    <link rel="stylesheet" href="seller-order-detail.css" />
+    <script src="seller-order-detail.js" type="module" defer></script>
   </head>
   <body>
     <div class="modal-nomal modal">
       <div class="modal_body">
         <div class="modal-inner">
-          <h2>배송 정보 수정</h2>
-          <!-- 주소 수정 -->
+          <h2>배송 상태 수정</h2>
+
+          <!-- 상태-->
           <div class="field is-horizontal">
             <div class="field-label is-normal">
-              <label class="label" for="address2">주소</label>
-            </div>
-            <div class="field-body search">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="postalCode"
-                    type="text"
-                    placeholder="주소찾기를 클릭해 주세요."
-                    readonly
-                  />
-                </p>
-              </div>
-              <div>
-                <button
-                  class="button is-light is-hovered"
-                  id="searchAddressButton"
-                >
-                  주소찾기
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 자세한 주소 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal no-label"></div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="address1"
-                    type="text"
-                    placeholder=""
-                    autocomplete="on"
-                    readonly
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="field is-horizontal">
-            <div class="field-label is-normal no-label"></div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="address2"
-                    type="text"
-                    placeholder=""
-                    autocomplete="on"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 수령인 이름 수정 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label" for="receiverName">이름</label>
+              <label class="label">상태</label>
             </div>
             <div class="field-body">
               <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="receiverNameInput"
-                    type="text"
-                    placeholder="받는 분 이름을 입력해 주세요."
-                    autocomplete="on"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 수령인 연락처 수정 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label" for="receiverPhoneNumber">연락처</label>
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="receiverPhoneNumber"
-                    type="number"
-                    placeholder="- 없이 입력해 주세요."
-                    autocomplete="on"
-                  />
-                </p>
+                <select id="productStatusDropdown">
+                  <option value="1" selected>주문완료</option>
+                  <option value="2">배송중</option>
+                  <option value="3">배송완료</option>
+                  <option value="4">취소완료</option>
+                </select>
               </div>
             </div>
           </div>
@@ -139,15 +53,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="modal-seller modal">
-      <div class="modal_body">
-        <h2>모달창 제목</h2>
-        <p>모달창 내용</p>
-
-        <button type="submit" class="modify-btn">수정</button>
-        <button type="button" class="cancel-btn">취소</button>
-      </div>
-    </div> -->
     <header id="header-component">
       <div class="header-container">
         <div class="header-logo">
@@ -189,20 +94,23 @@
     <!-- 주문 상세 내용 -->
     <section class="section">
       <div class="page-title">
-        <p class="title-name">주문 상세</p>
+        <p class="title-name">판매자 : 주문 상세</p>
       </div>
       <div class="order-wrapper">
         <div class="product-list">
           <p class="pay-time" id="payTime"></p>
           <div class="one-product-outer" id="oneProductOuter">
             <!-- <div class="one-product-inner">
-                <div class="image-url"></div>
-                <div class="other-product-info">
-                  <p class="product-name"></p>
-                  <p class="product-amount-payment"></p>
-                  <p class="product-order-status"></p>
-                </div>
-              </div> -->
+              <div class="image-url"></div>
+              <div class="other-product-info">
+                <p class="product-name"></p>
+                <p class="product-amount-payment"></p>
+                <p class="product-order-status"></p>
+              </div>
+              <button type="button" class="order-modify-button">
+                배송 상태 수정
+              </button>
+            </div> -->
           </div>
         </div>
         <div class="right">
@@ -234,7 +142,9 @@
                 <p class="total-payment" id="totalPayment"></p>
               </div>
             </div>
-            <button type="button" class="order-modify-button">주문 수정</button>
+            <!-- <button type="button" class="order-modify-button">
+              배송 상태 수정
+            </button> -->
           </div>
         </div>
       </div>
