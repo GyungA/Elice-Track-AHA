@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -45,15 +44,4 @@ public class ProductService {
         return productRepository.findByNameContaining(searchKeyword, pageable);
     }
 
-    // 카테고리 별 상품 리스트 불러오기
-//    public List<Product> getAllProductsByCategoryId(Long categoryId) {
-//        return productRepository.findByCategoryId(categoryId).stream()
-//                .map(this::)
-//    }
-
-    public List<Product> getAllProductsByCategoryId(Long categoryId) {
-        List<Product> products = productRepository.findByCategory_CategoryId(categoryId);
-        return products;
-    }
 }
-

@@ -103,9 +103,7 @@ public class OrderDetailService {
             if (currentStock >= quantity) {
                 product.setCurrent_stock(currentStock - quantity);
                 productRepository.save(product);
-                return true;
             }
-            return false;
 
         }
         throw new InvalidRequestDataException("이미 품절된 상품입니다. product id: " + productId);

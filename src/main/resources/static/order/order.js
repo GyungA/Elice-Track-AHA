@@ -45,9 +45,6 @@ const requestOption = {
   6: "직접 입력",
 };
 
-let userId = 1;
-let orderId = 8;
-
 // checkLogin();
 addAllElements();
 addAllEvents();
@@ -55,7 +52,7 @@ addAllEvents();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
   // createNavbar();
-  insertOrderSummary(userId, orderId); //나중에 userId, orderId 넣기
+  insertOrderSummary(1, 4); //나중에 userId, orderId 넣기
   // insertUserData();
 }
 
@@ -65,7 +62,7 @@ function addAllEvents() {
   searchAddressButton.addEventListener("click", searchAddress);
   // requestSelectBox.addEventListener("change", handleRequestChange); //요청사항
   checkoutButton.addEventListener("click", () => {
-    doCheckout(userId, orderId);
+    doCheckout(1, 4);
   });
 }
 
@@ -294,11 +291,7 @@ async function doCheckout(userId, orderId) {
     await Api.post("http://localhost:8080/orders/pay", data);
 
     alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
-    window.location.href =
-      "/static/mypage-order-detail/mypage-order-detail.html?a=0&orderId=" +
-      data.orderId +
-      "&userId=" +
-      data.userId;
+    // window.location.href = "/order/complete"; 나중에 redirect url 정해지면 추가
   } catch (err) {
     console.log(err);
     alert(`결제 중 문제가 발생하였습니다: ${err.message}`);

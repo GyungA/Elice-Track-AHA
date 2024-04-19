@@ -126,7 +126,7 @@ public class OrderService {
         return order.getId();
     }
 
-   /* private int calculateTotalPayment(List<Integer> productPayments, List<Integer> amounts) {
+    private int calculateTotalPayment(List<Integer> productPayments, List<Integer> amounts) {
         if (productPayments.size() == amounts.size()) {
             int sum = 0;
             for (int i = 0; i < productPayments.size(); i++) {
@@ -135,7 +135,7 @@ public class OrderService {
             return sum;
         }
         throw new InvalidRequestDataException("상품 id와 상품 수량의 개수가 맞지 않습니다.");
-    }*/
+    }
 
     @Transactional
     public OrderDetailHistoryResponseDto update(OrderUpdateRequestDto requestDto) {

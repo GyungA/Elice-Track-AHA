@@ -1,7 +1,6 @@
 package com.secondproject.shoppingproject.product.entity;
 
 
-import com.secondproject.shoppingproject.category.entity.Category;
 import com.secondproject.shoppingproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,10 +22,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
     private int price; //가격
     private String name; //상품명
     private String description; // 상품설명
@@ -41,7 +36,6 @@ public class Product {
 
     @DateTimeFormat(pattern = "YYYY-MM-DD")
     private LocalDate createAt; // 상품 등록 날짜
-
 
     @PrePersist // DB에 INSERT 되기 직전에 실행. 즉 DB에 값을 넣으면 자동으로 실행됨
     public void createDate() {

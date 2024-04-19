@@ -2,7 +2,6 @@ package com.secondproject.shoppingproject.global.config;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,19 +31,14 @@ public class WebSecurityConfig{
 
                         "/**" //TODO: 나중에 시큐리티 기능 완성하면 없애기
                 );
-/* 정적 리소스 확인 시 위의 requestMatchers 대신 아래의 코드 적용 */
-//        return (web) -> web.ignoring()
-//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((auth) -> {
-                            auth.anyRequest().permitAll();
-                        }
-                )
-                .formLogin((form) -> form.disable());
+                .authorizeHttpRequests((authz) -> authz
+                        .anyRequest().authenticated()
+                );
         return http.build();
     }
 }

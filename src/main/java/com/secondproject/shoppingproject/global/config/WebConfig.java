@@ -3,7 +3,6 @@ package com.secondproject.shoppingproject.global.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -24,15 +23,4 @@ public class WebConfig implements WebMvcConfigurer {
                 // 해당 옵션 사용시 allowedOrigins를 * (전체)로 설정할 수 없다.
                 .allowCredentials(true);
     }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 정적 리소스 핸들러를 추가한다
-        registry.addResourceHandler("/templates/**")
-                .addResourceLocations("classpath:/templates/");
-
-        registry.addResourceHandler("/static/**")
-                .addResourceLocations("classpath:/static/");
-    }
-
 }

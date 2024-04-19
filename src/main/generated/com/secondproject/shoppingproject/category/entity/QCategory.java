@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,24 +18,39 @@ public class QCategory extends EntityPathBase<Category> {
 
     private static final long serialVersionUID = 238917420L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QCategory category = new QCategory("category");
 
-    public final NumberPath<Long> categoryId = createNumber("categoryId", Long.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final NumberPath<Integer> level = createNumber("level", Integer.class);
 
     public final StringPath name = createString("name");
 
-    public final NumberPath<Long> parentId = createNumber("parentId", Long.class);
+    public final QCategory parentCategory;
+
+    public final ListPath<Category, QCategory> subCategory = this.<Category, QCategory>createList("subCategory", Category.class, QCategory.class, PathInits.DIRECT2);
 
     public QCategory(String variable) {
-        super(Category.class, forVariable(variable));
+        this(Category.class, forVariable(variable), INITS);
     }
 
     public QCategory(Path<? extends Category> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QCategory(PathMetadata metadata) {
-        super(Category.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QCategory(PathMetadata metadata, PathInits inits) {
+        this(Category.class, metadata, inits);
+    }
+
+    public QCategory(Class<? extends Category> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.parentCategory = inits.isInitialized("parentCategory") ? new QCategory(forProperty("parentCategory"), inits.get("parentCategory")) : null;
     }
 
 }
