@@ -1,5 +1,7 @@
 package com.secondproject.shoppingproject.product.controller;
 
+import com.secondproject.shoppingproject.category.dto.CategoryDTO;
+import com.secondproject.shoppingproject.category.service.CategoryService;
 import com.secondproject.shoppingproject.product.entity.Product;
 import com.secondproject.shoppingproject.product.entity.ProductRepository;
 import com.secondproject.shoppingproject.product.service.ProductService;
@@ -22,19 +24,23 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
+    private final CategoryService categoryService;
 
     @GetMapping("/home")
     public String get_Home(Model model) {
         List<Product> latestProducts = productService.getLatestProducts();
+        List<CategoryDTO> categories = categoryService.getParentCategories();
         model.addAttribute("products", latestProducts);
+        model.addAttribute("categories", categories);
         return "main";
     }
 
     @GetMapping("/product/{id}")
     public String productDetail(Model model, @PathVariable("id") Long id) {
         Product product = productService.productView(id);
+        List<CategoryDTO> categories = categoryService.getParentCategories();
         model.addAttribute("product", product);
+        model.addAttribute("categories", categories);
         return "product-detail"; // 상품 상세 페이지로 이동
     }
     // 상품 등록 페이지(GET)
