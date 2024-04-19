@@ -1,8 +1,10 @@
 package com.secondproject.shoppingproject.product.service;
 
 
+import com.secondproject.shoppingproject.product.dto.ProductAddRequestDto;
 import com.secondproject.shoppingproject.product.entity.Product;
 import com.secondproject.shoppingproject.product.entity.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +19,10 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     //상품 등록
-    public void saveProduct(Product product) { productRepository.save(product);}
+    @Transactional
+    public void saveProduct(ProductAddRequestDto requestDto) {
+        productRepository.save(requestDto);
+    }
     //상품 개별 불러오기
     public Product productView(Long id){return productRepository.findById(id).get();}
     //상품 리스트 불러오기
