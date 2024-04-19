@@ -1,5 +1,6 @@
 package com.secondproject.shoppingproject.product.controller;
 
+import com.secondproject.shoppingproject.product.dto.ProductAddRequestDto;
 import com.secondproject.shoppingproject.product.entity.Product;
 import com.secondproject.shoppingproject.product.entity.ProductRepository;
 import com.secondproject.shoppingproject.product.service.ProductService;
@@ -74,12 +75,16 @@ public class ProductController {
 //        int startPage = Math.max(nowPage -4 , 1);
 //        int endPage = Math.min(nowPage +5, products.getTotalPages());
 //
+//        //상품추가 모달 입력폼
+//        ProductAddRequestDto productAddRequestDto = new ProductAddRequestDto();
+//        model.addAttribute("productAdd", productAddRequestDto);
+//
 //        model.addAttribute("products", products);
 //        model.addAttribute("nowPage", nowPage);
 //        model.addAttribute("startPage", startPage);
 //        model.addAttribute("endPage", endPage);
 //
-//        return "/productList";
+//        return "/product-management";
 //
 //    }
 }

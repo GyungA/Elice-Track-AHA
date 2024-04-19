@@ -7,11 +7,14 @@ import {
   createPageNumber,
 } from "../js/useful-functions.js";
 
+//host
+const host = "http://34.22.75.198:8080";
+
 // 요소(element), input 혹은 상수
 const section = document.querySelector(".one-product-container");
 let pageWrapper = document.querySelector(".page-wrapper");
 
-setCookie("userId", 1);
+// setCookie("userId", 1);
 const userId = getCookie("userId");
 
 console.log(userId);
@@ -29,7 +32,7 @@ function addAllEvents() {}
 async function redirectOrders(userId) {
   try {
     const endpoint = `orders/user/${userId}`;
-    const response = await Api.get("http://localhost:8080", endpoint);
+    const response = await Api.get(host, endpoint);
 
     const responseData = response.content;
     const productNumber = responseData.length;
@@ -95,11 +98,11 @@ async function redirectOrderCancel(userId, orderId) {
       userId: userId,
       orderId: orderId,
     };
-    await Api.patch("http://localhost:8080/orders/cancel", "", data);
+    await Api.patch(host + "/orders/cancel", "", data);
     alert("주문 취소가 완료되었습니다.");
 
     setCookie("userId", userId);
-    redirect("/mypage-order-management/mypage-order-management.html");
+    redirect("/order/management");
   } catch (err) {
     console.log(err);
     alert(`페이지 로드 중 문제가 발생하였습니다: ${err.message}`);

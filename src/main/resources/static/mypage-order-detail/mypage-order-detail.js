@@ -6,6 +6,9 @@ import {
   formatPhoneNumber,
 } from "../js/useful-functions.js";
 
+//host
+const host = "http://34.22.75.198:8080";
+
 //결제일
 const payTimeElem = document.querySelector("#payTime");
 
@@ -74,7 +77,7 @@ function addAllEvents() {
 async function insertOrderDetail(userId, orderId) {
   try {
     const endpoint = `orders/user/${userId}/order/${orderId}`;
-    const response = await Api.get("http://localhost:8080", endpoint);
+    const response = await Api.get(host, endpoint);
     const {
       id,
       orderDetailInfoDtos,
@@ -199,10 +202,10 @@ async function modifyDelivery(userId, orderId) {
       receiverName: receiverName,
       receiverPhoneNumber: formatPhoneNumber(receiverPhoneNumber),
     };
-    await Api.patch("http://localhost:8080/orders", "", data);
+    await Api.patch(host + "/orders", "", data);
     alert("주문 수정이 완료되었습니다.");
 
-    redirect("/mypage-order-detail/mypage-order-detail.html");
+    redirect("/order/detail");
   } catch (err) {
     console.log(err);
     alert(`페이지 로드 중 문제가 발생하였습니다: ${err.message}`);

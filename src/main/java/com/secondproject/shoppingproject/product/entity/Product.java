@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class Product extends BaseEntity {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,22 +40,21 @@ public class Product extends BaseEntity {
 
     private String image; // 상품 이미지
 
-//    @DateTimeFormat(pattern = "YYYY-MM-DD")
-//    private LocalDate createAt; // 상품 등록 날짜
+    @DateTimeFormat(pattern = "YYYY-MM-DD")
+    private LocalDate createAt; // 상품 등록 날짜
 
 
-//    @PrePersist // DB에 INSERT 되기 직전에 실행. 즉 DB에 값을 넣으면 자동으로 실행됨
-//    public void createDate() {
-//        this.createAt = LocalDate.now();
-//    }
+    @PrePersist // DB에 INSERT 되기 직전에 실행. 즉 DB에 값을 넣으면 자동으로 실행됨
+    public void createDate() {
+        this.createAt = LocalDate.now();
+    }
 
     @Builder
-    public Product(Category category, int price, String name, String description, boolean status, int current_stock, User seller, String image) {
+    public Product(Category category, int price, String name, String description, int current_stock, User seller, String image) {
         this.category = category;
         this.price = price;
         this.name = name;
         this.description = description;
-        this.status = status;
         this.current_stock = current_stock;
         this.seller = seller;
         this.image = image;

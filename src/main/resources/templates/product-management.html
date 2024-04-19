@@ -74,6 +74,7 @@
         <div class="modal-inner">
           <h2>상품 추가</h2>
           <!-- 가격 수정 -->
+
           <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label" for="price">가격</label>
@@ -112,6 +113,22 @@
             </div>
           </div>
 
+          <!-- 카테고리-->
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label category-name">카테고리</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <select id="productCategoryDropdown">
+                  <option value="1" selected>카테고리1</option>
+                  <option value="2">카테고리2</option>
+                  <option value="3">카테고리3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
           <!-- 상태-->
           <div class="field is-horizontal">
             <div class="field-label is-normal">
@@ -141,6 +158,28 @@
                     id="stock"
                     type="text"
                     placeholder="상품의 재고 입력"
+                    autocomplete="on"
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 상품설명 -->
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label product-info" for="productName"
+                >상품설명</label
+              >
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input
+                    class="input"
+                    id="productInfo"
+                    type="text"
+                    placeholder="상품 설명"
                     autocomplete="on"
                   />
                 </p>
@@ -217,34 +256,89 @@
               <div class="tabs">
                 <ul>
                   <!-- 카테고리 -->
-                  <li id="manufacturerTag"></li>
+                  <li id="manufacturerTag">기타</li>
                 </ul>
               </div>
               <div class="content">
                 <div class="product-name-status">
                   <!-- 상품 이름 -->
-                  <p
-                    class="subtitle is-4 is-family-monospace"
-                    id="titleTag"
-                  ></p>
+                  <p class="subtitle is-4 is-family-monospace title-tag">
+                    삼각대 및 셀카봉
+                  </p>
                   <div class="status-wrapper">
                     <!-- 상품 상태를 나타내는 아이콘 -->
                     <span class="material-symbols-outlined">
                       fiber_manual_record
                     </span>
                     <!-- 상품 상태 -->
-                    <p class="proudct-status" id="statusTag"></p>
+                    <p class="proudct-status" id="statusTag">판매중</p>
                   </div>
                 </div>
 
                 <div class="price-stock-wrapper">
                   <!-- 상품 가격 -->
-                  <h2 id="priceTag"></h2>
+                  <h2 id="priceTag" class="price-tag">10,000원</h2>
 
                   <div class="stock-wrapper">
                     <!-- 남은 수량 -->
                     <p class="remain-stock-word">남은 수량:</p>
-                    <p class="remain-stock" id="remainStock"></p>
+                    <p class="remain-stock" id="remainStock">12개</p>
+                  </div>
+                </div>
+                <div class="buttons-container">
+                  <button class="button" id="addToCartButton">
+                    <span class="material-symbols-outlined"> delete </span>
+                  </button>
+                  <button class="button product-modify-btn" id="purchaseButton">
+                    수정하기
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </dic>
+
+        <!-- 상품이 n개면 <dic class="one-product">가 n번 반복되게 -->
+        <dic class="one-product">
+          <div class="is-child box product-image">
+            <figure class="image is-sqaure">
+              <!-- 상품 이미지 -->
+              <img id="productImageTag" src="" />
+            </figure>
+          </div>
+
+          <div class="tile is-parent is-vertical product-content-wrapper">
+            <div class="tile is-child box product-detail">
+              <div class="tabs">
+                <ul>
+                  <!-- 카테고리 -->
+                  <li id="manufacturerTag">홈리빙</li>
+                </ul>
+              </div>
+              <div class="content">
+                <div class="product-name-status">
+                  <!-- 상품 이름 -->
+                  <p class="subtitle is-4 is-family-monospace title-tag">
+                    니토리 거실화 3종 세트
+                  </p>
+                  <div class="status-wrapper">
+                    <!-- 상품 상태를 나타내는 아이콘 -->
+                    <span class="material-symbols-outlined">
+                      fiber_manual_record
+                    </span>
+                    <!-- 상품 상태 -->
+                    <p class="proudct-status" id="statusTag">판매중</p>
+                  </div>
+                </div>
+
+                <div class="price-stock-wrapper">
+                  <!-- 상품 가격 -->
+                  <h2 id="priceTag" class="price-tag">13,990원</h2>
+
+                  <div class="stock-wrapper">
+                    <!-- 남은 수량 -->
+                    <p class="remain-stock-word">남은 수량:</p>
+                    <p class="remain-stock" id="remainStock">199개</p>
                   </div>
                 </div>
                 <div class="buttons-container">
