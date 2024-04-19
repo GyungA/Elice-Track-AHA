@@ -354,9 +354,10 @@ const emailInput = document.querySelector("#emailInput");
 const emailToggle = document.querySelector("#emailToggle");
 const postalCodeInput = document.querySelector("#postalCodeInput");
 const searchAddressButton = document.querySelector("#searchAddressButton");
+const addressInput = document.querySelector("#addressInput");
 const addressToggle = document.querySelector("#addressToggle");
-const address1Input = document.querySelector("#address1Input");
-const address2Input = document.querySelector("#address2Input");
+//const address1Input = document.querySelector("#address1Input");
+//const address2Input = document.querySelector("#address2Input");
 const phoneNumberInput = document.querySelector("#phoneNumberInput");
 const phoneNumberToggle = document.querySelector("#phoneNumberToggle");
 const saveButton = document.querySelector("#saveButton");
@@ -399,10 +400,11 @@ document.addEventListener('DOMContentLoaded', function() {
   var toggleAddress = document.getElementById("addressToggle");
   if (toggleAddress) {
     toggleAddress.addEventListener("change", (e) => {
-      toggleField(e, postalCodeInput);
-      toggleField(e, address1Input);
-      toggleField(e, address2Input);
-      toggleField(e, searchAddressButton);
+//      toggleField(e, postalCodeInput);
+//      toggleField(e, address1Input);
+//      toggleField(e, address2Input);
+//      toggleField(e, searchAddressButton);
+        toggleField(e, addressInput);
     });
   }
 
@@ -470,10 +472,11 @@ function toggleTargets(e) {
   }
   if (toggleId.includes("address")) {
     targets = [
-      postalCodeInput,
-      address1Input,
-      address2Input,
-      searchAddressButton,
+//      postalCodeInput,
+//      address1Input,
+//      address2Input,
+//      searchAddressButton,
+        addressInput
     ];
   }
   if (toggleId.includes("phoneNumber")) {
@@ -513,7 +516,7 @@ async function insertUserData() {
   userData = await Api.get("/users");
 
   // 객체 destructuring
-  const { fullName, email, address, phoneNumber } = userData;
+  const { fullName, birthdate, email, address, phoneNumber } = userData;
 
   // 서버에서 온 비밀번호는 해쉬 문자열인데, 이를 빈 문자열로 바꿈
   // 나중에 사용자가 비밀번호 변경을 위해 입력했는지 확인하기 위함임.
@@ -522,16 +525,16 @@ async function insertUserData() {
   securityTitle.innerText = `회원정보 관리 (${email})`;
   fullNameInput.value = fullName;
 
-  if (address) {
-    const { postalCode, address1, address2 } = address;
-
-    postalCodeInput.value = postalCode;
-    address1Input.value = address1;
-    address2Input.value = address2;
-  } else {
-    // 나중에 입력 여부를 확인하기 위해 설정함
-    userData.address = { postalCode: "", address1: "", address2: "" };
-  }
+//  if (address) {
+//    const { postalCode, address1, address2 } = address;
+//
+//    postalCodeInput.value = postalCode;
+//    address1Input.value = address1;
+//    address2Input.value = address2;
+//  } else {
+//    // 나중에 입력 여부를 확인하기 위해 설정함
+//    userData.address = { postalCode: "", address1: "", address2: "" };
+//  }
 
   if (phoneNumber) {
     phoneNumberInput.value = phoneNumber;
@@ -552,11 +555,12 @@ function disableForm() {
   birthdateInput.setAttribute("disabled", ""); // 추가
   birthdateToggle.checked = false; // 추가
   passwordConfirmInput.setAttribute("disabled", "");
-  postalCodeInput.setAttribute("disabled", "");
+//  postalCodeInput.setAttribute("disabled", "");
+  addressInput.setAttribute("disabled", "");
   addressToggle.checked = false;
-  searchAddressButton.setAttribute("disabled", "");
-  address1Input.setAttribute("disabled", "");
-  address2Input.setAttribute("disabled", "");
+ // searchAddressButton.setAttribute("disabled", "");
+  //address1Input.setAttribute("disabled", "");
+  //address2Input.setAttribute("disabled", "");
   phoneNumberToggle.checked = false;
   phoneNumberInput.setAttribute("disabled", "");
 }
@@ -606,8 +610,9 @@ async function saveUserData(e) {
   const password = passwordInput.value;
   const passwordConfirm = passwordConfirmInput.value;
   const postalCode = postalCodeInput.value;
-  const address1 = address1Input.value;
-  const address2 = address2Input.value;
+  const address = addressInput.value;
+  //const address1 = address1Input.value;
+  //const address2 = address2Input.value;
   const phoneNumber = phoneNumberInput.value;
   const currentPassword = currentPasswordInput.value;
 
@@ -640,18 +645,21 @@ async function saveUserData(e) {
   }
 
   // 주소를 변경했는데, 덜 입력한 경우
-  if (isAddressChanged && !address2) {
-    closeModal();
-    return alert("주소를 모두 입력해 주세요.");
-  }
-
-  if (isAddressChanged) {
-    data.address = {
-      postalCode,
-      address1,
-      address2,
-    };
-  }
+//  if (isAddressChanged && !address2) {
+//    closeModal();
+//    return alert("주소를 모두 입력해 주세요.");
+//  }
+//    if (address !== userData.address) {
+//        data.address = address;
+//    }
+//  if (isAddressChanged) {
+//    data.address = {
+//      postalCode,
+//      address1,
+//      address2,
+//        address
+//    };
+//  }
 
   if (phoneNumber && phoneNumber !== userData.phoneNumber) {
     data.phoneNumber = phoneNumber;

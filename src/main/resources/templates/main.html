@@ -69,7 +69,7 @@
             <a href="#infants&toddlers">영유아동</a>
             -->
             <div th:each="category : ${categories}">
-                <a th:href="'#' + ${category.name}" th:text="${category.name}"></a>
+                <a th:href="'/' + ${category.name}" th:text="${category.name}"></a>
             </div>
         </div>
     </div>

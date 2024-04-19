@@ -156,7 +156,7 @@
                         <label class="label">생년월일</label>
                         <div class="control">
                             <!--                            <input class="input" id="birthInput" type="date" autocomplete="off" disabled="true"/> -->
-                            <input class="input" id="birthInput" type="text" autocomplete="off" disabled="true" th:value="${session.user.birthdate}"/>
+                            <input class="input" id="birthdateInput" type="text" autocomplete="off" disabled="true" th:value="${session.user.birthdate}"/>
                             <label class="switch">
                                 <input type="checkbox" id="birthdateToggle" />
                                 <span class="slider round"></span>
@@ -175,54 +175,23 @@
                         </div>
                     </div>
                     <div class="field">
-                        <div class="field-label is-normal">
-                            <label class="label label-address" for="addressInput">주소</label>
-                        </div>
-                        <div class="field-body search">
-                            <!--
-                            <div class="field">
-                                <p class="control">
-                                    <input
-                                            class="input"
-                                            id="postalCodeInput"
-                                            type="text"
-                                            placeholder="주소찾기를 클릭해 주세요."
-                                            readonly
-                                    />
-                                </p>
-                            </div>
-
-                            <div>
-                                <button
-                                        class="button is-light is-hovered"
-                                        id="searchAddressButton"
-                                >
-                                    주소찾기
-                                </button>
-                            </div>
-                            -->
-                            <div class="field-body">
-                                <div class="field">
-                                    <p class="control">
-                                        <input
-                                                class="input"
-                                                id="addressInput"
-                                                type="text"
-                                                placeholder=""
-                                                autocomplete="on"
-                                                th:value="${session.user.address}"
-                                        />
-                                    </p>
-                                </div>
-                            </div>
+                        <label class="label" for="addressInput">주소</label>
+                        <div class="control">
+                            <input
+                                    class="input"
+                                    id="addressInput"
+                                    type="text"
+                                    autocomplete="off"
+                                    disabled="true"
+                                    th:value="${session.user.address}"
+                            />
                             <!-- 토클 스위치 -->
-                            <label class="switch switch-address">
+                            <label class="switch">
                                 <input type="checkbox" id="addressToggle" />
                                 <span class="slider round"></span>
                             </label>
                         </div>
                     </div>
-
                     <!--
                     <div class="field">
                         <div class="field-label is-normal no-label"></div>
@@ -268,7 +237,8 @@
                                     id="phoneNumberInput"
                                     type="number"
                                     placeholder="- 없이 입력해 주세요."
-                                    autocomplete="on"
+                                    autocomplete="off"
+                                    disabled="true"
                                     th:value="${session.user.phone}"
                             />
                             <!-- 토클 스위치 -->
