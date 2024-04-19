@@ -6,6 +6,10 @@ import {
   formatPhoneNumber,
 } from "../js/useful-functions.js";
 
+//host
+const host = "http://34.22.75.198:8080";
+// const host = "http://localhost:8080";
+
 // 요소(element), input 혹은 상수
 const subtitleCart = document.querySelector("#subtitleCart");
 const receiverNameInput = document.querySelector("#receiverName");
@@ -105,7 +109,7 @@ function searchAddress() {
 async function insertOrderSummary(userId, orderId) {
   try {
     const endpoint = `orders/pay/user/${userId}/order/${orderId}`;
-    const response = await Api.get("http://localhost:8080", endpoint);
+    const response = await Api.get(host, endpoint);
     const {
       name,
       phone,
@@ -171,12 +175,12 @@ async function doCheckout(userId, orderId) {
       receiverName: receiverName,
       receiverPhoneNumber: formatPhoneNumber(receiverPhoneNumber),
     };
-    await Api.post("http://localhost:8080/orders/pay", data);
+    await Api.post(host + "/orders/pay", data);
 
     alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
     setCookie("userId", userId);
     setCookie("orderId", orderId);
-    redirect("/mypage-order-detail/mypage-order-detail.html");
+    redirect("/order/detail");
   } catch (err) {
     console.log(err);
     alert(`결제 중 문제가 발생하였습니다: ${err.message}`);

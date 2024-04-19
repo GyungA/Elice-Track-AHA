@@ -3,6 +3,9 @@ import { setCookie, getCookie, redirect } from "../js/useful-functions.js";
 // import * as Order from "../order/order.js";
 // import { formatPhoneNumber, searchAddress } from "../order/order.js";
 
+//host
+const host = "http://34.22.75.198:8080";
+
 //결제일
 const payTimeElem = document.querySelector("#payTime");
 
@@ -67,7 +70,7 @@ async function insertOrderDetail(userId, orderId) {
   try {
     //여기서 user id값은 판매자
     const endpoint = `orders/user/${userId}/order/${orderId}?is_seller=true`;
-    const response = await Api.get("http://localhost:8080", endpoint);
+    const response = await Api.get(host, endpoint);
     const {
       id,
       orderDetailInfoDtos,
@@ -215,15 +218,11 @@ async function modifyDelivery(userId, orderId, orderDetailId) {
       orderDetailId: orderDetailId,
       orderStatus: orderStatus,
     };
-    await Api.patch(
-      "http://localhost:8080/admin/orders/modify-status",
-      "",
-      data
-    );
+    await Api.patch(host + "/admin/orders/modify-status", "", data);
     alert("주문 수정이 완료되었습니다.");
 
     //판매자 : 주문 상세로 리다이렉트
-    redirect("/seller-order-detail/seller-order-detail.html");
+    redirect("/seller/order/detail");
   } catch (err) {
     console.log(err);
     alert(`페이지 로드 중 문제가 발생하였습니다: ${err.message}`);

@@ -159,12 +159,13 @@ export let getCookie = function (name) {
 };
 
 export let redirect = function (address) {
-  const hostName = window.location.hostname;
-  let additionalAddr = "";
-  if (hostName === "localhost") {
-    additionalAddr = "/ShoppingProject/src/main/resources";
-  }
-  window.location.href = `${additionalAddr}/static${address}`;
+  // const hostName = window.location.hostname;
+  // let additionalAddr = "";
+  // if (hostName === "localhost") {
+  //   additionalAddr = "/ShoppingProject/src/main/resources";
+  // }
+  // window.location.href = `${additionalAddr}/static${address}`;
+  window.location.href = `${address}`;
 };
 
 export let formatPhoneNumber = function (phoneNumber) {
