@@ -58,9 +58,7 @@ async function addImageToS3(fileInputElement, album) {
     return fileKey;
   } catch (err) {
     throw new Error(
-
       `S3에 업로드하는 과정에서 에러가 발생하였습니다.\n${err.message}`
-
     );
   }
 }

@@ -180,7 +180,7 @@ function searchAddress(e) {
         }
         if (data.buildingName !== "" && data.apartment === "Y") {
           extraAddr +=
-              extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+            extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
         }
         if (extraAddr !== "") {
           extraAddr = " (" + extraAddr + ")";
@@ -212,7 +212,7 @@ async function saveUserData(e) {
   const isPasswordLong = password.length >= 4;
   const isPasswordSame = password === passwordConfirm;
   const isPostalCodeChanged =
-      postalCode !== (userData.address?.postalCode || "");
+    postalCode !== (userData.address?.postalCode || "");
   const isAddress2Changed = address2 !== (userData.address?.address2 || "");
   const isAddressChanged = isPostalCodeChanged || isAddress2Changed;
 
