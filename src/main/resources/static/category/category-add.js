@@ -2,7 +2,7 @@ import * as Api from "../js/api.js";
 import { createNavbar } from "../js/useful-functions.js";
 
 // 요소(element), input 혹은 상수
-const titleInput = document.querySelector("#titleInput");
+const nameInput = document.querySelector("#nameInput");
 const topCategoryBox = document.querySelector("#TopCategoryBox");
 const submitButton = document.querySelector("#addCategoryButton");
 const registerCategoryForm = document.querySelector("#registerCategoryForm");
@@ -47,27 +47,33 @@ selectTopCategories();
 async function handleSubmit(e) {
   e.preventDefault();
 
-  const title = titleInput.value;
+    console.log(nameInput); // 요소 자체를 로그로 확인
+    console.log(nameInput.value); // 입력된 값 확인
+
+  const name = nameInput.value;
   const parentId = TopCategoryBox.value;
 
-  if (!title.trim()) {
+  if (!name.trim()) {
     return alert("카테고리 제목을 입력해 주세요.");
   }
 
-  if (!topCategory) {
+  if (!parentId) {
     return alert("상위 카테고리를 선택해 주세요.");
   }
 
+    const categoryData = { name, parentId };
+
+    console.log(categoryData);
+
   try {
-    const categoryData = { title, parentId};
+      console.log(name, parentId);
 
     await Api.post("http://localhost:8080/categories/api/add", categoryData);
 
-    alert(`정상적으로 ${title} 카테고리가 등록되었습니다.`);
+    alert(`정상적으로 ${name} 카테고리가 등록되었습니다.`);
 
     // 폼 초기화
     registerCategoryForm.reset();
-    fileNameSpan.innerText = "";
 
   } catch (err) {
     console.error(err.stack);

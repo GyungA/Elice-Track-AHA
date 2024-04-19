@@ -4,28 +4,21 @@ import com.secondproject.shoppingproject.category.dto.CategoryDTO;
 import com.secondproject.shoppingproject.category.entity.Category;
 import com.secondproject.shoppingproject.category.repository.CategoryRepository;
 import com.secondproject.shoppingproject.error.CategoryNotFoundException;
-import com.secondproject.shoppingproject.product.entity.Product;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.groupingBy;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
+
     private final CategoryRepository categoryRepository;
 
-//    public List<CategoryDTO> getParentCategories() {
-//        return categoryRepository.findParentCategories().stream()
-//                .map(this::convertToDTO)
-//                .collect(Collectors.toList());
-//    }
+
 
     public Long findCategoryId(String name) {
         return categoryRepository.findCategoryIdByName(name);
@@ -71,13 +64,6 @@ public class CategoryService {
         return new CategoryDTO(savedCategory.getCategoryId(), savedCategory.getName(), savedCategory.getParentId());
     }
 
-//    public CategoryDTO getById(Long categoryId) {
-//        List<CategoryDTO> categoryDTOS = categoryRepository.findCa
-//
-//        categoryDTO = categoryRepository.
-//
-//        return ;
-//    }
 
     public CategoryDTO getCategoryById(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)

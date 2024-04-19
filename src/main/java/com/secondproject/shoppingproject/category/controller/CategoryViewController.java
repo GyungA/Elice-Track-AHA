@@ -64,6 +64,11 @@ public class CategoryViewController {
         return "category-product/productByCategory"; // 뷰 이름 반환
     }
 
+    @GetMapping("/add")
+    public String addCategory() {
+        return "category-add";
+    }
+
 
 
 }
