@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopping Mall</title>
+    <!-- bulma css 관련 -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+            defer
+            src="https://kit.fontawesome.com/9daa42bcef.js"
+            crossorigin="anonymous"
+    ></script>
+    <!-- Daum 주소 API 사용하기 위한 파일 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 커스텀 css, js -->
+<!--    <link rel="stylesheet" th:href="@{/css/header.css}" />-->
+<!--    <link rel="stylesheet" th:href="@{/css/navigation.css}" />-->
+<!--    <link rel="stylesheet" th:href="@{/css/footer.css}" />-->
+<!--    <link rel="stylesheet" th:href="@{/order/order.css}" />-->
+
+    <link rel="stylesheet" href="../static/css/header.css" />
+    <link rel="stylesheet" href="../static/css/footer.css" />
+    <link rel="stylesheet" href="../static/css/navigation.css" />
+    <link rel="stylesheet" href="../static/order/order.css" />
+    <script src="../static/order/order.js" type="module" defer></script>
+    <script src="../static/js/navbar-category.js" type="module" defer></script>
+</head>
+
+
+  <header id="header-component">
+    <div class="header-container">
+        <div class="header-logo">
+            <a href="#">
+                <img class="header-title-image" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" alt="아하">
+            </a>
+        </div>
+        <div class="header-nav-list">
+            <div class="header-search">
+                <div class="header-search-light">
+                    <img class="icon search-light" src="https://i.ibb.co/yf6Xpw4/search-light.png" alt=""/>
+                </div>
+                <label>
+                    <input class="header-search-input-placeholder" placeholder="search">
+                </label>
+            </div>
+
+            <div class="header-nav-login-button">
+            <span class="header-nav-login-button-text">
+                로그인
+            </span>
+            </div>
+            <div class="header-nav-signup-button">
+            <span class="header-nav-signup-button-text">
+                회원가입
+            </span>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="custom-navbar">
+    <div class="custom-dropdown">
+        <button class="dropbtn">전체 카테고리</button>
+        <div class="custom-dropdown-content" id="navbar-category">
+            <!--a 태그 대신 DB에서 상위 카테고리 불러오기-->
+        </div>
+    </div>
+    <div class="menu" id="navbar-menu">
+        <a href="#home">홈</a>
+        <a href="#new-arrivals">최신작품</a>
+        <a href="#Realtime-purchase">실시간구매</a>
+        <a href="#Realtime-review">실시간후기</a>
+        <a href="#bestproduct">인기작품</a>
+        <a href="#authorfeed">작가피드</a>
+        <a href="#authorfeed">매거진</a>
+        <a href="#authorfeed">최신 작품</a>
+        <a href="#authorfeed">소담상회</a>
+    </div>
+
+</div>
+
+
+  <!-- 배송지 정보 입력 박스 -->
+    <section class="section">
+      <div class="container">
+        <div class="cart-header">
+          <div class="subtitle subtitle-cart" id="subtitleCart">
+            <p class="is-size-6">장바구니 &nbsp; &gt;</p>
+          </div>
+          <div class="title">
+            <p class="is-size-2">주문결제</p>
+          </div>
+          <div class="subtitle">
+            <p class="is-size-6">&gt; &nbsp;주문완료</p>
+          </div>
+        </div>
+
+        <div class="tile outer-box">
+          <div class="inner-box">
+            <p class="subtitle is-4">결제자 정보</p>
+            <div class="buyer-info">
+              <div class="info">
+                <p>구매자명: </p>
+                <p class="buyer" id="buyerName"></p>
+              </div>
+              <div class="info">
+                <p>연락처:</p>
+                <p class="buyer" id="buyerPhone"></p>
+              </div>
+              <div class="info">
+                <p>이메일: </p>
+                <p class="buyer" id="buyerEmail"></p>
+              </div>
+              <div class="info">
+                <p>회원 등급: </p>
+                <p class="buyer" id="buyerGrade"></p>
+              </div>
+              <div class="info">
+                <p>회원 주소: </p>
+                <p class="buyer" id="buyerAddress"></p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="tile is-ancestor">
+          <div class="tile is-parent cart-products">
+            <div class="box delivery-info">
+              <!-- 배송지 정보 -->
+              <p class="subtitle is-4">배송지정보</p>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label" for="receiverName">이름</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control">
+                      <input
+                        class="input"
+                        id="receiverName"
+                        type="text"
+                        placeholder="받는 분 이름을 입력해 주세요."
+                        autocomplete="on"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label" for="receiverPhoneNumber">연락처</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control">
+                      <input
+                        class="input"
+                        id="receiverPhoneNumber"
+                        type="number"
+                        placeholder="- 없이 입력해 주세요."
+                        autocomplete="on"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label" for="address2">주소</label>
+                </div>
+                <div class="field-body search">
+                  <div class="field">
+                    <p class="control">
+                      <input
+                        class="input"
+                        id="postalCode"
+                        type="text"
+                        placeholder="주소찾기를 클릭해 주세요."
+                        readonly
+                      />
+                    </p>
+                  </div>
+                  <div>
+                    <button
+                      class="button is-light is-hovered"
+                      id="searchAddressButton"
+                    >
+                      주소찾기
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-horizontal">
+                <div class="field-label is-normal no-label"></div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control">
+                      <input
+                        class="input"
+                        id="address1"
+                        type="text"
+                        placeholder=""
+                        autocomplete="on"
+                        readonly
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-horizontal">
+                <div class="field-label is-normal no-label"></div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control">
+                      <input
+                        class="input"
+                        id="address2"
+                        type="text"
+                        placeholder=""
+                        autocomplete="on"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label" for="requestSelectBox">요청사항</label>
+                </div>
+                <div class="field-body">
+                  <div class="select">
+                    <select id="requestSelectBox">
+                      <option value="0">
+                        배송시 요청사항을 선택해 주세요.
+                      </option>
+                      <option value="1" class="select-option">
+                        직접 수령하겠습니다.
+                      </option>
+                      <option value="2" class="select-option">
+                        배송 전 연락바랍니다.
+                      </option>
+                      <option value="3" class="select-option">
+                        부재 시 경비실에 맡겨주세요.
+                      </option>
+                      <option value="4" class="select-option">
+                        부재 시 문 앞에 놓아주세요.
+                      </option>
+                      <option value="5" class="select-option">
+                        부재 시 택배함에 넣어주세요.
+                      </option>
+                      <option value="6" class="select-option">직접 입력</option>
+                    </select>
+                  </div>
+                </div>
+              </div> -->
+
+              <div
+                class="field is-horizontal custom-request"
+                id="customRequestContainer"
+              >
+                <div class="field-label is-normal no-label"></div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control">
+                      <input
+                        class="input"
+                        id="customRequest"
+                        type="text"
+                        maxlength="50"
+                        placeholder="최대 50자 입력이 가능합니다."
+                        autocomplete="on"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 주문 정보 요약 -->
+          <div class="tile is-parent tile-order-summary">
+            <div class="box order-summary">
+              <div class="header">
+                <p>결제정보</p>
+              </div>
+              <div class="order-info">
+                <div class="info">
+                  <p>주문상품</p>
+                  <!-- <div class="one-product"> -->
+                    <p class="products-title" id="productsTitle"></p>
+                    <p class="products-amount" id="productsAmount"></p>
+                    <p class="products-payment" id="productsPayment"></p>
+                  <!-- </div> -->
+                </div>
+                <div class="info">
+                  <p>상품총액</p>
+                  <p id="productsTotal"></p>
+                </div>
+                <!-- <div class="info">
+                  <p>배송비</p>
+                  <p id="deliveryFee"></p>
+                </div> -->
+              </div>
+              <div class="total">
+                <p class="total-label">총 결제금액</p>
+                <p class="total-price" id="orderTotal"></p>
+              </div>
+              <div class="purchase">
+
+                <button class="button is-custom" id="checkoutButton" style="background-color: #5D5A88; color: #FFFFFF; ">
+                  결제하기
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="footer-navigation body3-regular-medium text-center">
+          <div>이용약관</div>
+          <div class="bar">|</div>
+          <div class="body3-bold-medium" rel="nosublink">개인정보 처리방침</div>
+          <div class="bar">|</div>
+          <div>공지사항</div>
+          <div class="bar">|</div>
+          <div>자주묻는 질문</div>
+          <div class="bar">|</div>
+          <div>이벤트</div>
+          <div class="bar">|</div>
+          <div>입점문의</div>
+          <div class="bar">|</div>
+          <div>about idea house</div>
+          <div class="bar">|</div>
+          <div>인재영입</div>
+      </div>
+      <div class="footer-container">
+          <div class="full">
+              <div class="body3-regular-medium text-left">
+                  <div class="float-left">
+                      <img class="baseLogo" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" style="height: 42px; width: 100px;"/>
+                  </div>
+                  <div class="float-left" style="width: 450px;">
+                      <div class="mb-[8px] body3-bold-medium">(주) 아이디어하우스</div>
+                      <div data-v-f1827758="">대표이사 : 빌게이츠</div>
+                      <div data-v-f1827758="">서울특별시 성동구 아차산로17길 48 성수낙낙 C동 2층 엘리스Lab 성수점</div>
+                      <div data-v-f1827758="">사업자 등록번호 : 123-45-67890</div>
+                      <div data-v-f1827758="">통신판매업신고 : 2024-서울성수-1234호</div>
+                      <div data-v-f1827758="">호스팅서비스 제공자 : AWS WEB Service, Inc</div>
+                      <div class="caption2-regular-medium mt-[8px] tracking-tight">아이디어하우스는 통신판매중개자이며 통신판매의 당사자가 아닙니다. <br data-v-f1827758=""> 따라서 아이디어하우스는 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.</div>
+                      <div class="mt-[8px] caption2-regular-medium" data-v-f1827758="">Copyright ©Ideahouse Inc. all rights reserved.</div>
+                  </div>
+                  <div class="float-middle" style="width: 240px;">
+                      <div>
+                          <div class>
+                              <span class="body3-bold-medium">고객센터</span>
+                              <span class="caption2-regular-medium"> (평일 오전 10시 ~ 오후 6시) </span>
+                          </div>
+                          <div class>
+                              <a href="https://bit.ly/3IDiamS"></a>
+                          </div>
+                          <div class="footer-button">
+                              <button type="outline" class="CoreButton">
+                                  <span>단체선물 문의</span>
+                              </button>
+                              <button type="outline" class="CoreButton">
+                                  <span>아이디어하우스 채팅 상담</span>
+                              </button>
+                          </div>
+                          <div class="grid-container">
+                              <div class="grid-item">
+                                  <div>대표번호</div>
+                                  <div>1668-1234</div>
+                              </div>
+                              <div class="grid-item">
+                                  <div>제휴문의</div>
+                                  <div>aha@ideahouse.kr</div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div clas="float-right">
+                      <div class="float-right">
+                          <div class="right-title">Follow Us</div>
+                          <div class="TheFooter__snsLink">
+                              <a href="https://www.facebook.com" class="TheFooter__snsLink_facebook">
+                                  <img src="https://i.ibb.co/Q6q1JL6/image.png" alt="Facebook">
+                              </a>
+                              <a href="https://www.instagram.com" class="TheFooter__snsLink_instagram">
+                                  <img src="https://i.ibb.co/KzPgnvr/1.png" alt="1">
+                              </a>
+                              <a href="https://blog.naver.com" class="TheFooter__snsLink_naverBlog">
+                                  <img src="https://i.ibb.co/98r3RVb/2.png" alt="2">
+                              </a>
+                              <a href="https://post.naver.com" class="TheFooter__snsLink_naverPost">
+                                  <img src="https://i.ibb.co/vLXD634/3.png" alt="3">
+                              </a>
+                              <a href="https://twitter.com" class="TheFooter__snsLink_twitter">
+                                  <img src="https://i.ibb.co/Wts8MrJ/4.png" alt="4">
+                              </a>
+                          </div>
+                          <div class="TheFooter__award" style="width: 76px;">
+                              <div class="TheFooter__award1">
+                                  <img src="https://i.ibb.co/fFHCHkq/1-removebg-preview.png" alt="5" style="width: 106px; height: 60px;">
+                              </div>
+                              <div class="TheFooter__award2">
+                                  <img src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png"  alt="6" style="width: 76px; height: 60px;">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+</body>
+</html>

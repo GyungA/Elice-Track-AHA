@@ -1,32 +1,42 @@
 package com.secondproject.shoppingproject.category.controller;
 
+import com.secondproject.shoppingproject.category.dto.CategoryDTO;
 import com.secondproject.shoppingproject.category.service.CategoryService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
-@Controller
+
+@RestController
+@RequiredArgsConstructor
 @RequestMapping("/categories")
 public class CategoryController {
+
     private final CategoryService categoryService;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
+    // 상위 카테고리 조회
+    @GetMapping("/top-level")
+    public ResponseEntity<List<CategoryDTO>> getTopLevelCategories() {
+        List<CategoryDTO> topLevelCategories = categoryService.getTopLevelCategories();
+        return ResponseEntity.ok(topLevelCategories);
     }
 
+    @GetMapping("/{parentId}/subcategories")
+    public ResponseEntity<List<CategoryDTO>> getSubCategories(@PathVariable("parentId") Long parentId) {
+        List<CategoryDTO> subCategories = categoryService.getAllByParentId(parentId);
+        return ResponseEntity.ok(subCategories);
 
-    @GetMapping
-    public String showTopLevelCategories(Model model) {
-        model.addAttribute("categories", categoryService.getAllTopLevelCategories());
-        return "topLevelCategories";
     }
 
-    @GetMapping("/{parentId}")
-    public String showSubCategories(@PathVariable("parentId") Long parentId, Model model) {
-        model.addAttribute("categories", categoryService.getAllSubCategories(parentId));
-        return "subCategories";
+    // 카테고리 추가
+    @PostMapping("/api/add")
+    public ResponseEntity<CategoryDTO> addCateogory(@RequestBody CategoryDTO categoryDTO) {
+        CategoryDTO savedCategory = categoryService.addCategory(categoryDTO);
+        return ResponseEntity.ok(savedCategory);
     }
+
 
 }
 
