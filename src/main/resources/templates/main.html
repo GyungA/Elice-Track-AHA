@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Mall Homepage</title>
-    <link rel="stylesheet" href="/static/css/header.css" />
-    <link rel="stylesheet" href="/static/css/navigation.css" />
-    <link rel="stylesheet" href="/static/css/footer.css" />
-    <link rel="stylesheet" href="/static/main/main.css"/>
+    <link rel="stylesheet" href="../static/css/header.css" />
+    <link rel="stylesheet" href="../static/css/navigation.css" />
+    <link rel="stylesheet" href="../../../../../../First_project_StudyPlanner/StudyPlanner/src/main/resources/static/css/footer.css" />
+    <link rel="stylesheet" href="../static/main/main.css"/>
     <script src="../static/js/navbar-category.js" type="module" defer></script>
 </head>
 <body>
@@ -17,7 +17,7 @@
 <header id="header-component">
     <div class="header-container">
         <div class="header-logo">
-            <a href="/home">
+            <a href="#">
                 <img class="header-title-image" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" alt="아하">
             </a>
         </div>
@@ -30,27 +30,16 @@
                     <input class="header-search-input-placeholder" placeholder="search">
                 </label>
             </div>
-            <div th:if="${session.user}">
-                <span class="header-nav-username" th:text="${session.user.name} + ' 님'"></span>
+
+            <div class="header-nav-login-button">
+            <span class="header-nav-login-button-text">
+                로그인
+            </span>
             </div>
-            <div th:if="${session.user}" class="header-nav-logout-button">
-                <form action="/signOut" method="post">
-                    <button type="submit" class="header-nav-logout-button-text">로그아웃</button>
-                </form>
-            </div>
-            <div th:if="${session.user}" class="header-nav-user-info">
-                <!--                <button type="button" class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</button> -->
-                <span class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</span>
-            </div>
-            <div th:unless="${session.user}" class="header-nav-login-button">
-                <span class="header-nav-login-button-text" onclick="window.location.href='/signIn'">
-                    로그인
-                </span>
-            </div>
-            <div th:unless="${session.user}" class="header-nav-signup-button">
-                <span class="header-nav-signup-button-text" onclick="window.location.href='/signUp'">
-                    회원가입
-                </span>
+            <div class="header-nav-signup-button">
+            <span class="header-nav-signup-button-text">
+                회원가입
+            </span>
             </div>
         </div>
     </div>
@@ -58,53 +47,28 @@
 <div class="custom-navbar">
     <div class="custom-dropdown">
         <button class="dropbtn">전체 카테고리</button>
-        <div class="custom-dropdown-content">
-            <!--
-            <a href="#electronics">식품</a>
-            <a href="#jewelry&fashion">주얼리/패션</a>
-            <a href="#home&living">홈리빙</a>
-            <a href="#case&stationery">케이스/문구</a>
-            <a href="#beauty">뷰티</a>
-            <a href="#animal">반려동물</a>
-            <a href="#crafts">공예</a>
-            <a href="#infants&toddlers">영유아동</a>
-            -->
-            <div th:each="category : ${categories}">
-                <a th:href="'/' + ${category.name}" th:text="${category.name}"></a>
-            </div>
+        <div class="custom-dropdown-content" id="navbar-category">
+            <!--a 태그 대신 DB에서 상위 카테고리 불러오기-->
         </div>
     </div>
-    <a href="/home">홈</a>
-    <a href="#new-arrivals">최신작품</a>
-    <a href="#Realtime-purchase">실시간구매</a>
-    <a href="#Realtime-review">실시간후기</a>
-    <a href="#bestproduct">인기작품</a>
-    <a href="#authorfeed">작가피드</a>
-    <a href="#authorfeed">매거진</a>
-    <a href="#authorfeed">최신 작품</a>
-    <a href="#authorfeed">소담상회</a>
+    <div class="menu" id="navbar-menu">
+        <a href="#home">홈</a>
+        <a href="#new-arrivals">최신작품</a>
+        <a href="#Realtime-purchase">실시간구매</a>
+        <a href="#Realtime-review">실시간후기</a>
+        <a href="#bestproduct">인기작품</a>
+        <a href="#authorfeed">작가피드</a>
+        <a href="#authorfeed">매거진</a>
+        <a href="#authorfeed">최신 작품</a>
+        <a href="#authorfeed">소담상회</a>
+    </div>
 
 </div>
-
 
 <div class="banner">
     아이디어 하우스에 오신 것을 환영합니다.
 </div>
 
-<div class="product-grid">
-    <div th:each="product : ${products}" class="product">
-        <a th:href="@{/product/{id}(id=${product.id})}" style="text-decoration: none;">
-            <div class="product-name" th:text="${product.name}">Product Name</div>
-            <div class="product-price" th:text="${product.price} + '원'">0원</div>
-            <div class="product-description" th:text="${product.description}">Product Description</div>
-            <div class="product-stock" th:text="'잔고 : ' + ${product.current_stock}">Stock</div>
-            <!-- Add more product details as needed -->
-        </a>
-    </div>
-</div>
-
-
-<!--
 <div class="product-grid">
     <div class="product">
         <img src="https://img.etoday.co.kr/pto_db/2023/08/600/20230825064547_1920136_1000_1332.jpg" alt="Product 1">

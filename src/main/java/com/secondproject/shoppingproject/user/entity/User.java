@@ -31,7 +31,7 @@ public class User extends BaseEntity {
 	String email;
 
 	@Column(name = "password", nullable = false)
-//	@Size(min = 8, max = 20)
+	@Size(min = 8, max = 20)
 	String password;
 
 	@Column(name = "name", nullable = false)
@@ -65,13 +65,13 @@ public class User extends BaseEntity {
 //    @JsonIgnore
 //    List<Cart> carts = new ArrayList<>();
 //
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    List<Product> products = new ArrayList<>();
+//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnore
+//    List<Product> products = new ArrayList<>();
 
 	@Builder
 	public User(String email, String password, String name, String birthdate, boolean status,
-				String address, String phone, Grade grade, Role role) {
+			String address, String phone, Grade grade, Role role) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
@@ -85,7 +85,7 @@ public class User extends BaseEntity {
 
 	@Builder
 	public User(String email, String password, String name, String birthdate, boolean status,
-				String address, String phone) {
+			String address, String phone) {
 		this.email = email;
 		this.password = password;
 		this.name = name;

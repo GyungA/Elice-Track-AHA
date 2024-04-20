@@ -13,6 +13,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,21 +34,21 @@ public class OrderController {
      *
      * @param userId 자기자신의 user id
      */
-//    @Operation(summary = "모든 주문 내역 조회", description = "자신의 모든 주문 내역을 조회합니다.")
-//    @Parameter(name = "userId", description = "주문 내역을 조회할 유저의 아이디")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "성공",
-//                    content = {
-//                            @Content(mediaType = "application/json",
-//                                    array = @ArraySchema(schema = @Schema(implementation = OrderHistoryResponseDto.class)))
-//                    }),
-//            @ApiResponse(responseCode = "404", description = "해당 ID의 유저가 존재하지 않습니다."),
-//    })
-//    @GetMapping("/user/{user_id}")
-//    public ResponseEntity<Page<OrderHistoryResponseDto>> getMyOrder(@PathVariable("user_id") Long userId,
-//                                                                    @PageableDefault(page = 0, size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-//        return ResponseEntity.ok(orderService.getMyOrder(userId, pageable));
-//    }
+    @Operation(summary = "모든 주문 내역 조회", description = "자신의 모든 주문 내역을 조회합니다.")
+    @Parameter(name = "userId", description = "주문 내역을 조회할 유저의 아이디")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = OrderHistoryResponseDto.class)))
+                    }),
+            @ApiResponse(responseCode = "404", description = "해당 ID의 유저가 존재하지 않습니다."),
+    })
+    @GetMapping("/user/{user_id}")
+    public ResponseEntity<Page<OrderHistoryResponseDto>> getMyOrder(@PathVariable("user_id") Long userId,
+                                                                    @PageableDefault(page = 0, size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(orderService.getMyOrder(userId, pageable));
+    }
 
     /**
      * 자신의 주문 내역 중, 하나를 상세 조회

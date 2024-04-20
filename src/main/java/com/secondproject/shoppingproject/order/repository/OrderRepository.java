@@ -14,13 +14,13 @@ import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    //    List<Order> findByUserOrderByCreatedAtDesc(User user);
+//    List<Order> findByUserOrderByCreatedAtDesc(User user);
     @Query("SELECT o FROM Order o " +
             "WHERE o.user = :user " +
             "ORDER BY o.createdAt DESC")
     Page<Order> findByUserOrderByCreatedAtDesc(@Param("user") User user, Pageable pageable); //TODO: "주문 중" 상태 제외
 
-    //    Optional<Order> findByIdAndUserid(Long orderId, Long userId);
+//    Optional<Order> findByIdAndUserid(Long orderId, Long userId);
     @Query("SELECT o FROM Order o " +
             "WHERE o.user.user_id = :userId AND o.id = :orderId")
     Optional<Order> findByUserIdAndOrderId(@Param("userId") Long userId, @Param("orderId") Long orderId);
