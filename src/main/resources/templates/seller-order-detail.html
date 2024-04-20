@@ -21,8 +21,10 @@
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="../static/css/header.css" />
     <link rel="stylesheet" href="../static/css/footer.css" />
+    <link rel="stylesheet" href="../static/css/navigation.css" />
     <link rel="stylesheet" href="../static/seller-order-detail/seller-order-detail.css" />
     <script src="../static/seller-order-detail/seller-order-detail.js" type="module" defer></script>
+    <script src="../static/js/navbar-category.js" type="module" defer></script>
   </head>
   <body>
     <div class="modal-nomal modal">
@@ -90,6 +92,26 @@
         </div>
       </div>
     </header>
+    <div class="custom-navbar">
+      <div class="custom-dropdown">
+        <button class="dropbtn">전체 카테고리</button>
+        <div class="custom-dropdown-content" id="navbar-category">
+          <!--a 태그 대신 DB에서 상위 카테고리 불러오기-->
+        </div>
+      </div>
+      <div class="menu" id="navbar-menu">
+        <a href="#home">홈</a>
+        <a href="#new-arrivals">최신작품</a>
+        <a href="#Realtime-purchase">실시간구매</a>
+        <a href="#Realtime-review">실시간후기</a>
+        <a href="#bestproduct">인기작품</a>
+        <a href="#authorfeed">작가피드</a>
+        <a href="#authorfeed">매거진</a>
+        <a href="#authorfeed">최신 작품</a>
+        <a href="#authorfeed">소담상회</a>
+      </div>
+
+    </div>
 
     <!-- 주문 상세 내용 -->
     <section class="section">
