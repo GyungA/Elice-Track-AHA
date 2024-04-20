@@ -5,24 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>계정 관리</title>
 
-  <!-- bulma css -->
-  <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-  />
-  <!-- 폰트 어썸: 아이콘 -->
-  <script
-          defer
-          src="https://kit.fontawesome.com/9daa42bcef.js"
-          crossorigin="anonymous"
-  ></script>
-  <!-- 커스텀 css, js -->
-  <link rel="stylesheet" href="../static/account/account.css" />
-  <link rel="stylesheet" href="../static/css/header.css" />
-  <link rel="stylesheet" href="../../../../../../First_project_StudyPlanner/StudyPlanner/src/main/resources/static/css/footer.css" />
-  <link rel="stylesheet" href="../static/css/navigation.css" />
-  <script src="/account/account.js" type="module" defer></script>
-  <script src="../static/js/navbar-category.js" type="module" defer></script>
+    <!-- bulma css -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+            defer
+            src="https://kit.fontawesome.com/9daa42bcef.js"
+            crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/static/account/account.css" />
+    <link rel="stylesheet" href="/static/css/header.css" />
+    <link rel="stylesheet" href="/static/css/footer.css" />
+    <link rel="stylesheet" href="/static/css/navigation.css" />
+    <script src="/static/account/account.js" type="module" defer></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -40,34 +39,45 @@
 </head>
 <body>
 <header id="header-component">
-  <div class="header-container">
-    <div class="header-logo">
-      <a href="#">
-        <img class="header-title-image" src="https://i.ibb.co/N20ZLds/logo.jpg" alt="아하">
-      </a>
-    </div>
-    <div class="header-nav-list">
-      <div class="header-search">
-        <div class="header-search-light">
-          <img class="icon search-light" src="https://i.ibb.co/yf6Xpw4/search-light.png" alt=""/>
+    <div class="header-container">
+        <div class="header-logo">
+            <a href="/home">
+                <img class="header-title-image" src="https://i.ibb.co/N20ZLds/logo.jpg" alt="아하">
+            </a>
         </div>
-        <label>
-          <input class="header-search-input-placeholder" placeholder="search">
-        </label>
-      </div>
-
-      <div class="header-nav-login-button">
-            <span class="header-nav-login-button-text">
-                로그인
-            </span>
-      </div>
-      <div class="header-nav-signup-button">
-            <span class="header-nav-signup-button-text">
-                회원가입
-            </span>
-      </div>
+        <div class="header-nav-list">
+            <div class="header-search">
+                <div class="header-search-light">
+                    <img class="icon search-light" src="https://i.ibb.co/yf6Xpw4/search-light.png" alt=""/>
+                </div>
+                <label>
+                    <input class="header-search-input-placeholder" placeholder="search">
+                </label>
+            </div>
+            <div th:if="${session.user}">
+                <span class="header-nav-username" th:text="${session.user.name} + ' 님'"></span>
+            </div>
+            <div th:if="${session.user}" class="header-nav-logout-button">
+                <form action="/signOut" method="post">
+                    <button type="submit" class="header-nav-logout-button-text">로그아웃</button>
+                </form>
+            </div>
+            <div th:if="${session.user}" class="header-nav-user-info">
+                <!--                <button type="button" class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</button> -->
+                <span class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</span>
+            </div>
+            <div th:unless="${session.user}" class="header-nav-login-button">
+                <span class="header-nav-login-button-text" onclick="window.location.href='/signIn'">
+                    로그인
+                </span>
+            </div>
+            <div th:unless="${session.user}" class="header-nav-signup-button">
+                <span class="header-nav-signup-button-text" onclick="window.location.href='/signUp'">
+                    회원가입
+                </span>
+            </div>
+        </div>
     </div>
-  </div>
 </header>
 <div class="custom-navbar">
   <div class="custom-dropdown">
@@ -91,42 +101,42 @@
 </div>
 <!-- 계정관리 관련 목록 -->
 <section class="section">
-  <div class="container">
-    <div class="block account-header">
-      <h1 class="title">계정관리</h1>
-    </div>
-    <div class="menu-container">
-      <!-- 주문조회 -->
-      <a class="menu-card" href="/account/orders">
-        <div class="menu-icon">
+    <div class="container">
+        <div class="block account-header">
+            <h1 class="title">계정관리</h1>
+        </div>
+        <div class="menu-container">
+            <!-- 주문조회 -->
+            <a class="menu-card" href="/account/orders">
+                <div class="menu-icon">
               <span class="icon has-text-info">
                 <i class="fa-solid fa-credit-card"></i>
               </span>
-        </div>
-        <div class="menu-body">
-          <p class="title is-3">주문조회</p>
-          <p class="subtitle is-5">
-            지난 주문 내역을 확인, 취소할 수 있습니다.
-          </p>
-        </div>
-      </a>
+                </div>
+                <div class="menu-body">
+                    <p class="title is-3">주문조회</p>
+                    <p class="subtitle is-5">
+                        지난 주문 내역을 확인, 취소할 수 있습니다.
+                    </p>
+                </div>
+            </a>
 
-      <!-- 회원정보 관리 -->
-      <a class="menu-card" href="/account/security">
-        <div class="menu-icon">
+            <!-- 회원정보 관리 -->
+            <a class="menu-card" href="/account/security">
+                <div class="menu-icon">
               <span class="icon has-text-info">
                 <i class="fa-solid fa-user-gear"></i>
               </span>
-        </div>
-        <div class="menu-body">
-          <p class="title is-3">회원정보 관리</p>
-          <p class="subtitle is-5">회원 정보를 확인, 수정할 수 있습니다.</p>
-        </div>
-      </a>
+                </div>
+                <div class="menu-body">
+                    <p class="title is-3">회원정보 관리</p>
+                    <p class="subtitle is-5">회원 정보를 확인, 수정할 수 있습니다.</p>
+                </div>
+            </a>
 
-      <!-- 제품 추가하기 -->
-      <a class="menu-card" href="/product/add">
-        <div class="menu-icon">
+            <!-- 제품 추가하기 -->
+            <a class="menu-card" href="/product/add">
+                <div class="menu-icon">
               <span class="icon has-text-info">
                 <i class="fa-solid fa-won-sign"></i>
               </span>

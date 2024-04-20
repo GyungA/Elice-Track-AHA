@@ -32,7 +32,7 @@ public class WebSecurityConfig{
 
                         "/**" //TODO: 나중에 시큐리티 기능 완성하면 없애기
                 );
-/* 정적 리소스 확인 시 위의 requestMatchers 대신 아래의 코드 적용 */
+        /* 정적 리소스 확인 시 위의 requestMatchers 대신 아래의 코드 적용 */
 //        return (web) -> web.ignoring()
 //                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }

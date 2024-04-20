@@ -34,11 +34,11 @@ public class UserService {
             user.setPassword(signUpRequest.getPassword());
             user.setName(signUpRequest.getName());
             user.setBirthdate(signUpRequest.getBirthdate());
-          //  user.setGrade(signUpDto.getGrade());
+            //  user.setGrade(signUpDto.getGrade());
 //            user.setStatus(signUpRequest.isStatus());
             user.setAddress(signUpRequest.getAddress());
             user.setPhone(signUpRequest.getPhone());
-           // user.setRole(signUpDto.getRole());
+            // user.setRole(signUpDto.getRole());
             return userRepository.save(user);
         }
         return null;

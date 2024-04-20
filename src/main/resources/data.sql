@@ -86,3 +86,16 @@ VALUES (9, 18000, 'Knotted Doughnut Set', '6가지 도넛으로 구성', true, 1
 
 INSERT INTO product (category_id, price, name, description, status, current_stock, seller_id, image, create_at)
 VALUES (16, 300000, 'JoMalone ', 'For Man 23 F/W', true, 50, 1, 'image_url_here', '2023-02-11');
+
+INSERT INTO product (category_id, price, name, description, status, current_stock, seller_id, image, create_at)
+VALUES (25, 5000, '목줄(강아지 용)', '1m 목줄 (추천 : 생후 1년 이하 견종)', true, 15, 2, 'image_url_here', '2021-01-08');
+
+
+INSERT INTO product (category_id, price, name, description, status, current_stock, seller_id, image, create_at)
+VALUES (29, 45000, 'Spao Kid Outer', '22 SS 재고 떨이(싸게 가져가세요)', true, 20, 1, 'image_url_here', '2022-11-24');
+
+INSERT INTO product (category_id, price, name, description, status, current_stock, seller_id, image, create_at)
+VALUES (28, 15000, 'Hand-Made Candle', '자신만의 Candle을 만들어보세요', true, 100, 1, 'image_url_here', '2023-12-01');
+
+INSERT INTO product (category_id, price, name, description, status, current_stock, seller_id, image, create_at)
+VALUES (17, 50000, 'Willson Tennis Racket', 'Racket that Nadal uses', true, 25, 2, 'image_url_here', '2023-03-08');

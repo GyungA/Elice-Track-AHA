@@ -18,3 +18,27 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+-- Category
+CREATE TABLE IF NOT EXISTS category (
+    category_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    parent_id BIGINT,
+    FOREIGN KEY (parentId) REFERENCES category(category_id)
+);
+
+-- Product
+CREATE TABLE IF NOT EXISTS product (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    category_id BIGINT,
+    price INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    status BOOLEAN NOT NULL,
+    current_stock INT NOT NULL,
+    seller_id BIGINT,
+    image VARCHAR(255),
+    create_at DATE,
+    FOREIGN KEY (category_id) REFERENCES category(category_key),
+    FOREIGN KEY (seller_id) REFERENCES user(user_id)
+);
