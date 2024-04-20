@@ -42,7 +42,7 @@ public class Order extends BaseEntity {
 
     @Builder
     public Order(User user, /*String deliveryAddress, OrderStatus orderStatus,*/
-            /*String receiverName, String receiverPhoneNumber, */int totalPayment) {
+                 /*String receiverName, String receiverPhoneNumber, */int totalPayment) {
         this.user = user;
 //        this.deliveryAddress = deliveryAddress;
 //        this.orderStatus = orderStatus;

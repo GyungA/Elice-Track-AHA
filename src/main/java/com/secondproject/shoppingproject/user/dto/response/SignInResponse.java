@@ -15,20 +15,12 @@ public class SignInResponse extends ResponseDto {
     private int expirationTime;
 
     //TODO : token 받아서 주입, expiration Time 논의해서 설정 아마 30분 또는 1시간
-//    private SignInResponse() {
-//        super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-//    }
-    private SignInResponse(String token, int expirationTime) {
+    private SignInResponse() {
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-        this.token = token;
-        this.expirationTime = expirationTime;
     }
-    //    public static ResponseEntity<SignInResponse> success(String token) {
-//        SignInResponse result = new SignInResponse(token, 60*60*1000);
-//        return ResponseEntity.ok().body(result);
-//    }
-    public static ResponseEntity<SignInResponse> success(String token, int expirationTime) {
-        SignInResponse result = new SignInResponse(token, expirationTime);
+
+    public static ResponseEntity<SignInResponse> success(String token) {
+        SignInResponse result = new SignInResponse();
         return ResponseEntity.ok().body(result);
     }
 

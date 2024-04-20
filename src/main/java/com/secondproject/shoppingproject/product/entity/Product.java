@@ -2,6 +2,7 @@ package com.secondproject.shoppingproject.product.entity;
 
 
 import com.secondproject.shoppingproject.category.entity.Category;
+import com.secondproject.shoppingproject.global.entity.BaseEntity;
 import com.secondproject.shoppingproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,20 +12,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     private int price; //가격
     private String name; //상품명
@@ -35,11 +37,6 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seller_id")
     private User seller; // 판매자 아이디
-
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id")
-    private Category category;
 
     private String image; // 상품 이미지
 
@@ -53,14 +50,13 @@ public class Product {
     }
 
     @Builder
-    public Product(int price, String name, String description, boolean status, int current_stock, User seller, Category category, String image) {
-        this.price=price;
-        this.name=name;
-        this.description=description;
-        this.status=status;
-        this.current_stock=current_stock;
-        this.seller=seller;
-        this.category=category;
-        this.image=image;
+    public Product(Category category, int price, String name, String description, int current_stock, User seller, String image) {
+        this.category = category;
+        this.price = price;
+        this.name = name;
+        this.description = description;
+        this.current_stock = current_stock;
+        this.seller = seller;
+        this.image = image;
     }
 }

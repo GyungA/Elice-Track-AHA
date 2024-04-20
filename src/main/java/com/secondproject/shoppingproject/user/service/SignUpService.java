@@ -1,7 +1,5 @@
 package com.secondproject.shoppingproject.user.service;
 
-import com.secondproject.shoppingproject.user.constant.Grade;
-import com.secondproject.shoppingproject.user.constant.Role;
 import com.secondproject.shoppingproject.user.dto.request.SignUpRequest;
 import com.secondproject.shoppingproject.user.dto.response.SignUpResponse;
 import com.secondproject.shoppingproject.user.entity.User;
@@ -28,25 +26,13 @@ public class SignUpService {
 			throw new DuplicatedPhoneException();
 		}
 
-//        User user = User.builder()
-//                .email(signUpRequest.getEmail())
-//                .password(passwordEncoder.encode(signUpRequest.getPassword()))
-//                .name(signUpRequest.getName())
-//                .birthdate(signUpRequest.getBirthdate())
-//                .status(signUpRequest.isStatus())
-//                .address(signUpRequest.getAddress())
-//                .phone(signUpRequest.getPhone()).build();
 		User user = User.builder()
 				.email(signUpRequest.getEmail())
-				//.password(passwordEncoder.encode(signUpRequest.getPassword()))
-				.password(signUpRequest.getPassword())
+				.password(passwordEncoder.encode(signUpRequest.getPassword()))
 				.name(signUpRequest.getName())
 				.birthdate(signUpRequest.getBirthdate())
 				.address(signUpRequest.getAddress())
-				.phone(signUpRequest.getPhone())
-				.grade(Grade.BRONZE) // 기본값 설정
-				.role(Role.USER) // 기본값 설정
-				.build();
+				.phone(signUpRequest.getPhone()).build();
 
 		userRepository.save(user);
 		return SignUpResponse.success();

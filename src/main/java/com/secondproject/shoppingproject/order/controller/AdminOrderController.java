@@ -39,31 +39,30 @@ public class AdminOrderController {
      * @param buyerId 구매자 기준으로 필터링하고 싶다면, 구매자 아이디 입력
      * @return 전체 주문 내역 리스트
      */
-//    @Operation(summary = "모든 주문 내역 조회", description = "모든 주문 내역을 조회합니다.\n" +
-//            "또는 판매자를 기준으로 필터링도 가능합니다.\n" +
-//            "request param은 필수 아님. 비워둔다면, 필터링 없이 모든 주문 내역 조회")
-//    @Parameters({
-//            @Parameter(name = "user_id", description = "판매자 자신의 아이디"),
-//            @Parameter(name = "buyer_id", description = "구매자 기준으로 필터링하고 싶다면, 판매자 아이디 입력"),
-//    })
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "성공",
-//                    content = {
-//                            @Content(mediaType = "application/json",
-//                                    array = @ArraySchema(schema = @Schema(implementation = OrderHistoryResponseDto.class)))
-//                    }),
-//            @ApiResponse(responseCode = "403", description = "다른 회원들의 주문 내역을 조회할 권한이 없습니다."),
-//            @ApiResponse(responseCode = "404", description = "해당 유저 ID 또는 Order Id가 존재하지 않습니다."),
-//    })
-//    @GetMapping("/user/{user_id}")
-//    public ResponseEntity<Page<OrderHistoryResponseDto>> getOrderHistory(
-//            @PathVariable("user_id") Long userId,
-//            @RequestParam(value = "buyer_id", required = false) Long buyerId,
-//            @PageableDefault(page = 0, size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-//
-////        return ResponseEntity.ok(adminOrderService.getOrderHistory(userId, buyerId, pageable));
-//        return ResponseEntity.ok(adminOrderService.getOrderHistory(userId, buyerId));
-//    }
+    @Operation(summary = "모든 주문 내역 조회", description = "모든 주문 내역을 조회합니다.\n" +
+            "또는 판매자를 기준으로 필터링도 가능합니다.\n" +
+            "request param은 필수 아님. 비워둔다면, 필터링 없이 모든 주문 내역 조회")
+    @Parameters({
+            @Parameter(name = "user_id", description = "판매자 자신의 아이디"),
+            @Parameter(name = "buyer_id", description = "구매자 기준으로 필터링하고 싶다면, 판매자 아이디 입력"),
+    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = OrderHistoryResponseDto.class)))
+                    }),
+            @ApiResponse(responseCode = "403", description = "다른 회원들의 주문 내역을 조회할 권한이 없습니다."),
+            @ApiResponse(responseCode = "404", description = "해당 유저 ID 또는 Order Id가 존재하지 않습니다."),
+    })
+    @GetMapping("/user/{user_id}")
+    public ResponseEntity<Page<OrderHistoryResponseDto>> getOrderHistory(
+            @PathVariable("user_id") Long userId,
+            @RequestParam(value = "buyer_id", required = false) Long buyerId,
+            @PageableDefault(page = 0, size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        return ResponseEntity.ok(adminOrderService.getOrderHistory(userId, buyerId, pageable));
+    }
 
 
     /*

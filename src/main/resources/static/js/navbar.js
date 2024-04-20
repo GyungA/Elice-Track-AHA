@@ -87,8 +87,8 @@ const addNavElements = (keyString) => {
   // 로그아웃 요소만 유일하게, 클릭 이벤트를 필요로 함 (나머지는 href로 충분함)
   const logoutScript = document.createElement("script");
   logoutScript.innerText = `
-      const logoutElem = document.querySelector('#logout');
-
+      const logoutElem = document.querySelector('#logout'); 
+      
       if (logoutElem) {
         logoutElem.addEventListener('click', () => {
           sessionStorage.removeItem('token');
