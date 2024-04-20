@@ -41,7 +41,7 @@ public class CategoryViewController {
 //        model.addAttribute("parent_category", parent_category);
 //        List<Product> products = productService.get
         model.addAttribute("subCategories", subCategories);
-        return "category-product/productByCategory";
+        return "productByCategory";
     }
 
 //    @GetMapping("/parentCategory")
@@ -61,7 +61,7 @@ public class CategoryViewController {
         model.addAttribute("category", category);
         model.addAttribute("products", products);
 
-        return "category-product/productByCategory"; // 뷰 이름 반환
+        return "productByCategory"; // 뷰 이름 반환
     }
 
     @GetMapping("/add")

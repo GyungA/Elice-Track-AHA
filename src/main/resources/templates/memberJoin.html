@@ -4,18 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
-    <link rel="stylesheet" href="../static/member-join/memberJoin.css">
-    <link rel="stylesheet" href="../static/css/header.css" />
-    <link rel="stylesheet" href="../static/css/navigation.css" />
-    <link rel="stylesheet" href="../../../../../../First_project_StudyPlanner/StudyPlanner/src/main/resources/static/css/footer.css" />
-    <script defer src="../static/js/navbar-category.js" ></script>
-    <script src="../static/member-join/memberJoin.js"></script>
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/member-join/memberJoin.css">
+    <script src="/static/member-join/memberJoin.js"></script>
 </head>
 <body>
 <header id="header-component">
     <div class="header-container">
         <div class="header-logo">
-            <a href="#">
+            <a href="/home">
                 <img class="header-title-image" src="https://i.ibb.co/N20ZLds/logo.jpg" alt="">
             </a>
         </div>
@@ -29,9 +27,9 @@
                 </label>
             </div>
             <div class="header-nav-login-button">
-                <span class="header-nav-login-button-text">
+                <a href="/signIn" class="header-nav-login-button-text">
                     로그인
-                </span>
+                </a>
             </div>
             <div class="header-nav-signup-button">
                 <span class="header-nav-signup-button-text">
@@ -41,65 +39,46 @@
         </div>
     </div>
 </header>
-<div class="custom-navbar">
-    <div class="custom-dropdown">
-        <button class="dropbtn">전체 카테고리</button>
-        <div class="custom-dropdown-content" id="navbar-category">
-            <!--a 태그 대신 DB에서 상위 카테고리 불러오기-->
-        </div>
-    </div>
-    <div class="menu" id="navbar-menu">
-        <a href="#home">홈</a>
-        <a href="#new-arrivals">최신작품</a>
-        <a href="#Realtime-purchase">실시간구매</a>
-        <a href="#Realtime-review">실시간후기</a>
-        <a href="#bestproduct">인기작품</a>
-        <a href="#authorfeed">작가피드</a>
-        <a href="#authorfeed">매거진</a>
-        <a href="#authorfeed">최신 작품</a>
-        <a href="#authorfeed">소담상회</a>
-    </div>
-
-</div>
-<form action="/register" method="post">
+<form th:action="@{/signUp}" method="post" onsubmit="setBirthdate(event)">
     <div class="container">
         <div class="label" id="email-label">
             이메일*
         </div>
-        <input class="frame" id="email-frame" type="text" id="email" placeholder="이메일" required>
+        <input class="frame" type="text" id="email" placeholder="이메일" required>
         <div class="label" id="password-label">
             비밀번호*
         </div>
-        <input class="frame" id="password-frame" type="password" id="password" placeholder="비밀번호 입력" required>
-        <input class="frame" id="password-check-frame" type="password" id="password-check" placeholder="비밀번호 확인" required>
+        <input class="frame" type="password" id="password" placeholder="비밀번호 입력" required>
+        <input class="frame" type="password" id="password_check" placeholder="비밀번호 확인" required>
         <div class="label" id="information-label">
             부가정보*
         </div>
-        <input class="frame" id="name-frame" type="text" id="name" placeholder="이름" required>
+        <input class="frame" type="text" id="name" placeholder="이름" required>
         <!--            <input class="frame" id="birth-frame" type="text" placeholder="생년월일" required>-->
         <div class="field-birth">
             <div class="birth-input-container">
-                <input class="birth-frame" type="number" placeholder="연도" oninput="handleInput(this, 4)" inputmode="numeric">
-                <select class="month-frame">
+                <input class="birth-frame" type="number" placeholder="연도" id="year" inputmode="numeric" oninput="updateBirthdate()">
+                <select class="month-frame" id="month" onchange="updateBirthdate()">
                     <option value="">월</option>
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                    <option value="">4</option>
-                    <option value="">5</option>
-                    <option value="">6</option>
-                    <option value="">7</option>
-                    <option value="">8</option>
-                    <option value="">9</option>
-                    <option value="">10</option>
-                    <option value="">11</option>
-                    <option value="">12</option>
+                    <option value="01">1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">5</option>
+                    <option value="06">6</option>
+                    <option value="07">7</option>
+                    <option value="08">8</option>
+                    <option value="09">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
                 </select>
-                <input class="day-frame" type="number" min="1" max="31" placeholder="일" oninput="handleInput(this, 2)" inputmode="numeric">
+                <input class="day-frame" type="number" min="1" max="31" placeholder="일" id="day" oninput="updateBirthdate()">
             </div>
         </div>
-        <input class="frame" id="address-frame" type="text" id="address" placeholder="주소" required>
-        <input class="frame" id="number-frame" type="text" id="number" placeholder="전화번호" required>
+        <input type="hidden" id="birthdate" name="birthdate" />
+        <input class="frame" type="text" id="address" placeholder="주소" required>
+        <input class="frame" type="text" id="phone" placeholder="전화번호" required >
         <div class="button" onclick="register()">
             <div class="master-primary-button">
                 <span class="button-text">
@@ -107,7 +86,7 @@
                 </span>
             </div>
         </div>
-    </div>
+
     </div>
 </form>
 <footer class="footer">
@@ -132,7 +111,7 @@
         <div class="full">
             <div class="body3-regular-medium text-left">
                 <div class="float-left">
-                    <img class="baseLogo" src="https://i.ibb.co/Gt74K7K/1111-removebg-preview.png" style="height: 42px; width: 100px;"/>
+                    <img class="baseLogo" src="https://i.ibb.co/N20ZLds/logo.jpg" style="height: 42px; width: 100px;"/>
                 </div>
                 <div class="float-left" style="width: 450px;">
                     <div class="mb-[8px] body3-bold-medium">(주) 아이디어하우스</div>
@@ -195,10 +174,10 @@
                         </div>
                         <div class="TheFooter__award" style="width: 76px;">
                             <div class="TheFooter__award1">
-                                <img src="https://i.ibb.co/fFHCHkq/1-removebg-preview.png" alt="5" style="width: 106px; height: 60px;">
+                                <img src="https://i.ibb.co/3stzBxs/5.png" alt="5" style="width: 106px; height: 60px;">
                             </div>
                             <div class="TheFooter__award2">
-                                <img src="https://i.ibb.co/3zgLGhm/2-removebg-preview.png"  alt="6" style="width: 76px; height: 60px;">
+                                <img src="https://i.ibb.co/KNFZJTK/6.png" alt="6" style="width: 76px; height: 60px;">
                             </div>
                         </div>
                     </div>

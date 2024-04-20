@@ -13,10 +13,10 @@
   <!-- 커스텀 css, js -->
   <link rel="stylesheet" href="../static/account-security/account-security.css" />
   <link rel="stylesheet" href="../static/css/header.css" />
-  <link rel="stylesheet" href="../../../../../../First_project_StudyPlanner/StudyPlanner/src/main/resources/static/css/footer.css" />
+  <link rel="stylesheet" href="../static/css/footer.css" />
   <link rel="stylesheet" href="../static/css/navigation.css" />
   <script defer type="module" src="../static/account-security/account-security.js"></script>
-  <script defer type="module" src="/static/js/api.js"></script>
+  <script defer type="module" src="../static/js/api.js"></script>
   <script src="../static/js/navbar-category.js" type="module" defer></script>
 
 </head>
@@ -25,7 +25,7 @@
 <header id="header-component">
   <div class="header-container">
     <div class="header-logo">
-      <a href="#">
+      <a href="/home">
         <img class="header-title-image" src="https://i.ibb.co/N20ZLds/logo.jpg" alt="아하">
       </a>
     </div>
@@ -39,15 +39,27 @@
         </label>
       </div>
 
-      <div class="header-nav-login-button">
-            <span class="header-nav-login-button-text">
-                로그인
-            </span>
+      <div th:if="${session.user}">
+        <span class="header-nav-username" th:text="${session.user.name} + ' 님'"></span>
       </div>
-      <div class="header-nav-signup-button">
-            <span class="header-nav-signup-button-text">
-                회원가입
-            </span>
+      <div th:if="${session.user}" class="header-nav-logout-button">
+        <form action="/signOut" method="post">
+          <button type="submit" class="header-nav-logout-button-text">로그아웃</button>
+        </form>
+      </div>
+      <div th:if="${session.user}" class="header-nav-user-info">
+        <!--                <button type="button" class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</button> -->
+        <span class="header-nav-user-info-text" onclick="window.location.href='/account'">계정관리</span>
+      </div>
+      <div th:unless="${session.user}" class="header-nav-login-button">
+                <span class="header-nav-login-button-text" onclick="window.location.href='/signIn'">
+                    로그인
+                </span>
+      </div>
+      <div th:unless="${session.user}" class="header-nav-signup-button">
+                <span class="header-nav-signup-button-text" onclick="window.location.href='/signUp'">
+                    회원가입
+                </span>
       </div>
     </div>
   </div>
