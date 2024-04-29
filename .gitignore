@@ -42,6 +42,8 @@ src/main/resources/application.properties
 # docker-compose
 db/
 docker-compose.yml
+Dockerfile
 
 #generated
 src/main/generated/
+.DS_Store
