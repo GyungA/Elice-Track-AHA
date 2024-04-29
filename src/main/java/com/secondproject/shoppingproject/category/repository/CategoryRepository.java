@@ -20,5 +20,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     // 네비게이션 카테고리
     List<Category> findByParentIdIsNull();
 
+
+
+
 }
 

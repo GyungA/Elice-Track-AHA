@@ -16,145 +16,24 @@
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
+    <!-- Daum 주소 API 사용하기 위한 파일 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- google icon -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
+
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="../static/css/header.css" />
-    <link rel="stylesheet" href="../static/css/pagination.css" />
-    <link rel="stylesheet" href="../static/css/navigation.css" />
     <link rel="stylesheet" href="../static/css/footer.css" />
-    <link
-      rel="stylesheet"
-      href="../static/product-management/product-management.css"
-    />
-    <!-- AWS S3 사용하기 위한 파일 -->
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
-    <script src="../static/product-management/product-management.js" type="module" defer></script>
+    <link rel="stylesheet" href="../static/css/navigation.css" />
+    <link rel="stylesheet" href="../static/css/pagination.css" />
+    <link rel="stylesheet" href="../static/seller-order-management/seller-order-management.css" />
+    <script src="../static/seller-order-management/seller-order-management.js" type="module" defer></script>
     <script src="../static/js/navbar-category.js" type="module" defer></script>
   </head>
   <body>
-    <div class="modal-modify modal">
-      <div class="modal_body">
-        <div class="modal-inner">
-          <h2>상품 정보 수정</h2>
-          <!-- 가격 수정 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label" for="newPrice">가격</label>
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="newPrice"
-                    type="text"
-                    placeholder="새로운 가격 입력"
-                    autocomplete="on"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="buttons">
-            <button type="submit" class="modify-btn">수정</button>
-            <button type="button" class="cancel-btn">취소</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-add modal">
-      <div class="modal_body">
-        <div class="modal-inner">
-          <h2>상품 추가</h2>
-          <!-- 가격 수정 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label" for="price">가격</label>
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="price"
-                    type="text"
-                    placeholder="상품의 가격 입력"
-                    autocomplete="on"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-          <!-- 상품명 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label product-name" for="productName">상품명</label>
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="productName"
-                    type="text"
-                    placeholder="상품명 입력"
-                    autocomplete="on"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 상태-->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label">상태</label>
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <select id="productStatusDropdown">
-                  <option value="1" selected>판매중</option>
-                  <option value="2">일시품절</option>
-                  <option value="3">판매중단</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <!-- 현재 재고 -->
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label" for="stock">재고</label>
-            </div>
-            <div class="field-body">
-              <div class="field">
-                <p class="control">
-                  <input
-                    class="input"
-                    id="stock"
-                    type="text"
-                    placeholder="상품의 재고 입력"
-                    autocomplete="on"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 상품 이미지(이미지 등록?) -->
-
-          <div class="buttons">
-            <button type="submit" class="create-btn">추가</button>
-            <button type="button" class="cancel-add-btn">취소</button>
-          </div>
-        </div>
-      </div>
-    </div>
     <header id="header-component">
       <div class="header-container">
         <div class="header-logo">
@@ -213,70 +92,64 @@
 
     </div>
 
-    <!-- 제품 목록 -->
+    <!-- 구매내역-->
     <section class="section">
-      <div class="container product-item-container" id="producItemContainer">
-        <div class="buttons-container product-add-filterSearch">
-          <button class="button" id="addToProductButton">상품 추가</button>
-          <button class="button" id="filtering">필터링</button>
+      <div class="page-title">
+        <p class="title-name">판매자 : 주문 내역</p>
+      </div>
+      <div class="order-wrapper">
+        <div class="product-list">
+          <!-- <p class="pay-time" id="payTime"></p> -->
+          <div class="one-product-outer" id="oneProductOuter">
+            <section class="section one-product-container">
+              <!-- api 요청 후 만들어진 제품들 카드 요소가 삽입되는 곳 -->
+              <!-- 상품이 n개면 <dic class="one-product">가 n번 반복되게 -->
+              <!-- <dic class="one-product">
+                <div class="is-child box product-image">
+                  <figure class="image is-sqaure">
+                    <img id="productImageTag" src="" />
+                  </figure>
+                </div>
+
+                <div class="tile is-parent is-vertical product-content-wrapper">
+                  <div class="tile is-child box product-detail">
+                    <div class="upper">
+                      <p class="pay-time">2024.08.28 주문</p>
+                      <p>|</p>
+                      <p class="proudct-status" id="statusTag">주문 완료</p>
+                    </div>
+
+                    <div class="content">
+                      <div class="product-name-status">
+                        <p
+                          class="subtitle is-4 is-family-monospace"
+                          id="titleTag"
+                        >
+                          삼각대및셀카봉
+                        </p>
+                        <p class="remain-stock" id="remainStock">
+                          2개 주문, 총 20,000원
+                        </p>
+                      </div>
+
+                      <div class="buttons-container">
+                        <button class="button" id="detailButton">
+                          상세보기
+                        </button>
+                        <button
+                          class="button product-modify-btn"
+                          id="purchaseCancelButton"
+                        >
+                          주문 취소
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </dic> -->
+            </section>
+          </div>
         </div>
-        <!-- api 요청 후 만들어진 제품들 카드 요소가 삽입되는 곳 -->
-        <!-- 상품이 n개면 <dic class="one-product">가 n번 반복되게 -->
-        <!-- <dic class="one-product">
-          <div class="is-child box product-image">
-            <figure class="image is-sqaure">
-           
-              <img id="productImageTag" src="" />
-            </figure>
-          </div>
-
-          <div class="tile is-parent is-vertical product-content-wrapper">
-            <div class="tile is-child box product-detail">
-              <div class="tabs">
-                <ul>
-                  
-                  <li id="manufacturerTag"></li>
-                </ul>
-              </div>
-              <div class="content">
-                <div class="product-name-status">
-              
-                  <p
-                    class="subtitle is-4 is-family-monospace"
-                    id="titleTag"
-                  ></p>
-                  <div class="status-wrapper">
-                
-                    <span class="material-symbols-outlined">
-                      fiber_manual_record
-                    </span>
-             
-                    <p class="proudct-status" id="statusTag"></p>
-                  </div>
-                </div>
-
-                <div class="price-stock-wrapper">
-               
-                  <h2 id="priceTag"></h2>
-
-                  <div class="stock-wrapper">
-                 
-                    <p class="remain-stock-word">남은 수량:</p>
-                    <p class="remain-stock" id="remainStock"></p>
-                  </div>
-                </div>
-                <div class="buttons-container">
-                  <button class="button" id="addToCartButton">
-                    <span class="material-symbols-outlined"> delete </span>
-                  </button>
-                  <button class="button product-modify-btn" id="purchaseButton">
-                    수정하기
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </dic> -->
       </div>
       <div class="page-wrapper">
         <button class="page-before">

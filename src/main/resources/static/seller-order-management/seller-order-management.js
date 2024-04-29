@@ -7,11 +7,14 @@ import {
   createPageNumber,
 } from "../js/useful-functions.js";
 
+//host
+const host = "http://34.22.75.198:8080";
+
 // 요소(element), input 혹은 상수
 const section = document.querySelector(".one-product-container");
 let pageWrapper = document.querySelector(".page-wrapper");
 
-setCookie("userId", 2);
+// setCookie("userId", 2);
 const userId = getCookie("userId");
 let page = getCookie("page");
 
@@ -30,7 +33,7 @@ async function redirectOrders(userId, page) {
   try {
     //buyer id로 필터링 가능?
     const endpoint = `admin/orders/user/${userId}?page=${page}`;
-    const response = await Api.get("http://localhost:8080", endpoint);
+    const response = await Api.get(host, endpoint);
 
     console.log(response);
     const responsePageable = response.pageable;
@@ -51,7 +54,7 @@ async function redirectOrders(userId, page) {
 
     //페이지네이션
     await createPageNumber(endPageNumber, pageWrapper);
-    activePageButtons(endPageNumber);
+    activePageButtons(endPageNumber, "/seller/order/management");
 
     const payTimeTag = document.querySelectorAll(".pay-time");
     const orderStatusTag = document.querySelectorAll(".proudct-status");
@@ -89,7 +92,7 @@ async function redirectOrders(userId, page) {
         setCookie("userId", userId);
         setCookie("orderId", orderId);
 
-        redirect("/seller-order-detail/seller-order-detail.html");
+        redirect("/seller/order/detail");
       });
       purchaseCancelButton[i].addEventListener("click", () => {
         redirectOrderCancel(userId, orderId);
@@ -108,9 +111,9 @@ async function redirectOrderCancel(userId, orderId, orderDetailId) {
       orderId: orderId,
       orderDetailId: orderDetailId,
     };
-    await Api.patch("http://localhost:8080/admin/orders/cancel", "", data);
+    await Api.patch(host + "/admin/orders/cancel", "", data);
     alert("주문 취소가 완료되었습니다.");
-    redirect("/mypage-order-management/mypage-order-management.html");
+    redirect("/seller/order/management");
     setCookie("userId", userId);
     setCookie("orderId", orderId);
     setCookie("orderDetailId", orderDetailId);

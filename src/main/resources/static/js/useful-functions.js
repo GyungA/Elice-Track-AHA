@@ -6,10 +6,10 @@ export const randomId = () => {
 // 이메일 형식인지 확인 (true 혹은 false 반환)
 export const validateEmail = (email) => {
   return String(email)
-      .toLowerCase()
-      .match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
 };
 
 // 주소창의 url로부터 params를 얻어 객체로 만듦
@@ -159,12 +159,13 @@ export let getCookie = function (name) {
 };
 
 export let redirect = function (address) {
-  const hostName = window.location.hostname;
-  let additionalAddr = "";
-  if (hostName === "localhost") {
-    additionalAddr = "/ShoppingProject/src/main/resources";
-  }
-  window.location.href = `${additionalAddr}/static${address}`;
+  // const hostName = window.location.hostname;
+  // let additionalAddr = "";
+  // if (hostName === "localhost") {
+  //   additionalAddr = "/ShoppingProject/src/main/resources";
+  // }
+  // window.location.href = `${additionalAddr}/static${address}`;
+  window.location.href = `${address}`;
 };
 
 export let formatPhoneNumber = function (phoneNumber) {
@@ -187,14 +188,14 @@ export let formatPhoneNumber = function (phoneNumber) {
 };
 
 // 페이지네이션
-export let activePageButtons = function (endPageNumber) {
+export let activePageButtons = function (endPageNumber, url) {
   //페이지 번호 클릭시
   const pageButtons = document.querySelectorAll(".page-number-button");
   for (let i = 0; i < endPageNumber; i++) {
     pageButtons[i].addEventListener("click", () => {
       // redirectOrders(userId, i);
       setCookie("page", i);
-      redirect("/seller-order-management/seller-order-management.html");
+      redirect(url);
     });
   }
 
@@ -205,7 +206,7 @@ export let activePageButtons = function (endPageNumber) {
     let currentPage = getCookie("page");
     if (currentPage > 0) {
       setCookie("page", currentPage - 1);
-      redirect("/seller-order-management/seller-order-management.html");
+      redirect(url);
     } else {
       alert("첫 페이지입니다.");
     }
@@ -214,7 +215,7 @@ export let activePageButtons = function (endPageNumber) {
     let currentPage = getCookie("page");
     if (currentPage < endPageNumber - 1) {
       setCookie("page", currentPage + 1);
-      redirect("/seller-order-management/seller-order-management.html");
+      redirect(url);
     } else {
       alert("마지막 페이지입니다.");
     }
@@ -247,4 +248,4 @@ export let createPageNumber = function createPageNumber(
 };
 
 // 주변 다른 파일 것도 여기서 일괄 export 함
-export { createNavbar } from "static/js/navbar.js";
+export { createNavbar } from "./navbar.js";

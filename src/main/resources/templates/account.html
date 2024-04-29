@@ -17,11 +17,12 @@
           crossorigin="anonymous"
   ></script>
   <!-- 커스텀 css, js -->
-  <link rel="stylesheet" href="../static/account/account.css" />
-  <link rel="stylesheet" href="../static/css/header.css" />
-  <link rel="stylesheet" href="../static/css/footer.css" />
-  <link rel="stylesheet" href="../static/css/navigation.css" />
+  <link rel="stylesheet" href="/static/account/account.css" />
+  <link rel="stylesheet" href="/static/css/header.css" />
+  <link rel="stylesheet" href="/static/css/footer.css" />
+  <link rel="stylesheet" href="/static/css/navigation.css" />
   <script src="/account/account.js" type="module" defer></script>
+  <script src="/static/js/navbar-category.js" type="module" defer></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -71,26 +72,21 @@
 <div class="custom-navbar">
   <div class="custom-dropdown">
     <button class="dropbtn">전체 카테고리</button>
-    <div class="custom-dropdown-content">
-      <a href="#electronics">식품</a>
-      <a href="#jewelry&fashion">주얼리/패션</a>
-      <a href="#home&living">홈리빙</a>
-      <a href="#case&stationery">케이스/문구</a>
-      <a href="#beauty">뷰티</a>
-      <a href="#animal">반려동물</a>
-      <a href="#crafts">공예</a>
-      <a href="#infants&toddlers">영유아동</a>
+    <div class="custom-dropdown-content" id="navbar-category">
+      <!--a 태그 대신 DB에서 상위 카테고리 불러오기-->
     </div>
   </div>
-  <a href="#home">홈</a>
-  <a href="#new-arrivals">최신작품</a>
-  <a href="#Realtime-purchase">실시간구매</a>
-  <a href="#Realtime-review">실시간후기</a>
-  <a href="#bestproduct">인기작품</a>
-  <a href="#authorfeed">작가피드</a>
-  <a href="#authorfeed">매거진</a>
-  <a href="#authorfeed">최신 작품</a>
-  <a href="#authorfeed">소담상회</a>
+  <div class="menu" id="navbar-menu">
+    <a href="#home">홈</a>
+    <a href="#new-arrivals">최신작품</a>
+    <a href="#Realtime-purchase">실시간구매</a>
+    <a href="#Realtime-review">실시간후기</a>
+    <a href="#bestproduct">인기작품</a>
+    <a href="#authorfeed">작가피드</a>
+    <a href="#authorfeed">매거진</a>
+    <a href="#authorfeed">최신 작품</a>
+    <a href="#authorfeed">소담상회</a>
+  </div>
 
 </div>
 <!-- 계정관리 관련 목록 -->

@@ -29,6 +29,7 @@
     <!-- AWS S3 사용하기 위한 파일 -->
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
     <script src="../static/cart/cart.js" type="module" defer></script>
+    <script src="../static/js/navbar-category.js" type="module" defer></script>
   </head>
   <body>
     <header id="header-component">
@@ -72,14 +73,7 @@
       <div class="custom-dropdown">
         <button class="dropbtn">전체 카테고리</button>
         <div class="custom-dropdown-content" id="navbar-category">
-          <a href="#food">식품</a>
-          <a href="#jewelry&fashion">주얼리/패션</a>
-          <a href="#home&living">홈리빙</a>
-          <a href="#case&stationery">케이스/문구</a>
-          <a href="#beauty">뷰티</a>
-          <a href="#animal">반려동물</a>
-          <a href="#crafts">공예</a>
-          <a href="#infants&toddlers">영유아동</a>
+          <!--a 태그 대신 DB에서 상위 카테고리 불러오기-->
         </div>
       </div>
       <div class="menu" id="navbar-menu">
