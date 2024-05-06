@@ -4,7 +4,7 @@
 -- spring.jpa.defer-datasource-initialization=true
 
 -- User
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS users (
     user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -21,11 +21,10 @@ CREATE TABLE IF NOT EXISTS user (
 
 -- Category
 CREATE TABLE IF NOT EXISTS category (
-    category_key BIGINT AUTO_INCREMENT PRIMARY KEY,
-    category_name VARCHAR(255) NOT NULL,
-    parent_key BIGINT,
-    level INTEGER,
-    FOREIGN KEY (parent_key) REFERENCES category(category_key)
+    category_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    parent_id BIGINT,
+    FOREIGN KEY (parentId) REFERENCES category(category_id)
 );
 
 -- Product

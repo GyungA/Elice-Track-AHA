@@ -44,6 +44,8 @@ public class CategoryController {
     @GetMapping("/top-level")
     public ResponseEntity<List<CategoryDTO>> getTopLevelCategories() {
         List<CategoryDTO> topLevelCategories = categoryService.getTopLevelCategories();
+        CategoryDTO parent_category = topLevelCategories.get(0);
+
         return ResponseEntity.ok(topLevelCategories);
     }
 

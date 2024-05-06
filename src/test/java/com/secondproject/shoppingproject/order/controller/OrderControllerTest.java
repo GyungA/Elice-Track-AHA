@@ -19,10 +19,6 @@
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 //import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.PageImpl;
-//import org.springframework.data.domain.PageRequest;
-//import org.springframework.data.domain.Pageable;
 //import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 //import org.springframework.http.MediaType;
 //import org.springframework.security.test.context.support.WithMockUser;
@@ -62,14 +58,12 @@
 //        Long userId = 1L;
 //        List<OrderHistoryResponseDto> orderHistoryList = Arrays.asList(
 //                new OrderHistoryResponseDto(1L, 1L, "상품 이름1", "상품 이미지1",
-//                        5, "총 계산금액1", "ON_DELIVERY", "주문 날짜1"),
+//                        5, "총 계산금액1", OrderStatus.ON_DELIVERY, "주문 날짜1"),
 //                new OrderHistoryResponseDto(1L, 2L, "상품 이름2", "상품 이미지2",
-//                        5, "총 계산금액2", "ORDER_COMPLETE", "주문 날짜2")
+//                        5, "총 계산금액2", OrderStatus.ORDER_COMPLETE, "주문 날짜2")
 //        );
 //
-//        Pageable pageable = PageRequest.of(0, 10);
-//        Page<OrderHistoryResponseDto> page = new PageImpl<>(orderHistoryList, pageable, orderHistoryList.size());
-//        when(orderService.getMyOrder(userId, pageable)).thenReturn(page);
+//        when(orderService.getMyOrder(userId)).thenReturn(orderHistoryList);
 //
 //        // when
 //        ResultActions actions = mockMvc.perform(
@@ -168,11 +162,10 @@
 //        order.setUser(user);
 //
 //        OrderDetail orderDetail = new OrderDetail();
-//        orderDetail.setId(1L);
 //        orderDetail.setOrder(order);
 //        orderDetail.setOrderStatus(OrderStatus.ORDER_COMPLETE);
 //
-//        OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L, 1L);
+//        OrderCancelRequestDto requestDto = new OrderCancelRequestDto(1L, 1L);
 //
 //        OrderDetailHistoryResponseDto responseDto = new OrderDetailHistoryResponseDto();
 //        responseDto.setId(requestDto.getUserId());

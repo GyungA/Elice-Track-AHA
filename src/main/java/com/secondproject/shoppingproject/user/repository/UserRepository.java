@@ -2,10 +2,12 @@ package com.secondproject.shoppingproject.user.repository;
 
 import com.secondproject.shoppingproject.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAll();
 
@@ -15,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     void delete(User user);
 
-    User findByEmailAndPassword(String email, String password);
+    User findByEmail(String email);
 
     boolean existsByEmail(String email);
 

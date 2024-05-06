@@ -5,7 +5,9 @@ import com.secondproject.shoppingproject.product.entity.Product;
 import com.secondproject.shoppingproject.product.entity.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,11 @@ public class ProductService {
     public Product productView(Long id){return productRepository.findById(id).get();}
     //상품 리스트 불러오기
     public List<Product> allProductView(){return productRepository.findAll();}
+
+    public List<Product> getLatestProducts() {
+        Pageable pageable = PageRequest.of(0, 12, Sort.by("createAt").descending());
+        return productRepository.findAll(pageable).getContent();
+    }
     //상품 리스트 페이지용 불러오기
     public Page<Product> allProductViewPage(Pageable pageable){return productRepository.findAll(pageable);}
 

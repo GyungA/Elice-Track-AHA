@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Management</title>
+    <!-- 스타일과 스크립트 링크 추가 필요 -->
+</head>
+<body>
+
+<div id="categoryList">
+    <h2>Category List</h2>
+    <table id="categoriesTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 카테고리 목록이 여기에 동적으로 삽입됩니다 -->
+        </tbody>
+    </table>
+    <button id="addCategoryBtn">Add New Category</button>
+</div>
+
+<div id="addCategoryForm" style="display: none;">
+    <h2>Add Category</h2>
+    <form id="newCategoryForm">
+        <label for="categoryName">Category Name:</label>
+        <input type="text" id="categoryName" name="name" required>
+        <input type="submit" value="Add Category">
+    </form>
+</div>
+
+<div id="editCategoryForm" style="display: none;">
+    <h2>Edit Category</h2>
+    <form id="updateCategoryForm">
+        <input type="hidden" id="editCategoryId" name="id">
+        <label for="editCategoryName">Category Name:</label>
+        <input type="text" id="editCategoryName" name="name" required>
+        <input type="submit" value="Update Category">
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        loadCategories();
+
+        $('#addCategoryBtn').click(function() {
+            $('#addCategoryForm').show();
+            $('#editCategoryForm').hide();
+        });
+
+        $('#newCategoryForm').submit(function(event) {
+            event.preventDefault();
+            addCategory();
+        });
+
+        $('#updateCategoryForm').submit(function(event) {
+            event.preventDefault();
+            updateCategory();
+        });
+    });
+
+    function loadCategories() {
+        // AJAX로 카테고리 목록을 불러오고 테이블에 표시
+    }
+
+    function addCategory() {
+        // 폼 데이터를 사용하여 카테고리 추가 AJAX 요청
+    }
+
+    function editCategory(categoryId) {
+        // 특정 카테고리를 편집하기 위해 폼을 로드
+    }
+
+    function updateCategory() {
+        // 폼 데이터를 사용하여 카테고리 업데이트 AJAX 요청
+    }
+
+    function deleteCategory(categoryId) {
+        // 카테고리 삭제 AJAX 요청
+    }
+
+</script>
+
+</body>
+</html>

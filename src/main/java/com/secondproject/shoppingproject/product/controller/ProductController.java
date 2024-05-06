@@ -1,5 +1,7 @@
 package com.secondproject.shoppingproject.product.controller;
 
+import com.secondproject.shoppingproject.category.dto.CategoryDTO;
+import com.secondproject.shoppingproject.category.service.CategoryService;
 import com.secondproject.shoppingproject.product.entity.Product;
 import com.secondproject.shoppingproject.product.entity.ProductRepository;
 import com.secondproject.shoppingproject.product.service.ProductService;
@@ -12,13 +14,35 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+//@RequestMapping
 public class ProductController {
 
     private final ProductService productService;
+    private final CategoryService categoryService;
 
+    @GetMapping("/home")
+    public String get_Home(Model model) {
+        List<Product> latestProducts = productService.getLatestProducts();
+        List<CategoryDTO> categories = categoryService.getParentCategories();
+        model.addAttribute("products", latestProducts);
+        model.addAttribute("categories", categories);
+        return "main";
+    }
+
+    @GetMapping("/product/{id}")
+    public String productDetail(Model model, @PathVariable("id") Long id) {
+        Product product = productService.productView(id);
+        List<CategoryDTO> categories = categoryService.getParentCategories();
+        model.addAttribute("product", product);
+        model.addAttribute("categories", categories);
+        return "product-detail"; // 상품 상세 페이지로 이동
+    }
     // 상품 등록 페이지(GET)
     @GetMapping("/product/new")
     public String productSaveForm(){
@@ -54,11 +78,12 @@ public class ProductController {
     }
 
     // 상품 상세 페이지
-    @GetMapping("/product/view/{id}")
-    public String productView(Model model, @PathVariable("id") Long id){
-        model.addAttribute("product", productService.productView(id));
-        return "/seller/productView";
-    }
+//    @GetMapping("/product/view/{id}")
+//    public String productView(Model model, @PathVariable("id") Long id){
+//        model.addAttribute("product", productService.productView(id));
+//        return "/seller/productView";
+//    }
+
 
     // 상품 리스트 페이지
     @GetMapping("/product/list/{id}")

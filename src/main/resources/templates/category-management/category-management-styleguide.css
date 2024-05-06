@@ -1,0 +1,21 @@
+:root {
+    --neutral-colorscolor-1000: rgba(118, 116, 148, 1);
+    --neutral-colorswhite: rgba(255, 255, 255, 1);
+    --neutral-colorsheadings-black: rgba(93, 90, 136, 1);
+    --neutral-colorscolor-600: rgba(212, 210, 227, 1);
+    --neutral-colorscolor-400: rgba(242, 241, 250, 1);
+    --neutral-colorstext-gray: rgba(151, 149, 181, 1);
+    --neutral-colorscolor-300: rgba(249, 249, 255, 1);
+    --text-single-100-regular-font-family: "DM Sans", Helvetica;
+    --text-single-100-regular-font-weight: 400;
+    --text-single-100-regular-font-size: 16px;
+    --text-single-100-regular-letter-spacing: 0px;
+    --text-single-100-regular-line-height: 18px;
+    --text-single-100-regular-font-style: normal;
+    --text-single-100-bold-font-family: "DM Sans", Helvetica;
+    --text-single-100-bold-font-weight: 700;
+    --text-single-100-bold-font-size: 16px;
+    --text-single-100-bold-letter-spacing: 0px;
+    --text-single-100-bold-line-height: 18px;
+    --text-single-100-bold-font-style: normal;
+}
