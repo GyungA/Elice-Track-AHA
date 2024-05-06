@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-function handleInput(el, maxLength) {
-    if (el.value.length > maxLength) {
-        el.value = el.value.slice(0, maxLength);
-    }
-}
-=======
 function handleInput(el, maxLength) {
     if (el.value.length > maxLength) {
         el.value = el.value.slice(0, maxLength);
@@ -89,4 +82,3 @@ function setBirthdate(event) {
     // 폼 제출
     document.forms[0].submit();
 }
->>>>>>> feature-user-sigin/out
