@@ -21,7 +21,7 @@ public class SignUpController {
         this.signUpService=signUpService;
     }
 
-//    @PostMapping
+    //    @PostMapping
 //    public ResponseEntity<? super SignUpResponse> signUp(@RequestBody SignUpRequest signUpRequest){
 //        return signUpService.signUp(signUpRequest);
 //    }
@@ -31,7 +31,7 @@ public class SignUpController {
         return "memberJoin";
     }
 
-//    @PostMapping
+    //    @PostMapping
 //    public String postNewSignUp(@Valid @ModelAttribute("signUpRequest") SignUpRequest signUpRequest,
 //                                BindingResult bindingResult){
 ////        if (bindingResult.hasErrors()) {
@@ -43,7 +43,7 @@ public class SignUpController {
 //    }
     @PostMapping("/signUp")
     public String postNewSignUp(@RequestBody SignUpRequest signUpRequest,
-                            BindingResult bindingResult){
+                                BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             return "memberJoin"; // 유효성 검사 에러 발생 시 다시 회원가입 폼으로 이동
         }

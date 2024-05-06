@@ -67,6 +67,13 @@ public class CategoryService {
         return new CategoryDTO(savedCategory.getCategoryId(), savedCategory.getName(), savedCategory.getParentId());
     }
 
+    public CategoryDTO getCategoryById(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found with id " + categoryId));
+        return convertToDTO(category);
+    }
+
+
 
 }
 

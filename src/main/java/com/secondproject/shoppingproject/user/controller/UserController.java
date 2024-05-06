@@ -20,7 +20,7 @@ public class UserController {
     public UserController(UserService userService){
         this.userService=userService;
     }
-//    @GetMapping("/account-manage")
+    //    @GetMapping("/account-manage")
 //    public ResponseEntity<List<User>> getAllUser(){
 //        List<User> userList = userService.getAllUsers();
 //        if(userList.isEmpty()){

@@ -19,7 +19,7 @@ public class SignOutController {
         this.signOutService = signOutService;
     }
 
-//    @PostMapping("/signOut")
+    //    @PostMapping("/signOut")
 //    public ResponseEntity<?> logout(@RequestHeader("Authorization") String token) {
 //        String authToken = token.substring(7); // "Bearer " 부분을 제외한 토큰 추출
 //        signOutService.logout(authToken); // 사용자 로그아웃 처리
@@ -29,9 +29,9 @@ public class SignOutController {
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 
-            if(session != null) {
-                session.invalidate();
-            }
+        if(session != null) {
+            session.invalidate();
+        }
         return "redirect:/home";
     }
 }

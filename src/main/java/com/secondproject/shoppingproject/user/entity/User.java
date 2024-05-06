@@ -57,7 +57,7 @@ public class User extends BaseEntity {
 	@Column(name = "role", nullable = false)
 	private Role role = Role.USER;
 
-//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+	//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JsonIgnore
 //    List<Order> orders = new ArrayList<>();
 //
@@ -65,9 +65,9 @@ public class User extends BaseEntity {
 //    @JsonIgnore
 //    List<Cart> carts = new ArrayList<>();
 //
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    List<Product> products = new ArrayList<>();
+	@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
+	List<Product> products = new ArrayList<>();
 
 	@Builder
 	public User(String email, String password, String name, String birthdate, boolean status,

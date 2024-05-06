@@ -59,7 +59,7 @@ public class OrderService {
             System.out.println("여기로 들어옴");
             Order order = orderRepository.findById(orderId)
                     .orElseThrow(() -> new EntityNotFoundException("해당하는 order id를 찾을 수 없습니다."));
-            return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailListBySeller(order, userId));
+        return new OrderDetailHistoryResponseDto(order, orderDetailService.getOrderDetailListBySeller(order, userId));
         } else{
             Order order = orderRepository.findByUserIdAndOrderId(userId, orderId)
                     .orElseThrow(() -> new EntityNotFoundException("해당하는 user id 또는 order id를 찾을 수 없습니다."));

@@ -13,19 +13,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtProvider {
 
-	private static final String SECRET_KEY = "test1234test";
+    private static final String SECRET_KEY = "test1234test";
 
-	public String generate(String email) {
-		Date expiredTime = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
-		Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    public String generate(String email) {
+        Date expiredTime = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
+        Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-		return Jwts.builder()
-				.setSubject(email)
-				.setExpiration(expiredTime)
-				.setIssuedAt(new Date())
-				.signWith(secretKey)
-				.compact();
-	}
+        return Jwts.builder()
+                .setSubject(email)
+                .setExpiration(expiredTime)
+                .setIssuedAt(new Date())
+                .signWith(secretKey)
+                .compact();
+    }
 
 
 }

@@ -56,7 +56,7 @@ public class SignInController {
             User user = signInService.get_User(signInRequest.getEmail());
             session.setAttribute("user", user);
             return "redirect:/";  // 로그인 성공 후 홈페이지로 이동
-           // return "login/login";
+            // return "login/login";
         } catch (InvalidEmailException | InvalidPasswordException e) {
             model.addAttribute("error", "이메일 또는 비밀번호가 올바르지 않습니다.");
             return "login";
