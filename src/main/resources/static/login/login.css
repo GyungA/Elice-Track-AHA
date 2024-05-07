@@ -1,0 +1,142 @@
+.login-box {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  text-align: center;
+  width: 350px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin-bottom: 24px;
+  font-size: 50px;
+  color : #5D5A88;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.helper-group {
+  text-align: left;
+  margin: 10px 0;
+  justify-content: space-between;
+  display: flex;
+}
+
+.helper-group input {
+  margin-right: 10px;
+}
+
+.helper-group label {
+  color: #5c5c5c;
+}
+
+.footer-group {
+  margin-top: 20px;
+}
+
+.footer-group span {
+  text-decoration: none;
+  font-size: 0.9em;
+  margin-right: 10px;
+  color : #5D5A88;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #8a8a8a;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #7a7a7a;
+}
+.login-box {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  text-align: center;
+  width: 350px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin-bottom: 24px;
+  font-size: 50px;
+  color : #5D5A88;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.helper-group {
+  text-align: left;
+  margin: 10px 0;
+  justify-content: space-between;
+  display: flex;
+}
+
+.helper-group input {
+  margin-right: 10px;
+}
+
+.helper-group label {
+  color: #5c5c5c;
+}
+
+.footer-group {
+  margin-top: 20px;
+}
+
+.footer-group span {
+  text-decoration: none;
+  font-size: 0.9em;
+  margin-right: 10px;
+  color : #5D5A88;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #8a8a8a;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #7a7a7a;
+}
